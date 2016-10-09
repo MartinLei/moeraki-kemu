@@ -12,6 +12,7 @@ apply plugin: "org.sonarqube"
 apply plugin: "eclipse"
 apply plugin: "maven"
 apply plugin: "jacoco"
+apply plugin: "base"
 
 dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api',  version: '2.2'
