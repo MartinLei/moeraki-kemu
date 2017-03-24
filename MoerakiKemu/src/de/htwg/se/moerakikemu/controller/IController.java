@@ -1,6 +1,8 @@
 package de.htwg.se.moerakikemu.controller;
 
-public interface IController {
+import de.htwg.se.util.observerNEW.IObservable;
+
+public interface IController extends IObservable {
 
 	/**
 	 * Returns the name of the player that occupies the field with the coordinates.

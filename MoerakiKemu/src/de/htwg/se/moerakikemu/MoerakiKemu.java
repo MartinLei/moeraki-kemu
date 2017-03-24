@@ -29,8 +29,8 @@ public class MoerakiKemu {
 
 		controller = injector.getInstance(IController.class);
 	   // @SuppressWarnings("unused")
-		//GUI gui = injector.getInstance(GUI.class);
-		//tui = injector.getInstance(TextUI.class);
+		GUI gui = injector.getInstance(GUI.class);
+		tui = injector.getInstance(TextUI.class);
 		tui = new TextUI(controller);
 		tui.printWelcome();
 

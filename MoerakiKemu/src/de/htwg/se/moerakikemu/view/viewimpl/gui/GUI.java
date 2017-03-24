@@ -11,7 +11,6 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.UserInterface;
-import de.htwg.se.util.observer.ObserverObserver;
 import de.htwg.se.util.observerNEW.Event;
 import de.htwg.se.util.observerNEW.IObserver;
 
@@ -28,6 +27,8 @@ public class GUI extends JFrame implements UserInterface, IObserver {
 	public GUI(IController newController, IControllerPlayer playerController) {
 		super("Moeraki Kemu");
 		this.myController = newController;
+		myController.addObserver(this);
+		
 		this.myPlayerController = playerController;
 		this.myMainPanel = new MainPanel(myController, myPlayerController, myController.getEdgeLength());
 		this.myMessagePanel = new MessagePanel(myController, myPlayerController);

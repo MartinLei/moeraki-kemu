@@ -9,7 +9,6 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.UserInterface;
-import de.htwg.se.util.observer.ObserverObserver;
 import de.htwg.se.util.observerNEW.Event;
 import de.htwg.se.util.observerNEW.IObserver;
 
@@ -23,6 +22,7 @@ public class TextUI implements IObserver {
 	@Inject
 	public TextUI(IController controller){//, IControllerPlayer playerController) {
 		myController = controller;
+		myController.addObserver(this);
 		//myPlayerController = playerController;
 		//queryPlayerName();
 	}

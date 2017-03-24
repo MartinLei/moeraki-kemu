@@ -10,9 +10,6 @@ import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.modellayer.IField;
 import de.htwg.se.moerakikemu.modellayer.modellayerimpl.Field;
 import de.htwg.se.moerakikemu.view.UserInterface;
-import de.htwg.se.util.observer.IObserverSubject;
-import de.htwg.se.util.observer.ObserverObserver;
-import de.htwg.se.util.observer.ObserverSubject;
 import de.htwg.se.util.observerNEW.IObservable;
 import de.htwg.se.util.observerNEW.Observable;
 
@@ -34,9 +31,8 @@ public class Controller extends Observable implements IController  {
 	private boolean winner;
 
 	@Inject
-	public Controller(){//(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
-	//	super();
-		int fieldLength = 12;
+	public Controller(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
+		super();
 		gameField = new Field(fieldLength);
 		this.fieldLength = fieldLength;
 		//this.playerController = playerCon;
