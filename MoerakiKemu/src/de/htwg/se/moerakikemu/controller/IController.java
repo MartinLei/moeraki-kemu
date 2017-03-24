@@ -86,4 +86,6 @@ public interface IController extends IObservable {
 
 	boolean setStartDot(Point position);
 
+	boolean setDot(Point position);
+
 }

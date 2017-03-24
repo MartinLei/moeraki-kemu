@@ -54,23 +54,23 @@ public class Controller extends Observable implements IController {
 		winner = false;
 
 		state = State.GET_FIRST_PLAYER_NAME;
-		
-		//quicStartForTest();
-		
+
+		quicStartForTest();
+
 		notifyObservers();
 	}
 
-	private void quicStartForTest(){
-		String player1Name = "Player1";
-		String player2Name = "Player2";
+	private void quicStartForTest() {
+		String player1Name = "Andrew";
+		String player2Name = "Walter";
 		playerController.setName(player1Name, player2Name);
-		
-		Point starDotPosisiton = new Point(4,4);
+
+		Point starDotPosisiton = new Point(4, 4);
 		setStartDot(starDotPosisiton);
-		
+
 		state = State.TURN_PLAYER1;
 	}
-	
+
 	public String getIsOccupiedByPlayer(int x, int y) {
 		return gameField.getIsOccupiedFrom(x, y);
 	}
@@ -104,7 +104,7 @@ public class Controller extends Observable implements IController {
 			setEnd(true);
 		}
 
-		//notifyObservers();
+		// notifyObservers();
 
 		return 0;
 	}
@@ -332,7 +332,6 @@ public class Controller extends Observable implements IController {
 		notifyObservers();
 	}
 
-	
 	@Override
 	public void setPlayer1Name(String name) {
 		playerController.setPlayer1Name(name);
@@ -374,12 +373,33 @@ public class Controller extends Observable implements IController {
 
 		if (!setStartDot(position.x, position.y))
 			return false;
-		
+
 		state = State.TURN_PLAYER1;
 		occupy(position.x, position.y);
-	
+
 		notifyObservers();
 		return true;
+	}
+
+	@Override
+	public boolean setDot(Point position) {
+		if (position == null)
+			return false;
+
+		if (occupy(position.x, position.y) != 0)
+			return false;
+
+		changePlayer();
+		notifyObservers();
+		return true;
+	}
+
+	private void changePlayer() {
+		if (state.equals(State.TURN_PLAYER1)) {
+			state = State.TURN_PLAYER2;
+		} else if (state.equals(State.TURN_PLAYER2)) {
+			state = State.TURN_PLAYER1;
+		}
 	}
 
 }

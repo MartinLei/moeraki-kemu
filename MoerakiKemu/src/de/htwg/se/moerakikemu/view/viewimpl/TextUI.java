@@ -170,7 +170,7 @@ public class TextUI implements IObserver {
 		} else if (myController.getState().equals(State.GET_SECOND_PLAYER_NAME)) {
 			// TODO input check
 			myController.setPlayer2Name(inputLine);
-		} else if (inputLine.matches("([1-9][0-9]|[1-9])-([1-9][0-9]|[1-9])")) {
+		} else if (inputLine.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])")) {
 			Point position = getPosition(inputLine);
 
 			setStone(position);
@@ -181,23 +181,28 @@ public class TextUI implements IObserver {
 	}
 
 	private void setStone(Point position) {
-		if (position == null)
+		if (position == null){
 			LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
+			return;
+		}
 
 		if (myController.getState().equals(State.SET_START_DOT)) {
 			if (!myController.setStartDot(position)) {
 				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
-			
 			}
-		}	
+		} else {
+			if (!myController.setDot(position)) {
+				LOGGER.info("Die Zelle ist schon besetzt :(");
+			}
+		}
 	}
 
 	private Point getPosition(String coordinate) {
 		String[] parts = coordinate.split("-");
-		int x = Integer.parseInt(parts[0]) -1;
-		int y = Integer.parseInt(parts[1]) -1;
+		int x = Integer.parseInt(parts[0]) - 1;
+		int y = Integer.parseInt(parts[1]) - 1;
 
-		if (x >= 0  && x <= 11 && y >= 0 && y <= 11)
+		if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
 			return new Point(x, y);
 
 		return null;
@@ -219,10 +224,12 @@ public class TextUI implements IObserver {
 			LOGGER.info("Setzt nun den StartStein:: ");
 		} else if (state.equals(State.TURN_PLAYER1)) {
 			drawCurrentState();
-			LOGGER.info("Spieler1 du bist dran:: ");
+			String player1Name = myController.getPlayer1Name();
+			LOGGER.info(player1Name +" du bist dran:: ");
 		} else if (state.equals(State.TURN_PLAYER2)) {
 			drawCurrentState();
-			LOGGER.info("Spieler2 du bist dran:: ");
+			String player2Name = myController.getPlayer2Name();
+			LOGGER.info(player2Name +" du bist dran:: ");
 		}
 
 	}
