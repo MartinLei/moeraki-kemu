@@ -63,43 +63,44 @@ public class GUI extends JFrame implements IObserver {
 
 	public void update(Event e) {
 		State state = myController.getState();
+		
+		drawCurrentState();
+		
 		if (state.equals(State.EXIT_GAME)) {
 			this.setVisible(false);
 			this.dispose();
 			return;
 		} else if (state.equals(State.GET_FIRST_PLAYER_NAME)) {
 			String player1Name = JOptionPane.showInputDialog("Name fuer Spieler 1 eigeben:", "Andrew");
-			if (player1Name != null) 
-				myController.setPlayer1Name(player1Name);
-			// LOGGER.info("Spieler1 bitte gebe dein Name ein:: ");
+			if (player1Name == null)
+				player1Name = "Andrew";
+
+			myController.setPlayer1Name(player1Name);
+			myMessagePanel.printMessage("Spieler1 heist: " +player1Name);
 		} else if (state.equals(State.GET_SECOND_PLAYER_NAME)) {
 			String player2Name = JOptionPane.showInputDialog("Name fuer Spieler 2 eigeben:", "Walter");
-			if (player2Name != null) 
-				myController.setPlayer2Name(player2Name);
-			// LOGGER.info("Spieler2 bitte gebe dein Name ein:: ");
+			if (player2Name == null)
+				player2Name = "Walter";
+
+			myController.setPlayer2Name(player2Name);
+			myMessagePanel.printMessage("Spieler2 heist: " +player2Name);
 		} else if (state.equals(State.SET_START_DOT)) {
-			// drawCurrentState();
-			// LOGGER.info("Setzt nun den StartStein:: ");
+			myMessagePanel.printMessage("Setzt nun den StartStein");
 		} else if (state.equals(State.TURN_PLAYER1)) {
-			// drawCurrentState();
-			// String player1Name = myController.getPlayer1Name();
-			// LOGGER.info(player1Name + " du bist dran:: ");
+			String player1Name = myController.getPlayer1Name();
+			myMessagePanel.printMessage(player1Name + " du bist dran");
 		} else if (state.equals(State.TURN_PLAYER2)) {
-			// drawCurrentState();
 			String player2Name = myController.getPlayer2Name();
-			// LOGGER.info(player2Name + " du bist dran:: ");
+			myMessagePanel.printMessage(player2Name + " du bist dran");
 		} else if (state.equals(State.PLAYER_WON)) {
 			// TODO test ?
 			String winner = myController.getWinner();
 			String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
 			this.printWinnerPopup();
-			// LOGGER.info(display);
 		} else if (state.equals(State.GAME_FINISHED)) {
 			// TODO test ?
-			// LOGGER.info("Spiel ist beendet");
+			myMessagePanel.printMessage("Spiel ist beendet");
 		}
-		
-		drawCurrentState();
 	}
 
 	// public void update() {

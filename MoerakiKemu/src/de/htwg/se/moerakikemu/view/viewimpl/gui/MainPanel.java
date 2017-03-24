@@ -15,8 +15,9 @@ import javax.swing.SwingConstants;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
-import java.awt.Color;
+import de.htwg.se.moerakikemu.controller.State;
 
+import java.awt.Color;
 
 public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -24,11 +25,9 @@ public class MainPanel extends JPanel {
 	IController myController;
 	IControllerPlayer myPlayerController;
 
-
 	ImageIcon blackIcon;
 	ImageIcon redIcon;
 	ImageIcon greenIcon;
-
 
 	GridLayout gridForSpots;
 	JButton[][] field;
@@ -36,28 +35,34 @@ public class MainPanel extends JPanel {
 	private MouseListener listener = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent me) {
+			if (myController.getState() != State.TURN_PLAYER1 && myController.getState() != State.TURN_PLAYER2
+					&& myController.getState() != State.SET_START_DOT)
+				return;
+
 			JButton pressedButton = (JButton) me.getSource();
-			
+
 			// Occupy Spot
-			int []coordinates = getButtonCoordinates(pressedButton);
-			String name = myController.getIsOccupiedByPlayer(coordinates[0]-1, coordinates[1]-1);
+			int[] coordinates = getButtonCoordinates(pressedButton);
+			String name = myController.getIsOccupiedByPlayer(coordinates[0] - 1, coordinates[1] - 1);
 			if ("".equals(name)) {
 				setSpotColor(pressedButton, myPlayerController.getCurrentPlayerName());
-				//myController.occupy(coordinates[0]-1, coordinates[1]-1);
-				Point mousePosition = new Point(coordinates[0]-1, coordinates[1]-1);
-				myController.setDot(mousePosition);
+				
+				Point mousePosition = new Point(coordinates[0] - 1, coordinates[1] - 1);
+				if (myController.getState().equals(State.SET_START_DOT))
+					myController.setStartDot(mousePosition);
+				else
+					myController.setDot(mousePosition);
 			}
-			
+
 		}
 	};
 
-	
 	public MainPanel(IController controller, IControllerPlayer playerController, final int fieldLength) {
 		super();
 		this.myController = controller;
 		this.myPlayerController = playerController;
 		this.setBackground(new Color(200, 120, 40));
-		
+
 		// Read and scale images for occupied spots
 		blackIcon = new ImageIcon("Spot_black.png");
 		Image blackIconImg = blackIcon.getImage();
@@ -68,7 +73,7 @@ public class MainPanel extends JPanel {
 		greenIcon = new ImageIcon("Spot_green.png");
 		Image greenIconImg = greenIcon.getImage();
 		greenIcon.setImage(greenIconImg.getScaledInstance(40, 40, Image.SCALE_SMOOTH));
-		
+
 		gridForSpots = new GridLayout(fieldLength, fieldLength);
 		this.setLayout(gridForSpots);
 		field = new JButton[fieldLength][fieldLength];
@@ -77,7 +82,7 @@ public class MainPanel extends JPanel {
 				field[i][j] = new JButton();
 				this.add(field[i][j]);
 				field[i][j].addMouseListener(listener);
-				field[i][j].setToolTipText("(" + (i+1) + "/" + (j+1) + ")");
+				field[i][j].setToolTipText("(" + (i + 1) + "/" + (j + 1) + ")");
 				field[i][j].setText("+");
 				field[i][j].setHorizontalTextPosition(SwingConstants.CENTER);
 				field[i][j].setVerticalTextPosition(SwingConstants.CENTER);
@@ -88,7 +93,6 @@ public class MainPanel extends JPanel {
 		}
 	}
 
-	
 	public void updateField() {
 		int fieldLength = myController.getEdgeLength();
 		for (int i = 0; i < fieldLength; i++) {
@@ -98,21 +102,21 @@ public class MainPanel extends JPanel {
 		}
 		this.repaint();
 	}
-	
+
 	private int[] getButtonCoordinates(JButton button) {
-		int []xyCoordinates = new int[2];
-		
-		Scanner getNumbers = new Scanner(button.getToolTipText()); 
+		int[] xyCoordinates = new int[2];
+
+		Scanner getNumbers = new Scanner(button.getToolTipText());
 		getNumbers.useDelimiter("[()/]");
 		xyCoordinates[0] = getNumbers.nextInt();
 		xyCoordinates[1] = getNumbers.nextInt();
 		getNumbers.close();
-		
+
 		return xyCoordinates;
 	}
 
 	private void setSpotColor(JButton buttonToChange, String playerNameOnSpot) {
-		if(playerNameOnSpot == null || "".equals(playerNameOnSpot)){
+		if (playerNameOnSpot == null || "".equals(playerNameOnSpot)) {
 			buttonToChange.setText("+");
 			buttonToChange.setIcon(null);
 		} else if (myPlayerController.getPlayer1Name().equals(playerNameOnSpot)) {
@@ -121,12 +125,11 @@ public class MainPanel extends JPanel {
 		} else if (myPlayerController.getPlayer2Name().equals(playerNameOnSpot)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(redIcon);
-		} else if("StartDot".equals(playerNameOnSpot)){
+		} else if ("StartDot".equals(playerNameOnSpot)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(greenIcon);
 
 		}
 	}
-
 
 }
