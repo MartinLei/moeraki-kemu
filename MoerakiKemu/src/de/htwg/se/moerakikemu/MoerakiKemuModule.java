@@ -12,8 +12,9 @@ public class MoerakiKemuModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(Integer.class).annotatedWith(Names.named("fieldLength")).toInstance(12);
 		bind(IController.class).to(Controller.class);
-		bind(IControllerPlayer.class).to(ControllerPlayer.class);
+		
+		//bind(Integer.class).annotatedWith(Names.named("fieldLength")).toInstance(12);
+		//bind(IControllerPlayer.class).to(ControllerPlayer.class);
 	}
 }

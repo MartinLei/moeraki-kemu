@@ -13,9 +13,11 @@ import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.util.observer.IObserverSubject;
 import de.htwg.se.util.observer.ObserverObserver;
 import de.htwg.se.util.observer.ObserverSubject;
+import de.htwg.se.util.observerNEW.IObservable;
+import de.htwg.se.util.observerNEW.Observable;
 
 @Singleton
-public class Controller extends ObserverSubject implements IController, IObserverSubject {
+public class Controller extends Observable implements IController  {
 
 	private IField gameField;
 	private int fieldLength;
@@ -32,16 +34,19 @@ public class Controller extends ObserverSubject implements IController, IObserve
 	private boolean winner;
 
 	@Inject
-	public Controller(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
-		super();
+	public Controller(){//(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
+	//	super();
+		int fieldLength = 12;
 		gameField = new Field(fieldLength);
 		this.fieldLength = fieldLength;
-		this.playerController = playerCon;
+		//this.playerController = playerCon;
 		quitGame = false;
 		playerWin = "";
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
-		notifyObservers();
+		
+		state = State.GET_FIRST_PLAYER_NAME;
+	//	notifyObservers();
 	}
 
 	public String getIsOccupiedByPlayer(int x, int y) {
@@ -257,60 +262,61 @@ public class Controller extends ObserverSubject implements IController, IObserve
 	}
 
 	public void newGame() {
-		gameField = new Field(fieldLength);
-		for (ObserverObserver ui : observers) {
-			((UserInterface) ui).printMessage("");
-		}
-		for (ObserverObserver ui : observers) {
-			((UserInterface) ui).addPoints(0, 0);
-		}
-		playerController.newGame();
-		playerWin = "";
-		quitGame = false;
-		winner = false;
-
-		notifyObservers();
+//		gameField = new Field(fieldLength);
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).printMessage("");
+//		}
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).addPoints(0, 0);
+//		}
+//		playerController.newGame();
+//		playerWin = "";
+//		quitGame = false;
+//		winner = false;
+//
+//		notifyObservers();
 	}
 
 	private void printInfoALLUIs() {
-		String pointString = "Das Spiel endet";
-		for (ObserverObserver ui : observers) {
-			((UserInterface) ui).printMessage(pointString);
-		}
+//		String pointString = "Das Spiel endet";
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).printMessage(pointString);
+//		}
 	}
 
 	private void printInfoALLUIs(String player) {
-		String pointString = "Ein Punkt fuer " + player;
-		for (ObserverObserver ui : observers) {
-			((UserInterface) ui).addPoints(playerController.getPlayer1Points(), playerController.getPlayer2Points());
-		}
-		for (ObserverObserver ui : observers) {
-			((UserInterface) ui).printMessage(pointString);
-		}
+//		String pointString = "Ein Punkt fuer " + player;
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).addPoints(playerController.getPlayer1Points(), playerController.getPlayer2Points());
+//		}
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).printMessage(pointString);
+//		}
 	}
 
 	private void printInfoAllUIs(int x, int y) {
-		int a = x + 1;
-		int b = y + 1;
-		String xValue = String.valueOf(a);
-		String yValue = String.valueOf(b);
-		String pointString = "Gewaehlter Punkt: " + xValue + "/" + yValue;
-		for (ObserverObserver ui : observers) {
-			((UserInterface) ui).printMessage(pointString);
-		}
+//		int a = x + 1;
+//		int b = y + 1;
+//		String xValue = String.valueOf(a);
+//		String yValue = String.valueOf(b);
+//		String pointString = "Gewaehlter Punkt: " + xValue + "/" + yValue;
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).printMessage(pointString);
+//		}
 	}
 
 	@Override
 	public State getState() {
-		if ("".equals(playerController.getPlayer1Name()) || "".equals(playerController.getPlayer2Name())) {
-			return State.QUERY_PLAYER_NAME;
-		} else if (quitGame) {
-			return State.GAME_FINISHED;
-		} else if (winner) {
-			return State.PLAYER_WON;
-		} else {
-			return State.PLAYER_OCCUPIED;
-		}
+//		if ("".equals(playerController.getPlayer1Name()) || "".equals(playerController.getPlayer2Name())) {
+//			return State.QUERY_PLAYER_NAME;
+//		} else if (quitGame) {
+//			return State.GAME_FINISHED;
+//		} else if (winner) {
+//			return State.PLAYER_WON;
+//		} else {
+//			return State.PLAYER_OCCUPIED;
+//		}
+		return state;
 	}
 
 	@Override

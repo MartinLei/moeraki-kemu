@@ -12,8 +12,10 @@ import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.util.observer.ObserverObserver;
+import de.htwg.se.util.observerNEW.Event;
+import de.htwg.se.util.observerNEW.IObserver;
 
-public class GUI extends JFrame implements UserInterface, ObserverObserver {
+public class GUI extends JFrame implements UserInterface, IObserver {
 	private static final long serialVersionUID = 2078463309153663728L;
 
 	private IController myController;
@@ -40,30 +42,6 @@ public class GUI extends JFrame implements UserInterface, ObserverObserver {
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-	}
-
-	@Override
-	public void update() {
-		State controllerState = myController.getState();
-		
-		switch (controllerState) {
-		case GAME_FINISHED:
-			myController.setEnd(true);
-			this.quit();
-			break;
-		case PLAYER_OCCUPIED:
-			drawCurrentState();
-			break;
-		case QUERY_PLAYER_NAME:
-			queryPlayerName();
-			break;
-		case PLAYER_WON:
-			this.printWinnerPopup();
-			myController.newGame();
-			break;
-		default:
-			break;
-		}
 	}
 
 	@Override
@@ -111,5 +89,42 @@ public class GUI extends JFrame implements UserInterface, ObserverObserver {
 	public void addPoints(int pointsPlayer1, int pointsPlayer2){
 		myMessagePanel.setPlayerPoints(pointsPlayer1, pointsPlayer2);
 	}
+
+
+	
+	@Override
+	public void update(Event e) {
+		State state = myController.getState();
+		if (state.equals(State.EXIT_GAME)) {
+			this.setVisible(false);
+			this.dispose();
+			return;
+		}
+	}
+	
+	@Override
+	public void update() {
+//		State controllerState = myController.getState();
+//		
+//		switch (controllerState) {
+//		case GAME_FINISHED:
+//			myController.setEnd(true);
+//			this.quit();
+//			break;
+//		case PLAYER_OCCUPIED:
+//			drawCurrentState();
+//			break;
+//		case QUERY_PLAYER_NAME:
+//			queryPlayerName();
+//			break;
+//		case PLAYER_WON:
+//			this.printWinnerPopup();
+//			myController.newGame();
+//			break;
+//		default:
+//			break;
+//		}
+	}
+
 
 }

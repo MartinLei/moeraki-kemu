@@ -7,6 +7,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.moerakikemu.view.viewimpl.gui.GUI;
 
@@ -27,15 +28,19 @@ public class MoerakiKemu {
 		Injector injector = Guice.createInjector(new MoerakiKemuModule());
 
 		controller = injector.getInstance(IController.class);
-	    //@SuppressWarnings("unused")
+	   // @SuppressWarnings("unused")
 		//GUI gui = injector.getInstance(GUI.class);
-		tui = injector.getInstance(TextUI.class);
+		//tui = injector.getInstance(TextUI.class);
+		tui = new TextUI(controller);
 		tui.printWelcome();
 
 		// Create an initial game
 		//controller.create();
 	}
 
+	public boolean isExitGame(){
+		return controller.getState().equals(State.EXIT_GAME);
+	}
 	public static void main(String[] args) {
 //		Injector injector = Guice.createInjector(new ControllerModuleWithController());
 //		
@@ -65,12 +70,11 @@ public class MoerakiKemu {
 //			ui.quit();
 //		}
 		
-		MoerakiKemu.getInstance();
+		MoerakiKemu moerakiKemu = MoerakiKemu.getInstance();
 
-		boolean continu = true;
 		scanner = new Scanner(System.in);
-		while (continu) {
-			continu = tui.processInputLine(scanner.next());
+		while (!moerakiKemu.isExitGame()) {
+			moerakiKemu.tui.processInputLine(scanner.next());
 		}
 	}
 

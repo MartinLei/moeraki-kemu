@@ -10,8 +10,10 @@ import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.util.observer.ObserverObserver;
+import de.htwg.se.util.observerNEW.Event;
+import de.htwg.se.util.observerNEW.IObserver;
 
-public class TextUI implements ObserverObserver {
+public class TextUI implements IObserver {
 
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
 
@@ -19,9 +21,9 @@ public class TextUI implements ObserverObserver {
 	IControllerPlayer myPlayerController;
 
 	@Inject
-	public TextUI(IController controller, IControllerPlayer playerController) {
+	public TextUI(IController controller){//, IControllerPlayer playerController) {
 		myController = controller;
-		myPlayerController = playerController;
+		//myPlayerController = playerController;
 		//queryPlayerName();
 	}
 
@@ -156,39 +158,54 @@ public class TextUI implements ObserverObserver {
 		}
 	}
 
-	@Override
-	public void update() {
-		State controllerState = myController.getState();
-		if (controllerState == State.PLAYER_OCCUPIED) {
-			drawCurrentState();
-		} else if (controllerState == State.GAME_FINISHED) {
-			LOGGER.info("Spiel ist beendet");
-		} else if (controllerState == State.QUERY_PLAYER_NAME) {
-			queryPlayerName();
-		} else if (controllerState == State.PLAYER_WON) {
-			String winner = myController.getWinner();
-			String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
-			LOGGER.error(display);
-		}
-	}
-
-
 	public void addPoints(int pointsPlayer1, int pointsPlayer2) {
 		LOGGER.error(myPlayerController.getPlayer1Name() + " hat " + pointsPlayer1 + "Punkte");
 		LOGGER.error(myPlayerController.getPlayer2Name() + " hat " + pointsPlayer2 + "Punkte");
 	}
 
-	public boolean processInputLine(String inputLine) {
-		System.out.println("hallo");
+	public void processInputLine(String inputLine) {
 		LOGGER.info("Your input was: " + inputLine);
-		if (inputLine.matches("q"))
-			return false;
-
-		return true;
+		if (inputLine.matches("q")){
+			LOGGER.info("quit");
+			myController.quitGame();
+		}
+			
 	}
 
 	
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
 	}
+
+	@Override
+	public void update(Event e) {
+		LOGGER.info("TUI EVENT");
+		
+		State state = myController.getState();
+		if (state.equals(State.EXIT_GAME)) {
+			LOGGER.info("Have a nice day :)");
+			return;
+		}
+	}
+
+	public void setController(IController controller) {
+		myController = controller;
+	}
+	
+//	@Override
+//	public void update() {
+//		State controllerState = myController.getState();
+//		if (controllerState == State.PLAYER_OCCUPIED) {
+//			drawCurrentState();
+//		} else if (controllerState == State.GAME_FINISHED) {
+//			LOGGER.info("Spiel ist beendet");
+//		} else if (controllerState == State.QUERY_PLAYER_NAME) {
+//			queryPlayerName();
+//		} else if (controllerState == State.PLAYER_WON) {
+//			String winner = myController.getWinner();
+//			String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
+//			LOGGER.error(display);
+//		}
+//	}
+
 }
