@@ -32,7 +32,7 @@ public class MoerakiKemu {
 		//GUI gui = injector.getInstance(GUI.class);
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
-
+		
 		controller.newGame();
 	}
 

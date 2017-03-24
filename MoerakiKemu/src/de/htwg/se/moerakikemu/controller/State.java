@@ -13,6 +13,8 @@ public enum State {
 	GET_FIRST_PLAYER_NAME,
 	GET_SECOND_PLAYER_NAME,
 	SET_START_DOT,
+	TURN_PLAYER1,
+	TURN_PLAYER2,
 	EXIT_GAME			// Exit the game
 	;
 	

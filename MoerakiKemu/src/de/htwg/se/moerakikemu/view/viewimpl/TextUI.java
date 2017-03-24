@@ -158,6 +158,7 @@ public class TextUI implements IObserver {
 
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
+		drawCurrentState();
 	}
 
 	public void processInputLine(String inputLine) {
@@ -172,35 +173,31 @@ public class TextUI implements IObserver {
 		} else if (inputLine.matches("([1-9][0-9]|[1-9])-([1-9][0-9]|[1-9])")) {
 			Point position = getPosition(inputLine);
 
-			if (position == null)
-				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
-
-			if (setStone(position))
-				drawCurrentState();
+			setStone(position);
 		} else {
 			LOGGER.info("Keine Ahnung :/ [h Hilfe] ");
 		}
 
 	}
 
-	private boolean setStone(Point position) {
-		if (myController.getState().equals(State.SET_START_DOT))
-			if (myController.setStartDot(position) == false) {
-				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
-				return false;
-			} else {
-				LOGGER.info("Moege der Bessere gewinnen:");
-			}
+	private void setStone(Point position) {
+		if (position == null)
+			LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
 
-		return true;
+		if (myController.getState().equals(State.SET_START_DOT)) {
+			if (!myController.setStartDot(position)) {
+				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
+			
+			}
+		}	
 	}
 
 	private Point getPosition(String coordinate) {
 		String[] parts = coordinate.split("-");
-		int x = Integer.parseInt(parts[0]);
-		int y = Integer.parseInt(parts[1]);
+		int x = Integer.parseInt(parts[0]) -1;
+		int y = Integer.parseInt(parts[1]) -1;
 
-		if (x <= 12 && y <= 12)
+		if (x >= 0  && x <= 11 && y >= 0 && y <= 11)
 			return new Point(x, y);
 
 		return null;
@@ -219,8 +216,15 @@ public class TextUI implements IObserver {
 			LOGGER.info("Spieler2 bitte gebe dein Name ein:: ");
 		} else if (state.equals(State.SET_START_DOT)) {
 			drawCurrentState();
-			LOGGER.info("Spieler2: bitte setze den StartStein:: ");
+			LOGGER.info("Setzt nun den StartStein:: ");
+		} else if (state.equals(State.TURN_PLAYER1)) {
+			drawCurrentState();
+			LOGGER.info("Spieler1 du bist dran:: ");
+		} else if (state.equals(State.TURN_PLAYER2)) {
+			drawCurrentState();
+			LOGGER.info("Spieler2 du bist dran:: ");
 		}
+
 	}
 
 	// @Override

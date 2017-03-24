@@ -53,10 +53,24 @@ public class Controller extends Observable implements IController {
 		quitGame = false;
 		winner = false;
 
-		state = State.GET_FIRST_PLAYER_NAME; // for automatic names change hire
+		state = State.GET_FIRST_PLAYER_NAME;
+		
+		//quicStartForTest();
+		
 		notifyObservers();
 	}
 
+	private void quicStartForTest(){
+		String player1Name = "Player1";
+		String player2Name = "Player2";
+		playerController.setName(player1Name, player2Name);
+		
+		Point starDotPosisiton = new Point(4,4);
+		setStartDot(starDotPosisiton);
+		
+		state = State.TURN_PLAYER1;
+	}
+	
 	public String getIsOccupiedByPlayer(int x, int y) {
 		return gameField.getIsOccupiedFrom(x, y);
 	}
@@ -90,7 +104,7 @@ public class Controller extends Observable implements IController {
 			setEnd(true);
 		}
 
-		notifyObservers();
+		//notifyObservers();
 
 		return 0;
 	}
@@ -318,6 +332,7 @@ public class Controller extends Observable implements IController {
 		notifyObservers();
 	}
 
+	
 	@Override
 	public void setPlayer1Name(String name) {
 		playerController.setPlayer1Name(name);
@@ -354,10 +369,17 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public boolean setStartDot(Point position) {
-		if(position == null)
+		if (position == null)
+			return false;
+
+		if (!setStartDot(position.x, position.y))
 			return false;
 		
-		return setStartDot(position.x, position.y);
+		state = State.TURN_PLAYER1;
+		occupy(position.x, position.y);
+	
+		notifyObservers();
+		return true;
 	}
 
 }
