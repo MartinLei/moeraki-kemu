@@ -33,7 +33,6 @@ public class MoerakiKemu {
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
 
-		
 		controller.newGame();
 	}
 
@@ -41,34 +40,6 @@ public class MoerakiKemu {
 		return controller.getState().equals(State.EXIT_GAME);
 	}
 	public static void main(String[] args) {
-//		Injector injector = Guice.createInjector(new ControllerModuleWithController());
-//		
-//		IController controller = injector.getInstance(Controller.class);
-//	
-//		UserInterface[] interfaces;
-//		interfaces = new UserInterface[2];
-//		interfaces[0] = injector.getInstance(TextUI.class);
-//		interfaces[1] = injector.getInstance(GUI.class);
-//
-//		for (int i = 0; i < interfaces.length; i++) {
-//			((IObserverSubject) controller).attatch((ObserverObserver) interfaces[i]);
-//			interfaces[i].drawCurrentState();
-//		}
-//
-//		// Used to query Player names
-//		((ObserverObserver) interfaces[1]).update();
-//		
-//		boolean finished = false;
-//		while (!finished) {
-//			finished = controller.testIfEnd();
-//			interfaces[0].update();
-//			interfaces[1].update();
-//		}
-//		
-//		for (UserInterface ui : interfaces) {
-//			ui.quit();
-//		}
-		
 		MoerakiKemu moerakiKemu = MoerakiKemu.getInstance();
 
 		scanner = new Scanner(System.in);

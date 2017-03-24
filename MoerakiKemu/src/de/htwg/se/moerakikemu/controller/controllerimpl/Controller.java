@@ -48,18 +48,12 @@ public class Controller extends Observable implements IController {
 
 	public void newGame() {
 		gameField = new Field(fieldLength);
-		// for (ObserverObserver ui : observers) {
-		// ((UserInterface) ui).printMessage("");
-		// }
-		// for (ObserverObserver ui : observers) {
-		// ((UserInterface) ui).addPoints(0, 0);
-		// }
 		playerController.newGame();
 		playerWin = "";
 		quitGame = false;
 		winner = false;
 
-		state = State.GET_FIRST_PLAYER_NAME;
+		state = State.GET_FIRST_PLAYER_NAME; // for automatic names change hire
 		notifyObservers();
 	}
 

@@ -18,13 +18,10 @@ import de.htwg.se.util.observerNEW.IObserver;
 public class TextUI implements IObserver {
 
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
-
 	IController myController;
-	IControllerPlayer myPlayerController;
 
 	@Inject
-	public TextUI(IController controller) {// , IControllerPlayer
-											// playerController) {
+	public TextUI(IController controller) {
 		myController = controller;
 		myController.addObserver(this);
 	}
@@ -157,11 +154,6 @@ public class TextUI implements IObserver {
 		} else {
 			LOGGER.error("Unentschieden");
 		}
-	}
-
-	public void addPoints(int pointsPlayer1, int pointsPlayer2) {
-		LOGGER.error(myPlayerController.getPlayer1Name() + " hat " + pointsPlayer1 + "Punkte");
-		LOGGER.error(myPlayerController.getPlayer2Name() + " hat " + pointsPlayer2 + "Punkte");
 	}
 
 	public void printWelcome() {
