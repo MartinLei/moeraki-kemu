@@ -140,22 +140,6 @@ public class TextUI implements IObserver {
 		LOGGER.error(msg + "\n");
 	}
 
-//	/**
-//	 * Prints the winner and ends the game.
-//	 *
-//	 * @return the boolean - value for the MoerakiKemu - class to finish the
-//	 *         game.
-//	 */
-//
-//	public void quit() {
-//		String winner = myController.getWinner();
-//		if (!"".equals(winner)) {
-//			LOGGER.error("Der Gewinner ist " + winner + "!!!\n");
-//		} else {
-//			LOGGER.error("Unentschieden");
-//		}
-//	}
-
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
 		drawCurrentState();
@@ -245,7 +229,7 @@ public class TextUI implements IObserver {
 		    String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
 			LOGGER.info(display);
 		} else if (state.equals(State.GAME_FINISHED)) {
-			//TODO teset ?
+			//TODO test ?
 			LOGGER.info("Spiel ist beendet");
 		}
 	}
