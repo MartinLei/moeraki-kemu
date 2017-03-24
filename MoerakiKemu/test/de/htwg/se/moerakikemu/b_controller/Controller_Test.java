@@ -126,12 +126,9 @@ public class Controller_Test {
 		controller.occupy(2, 2); // Set start Spot
 		controller.occupy(0, 0);
 
-		String a = controller.getIsOccupiedByPlayer(0, 0); // 0,0 because occupy
-															// get the direkt
-															// input from a
-															// player, so there
-															// is a -1, -1
-															// needed
+		// 0,0 because occupy get the direkt input from a player, so there is a
+		// -1, -1 needed
+		String a = controller.getIsOccupiedByPlayer(0, 0);
 		assertEquals("Andrew", a);
 	}
 
@@ -177,7 +174,8 @@ public class Controller_Test {
 
 	@Test
 	public void test_quitGamee() {
-		controller.quitGame();;
+		controller.quitGame();
+		;
 		assertEquals(State.EXIT_GAME, controller.getState());
 	}
 }
