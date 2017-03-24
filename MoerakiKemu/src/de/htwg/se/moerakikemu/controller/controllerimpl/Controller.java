@@ -12,8 +12,8 @@ import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.modellayer.IField;
 import de.htwg.se.moerakikemu.modellayer.modellayerimpl.Field;
 import de.htwg.se.moerakikemu.view.UserInterface;
-import de.htwg.se.util.observerNEW.IObservable;
-import de.htwg.se.util.observerNEW.Observable;
+import de.htwg.se.util.observer.IObservable;
+import de.htwg.se.util.observer.Observable;
 
 @Singleton
 public class Controller extends Observable implements IController {

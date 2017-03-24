@@ -12,8 +12,8 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.UserInterface;
-import de.htwg.se.util.observerNEW.Event;
-import de.htwg.se.util.observerNEW.IObserver;
+import de.htwg.se.util.observer.Event;
+import de.htwg.se.util.observer.IObserver;
 
 public class TextUI implements IObserver {
 
@@ -140,21 +140,21 @@ public class TextUI implements IObserver {
 		LOGGER.error(msg + "\n");
 	}
 
-	/**
-	 * Prints the winner and ends the game.
-	 *
-	 * @return the boolean - value for the MoerakiKemu - class to finish the
-	 *         game.
-	 */
-
-	public void quit() {
-		String winner = myController.getWinner();
-		if (!"".equals(winner)) {
-			LOGGER.error("Der Gewinner ist " + winner + "!!!\n");
-		} else {
-			LOGGER.error("Unentschieden");
-		}
-	}
+//	/**
+//	 * Prints the winner and ends the game.
+//	 *
+//	 * @return the boolean - value for the MoerakiKemu - class to finish the
+//	 *         game.
+//	 */
+//
+//	public void quit() {
+//		String winner = myController.getWinner();
+//		if (!"".equals(winner)) {
+//			LOGGER.error("Der Gewinner ist " + winner + "!!!\n");
+//		} else {
+//			LOGGER.error("Unentschieden");
+//		}
+//	}
 
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
@@ -164,6 +164,8 @@ public class TextUI implements IObserver {
 	public void processInputLine(String inputLine) {
 		if (inputLine.matches("q")) {
 			myController.quitGame();
+		}else if (inputLine.matches("h")) {
+			printHelp();
 		} else if (myController.getState().equals(State.GET_FIRST_PLAYER_NAME)) {
 			// TODO input check
 			myController.setPlayer1Name(inputLine);
@@ -179,9 +181,16 @@ public class TextUI implements IObserver {
 		}
 
 	}
+	
+	private void printHelp(){
+		LOGGER.info("Hilfe: ");
+		LOGGER.info("h Hilfe");
+		LOGGER.info("q Beenden");
+		LOGGER.info("x-y Koordinaten z.b 1-2");
+	}
 
 	private void setStone(Point position) {
-		if (position == null){
+		if (position == null) {
 			LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
 			return;
 		}
@@ -225,11 +234,11 @@ public class TextUI implements IObserver {
 		} else if (state.equals(State.TURN_PLAYER1)) {
 			drawCurrentState();
 			String player1Name = myController.getPlayer1Name();
-			LOGGER.info(player1Name +" du bist dran:: ");
+			LOGGER.info(player1Name + " du bist dran:: ");
 		} else if (state.equals(State.TURN_PLAYER2)) {
 			drawCurrentState();
 			String player2Name = myController.getPlayer2Name();
-			LOGGER.info(player2Name +" du bist dran:: ");
+			LOGGER.info(player2Name + " du bist dran:: ");
 		}
 
 	}

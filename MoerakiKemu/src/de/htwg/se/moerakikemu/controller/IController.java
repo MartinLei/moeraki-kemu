@@ -2,7 +2,7 @@ package de.htwg.se.moerakikemu.controller;
 
 import java.awt.Point;
 
-import de.htwg.se.util.observerNEW.IObservable;
+import de.htwg.se.util.observer.IObservable;
 
 public interface IController extends IObservable {
 

@@ -11,8 +11,8 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.view.UserInterface;
-import de.htwg.se.util.observerNEW.Event;
-import de.htwg.se.util.observerNEW.IObserver;
+import de.htwg.se.util.observer.Event;
+import de.htwg.se.util.observer.IObserver;
 
 public class GUI extends JFrame implements UserInterface, IObserver {
 	private static final long serialVersionUID = 2078463309153663728L;
