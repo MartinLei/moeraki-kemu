@@ -35,14 +35,30 @@ public class Controller extends Observable implements IController  {
 		super();
 		gameField = new Field(fieldLength);
 		this.fieldLength = fieldLength;
-		//this.playerController = playerCon;
+		this.playerController = playerCon;
 		quitGame = false;
 		playerWin = "";
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
 		
+		state = State.GET_FIRST_PLAYER_NAME; // todo none state?
+	}
+	
+	public void newGame() {
+		gameField = new Field(fieldLength);
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).printMessage("");
+//		}
+//		for (ObserverObserver ui : observers) {
+//			((UserInterface) ui).addPoints(0, 0);
+//		}
+		playerController.newGame();
+		playerWin = "";
+		quitGame = false;
+		winner = false;
+
 		state = State.GET_FIRST_PLAYER_NAME;
-	//	notifyObservers();
+		notifyObservers();
 	}
 
 	public String getIsOccupiedByPlayer(int x, int y) {
@@ -257,21 +273,7 @@ public class Controller extends Observable implements IController  {
 		return quitGame;
 	}
 
-	public void newGame() {
-//		gameField = new Field(fieldLength);
-//		for (ObserverObserver ui : observers) {
-//			((UserInterface) ui).printMessage("");
-//		}
-//		for (ObserverObserver ui : observers) {
-//			((UserInterface) ui).addPoints(0, 0);
-//		}
-//		playerController.newGame();
-//		playerWin = "";
-//		quitGame = false;
-//		winner = false;
-//
-//		notifyObservers();
-	}
+
 
 	private void printInfoALLUIs() {
 //		String pointString = "Das Spiel endet";

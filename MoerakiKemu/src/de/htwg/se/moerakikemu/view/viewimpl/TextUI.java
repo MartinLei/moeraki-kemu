@@ -182,8 +182,11 @@ public class TextUI implements IObserver {
 			LOGGER.info("Exit MoerakiKemu");
 			LOGGER.info("Have a nice day :)");
 			return;
+		}else if (state.equals(State.GET_FIRST_PLAYER_NAME)) {
+			LOGGER.info("Bitte Namen des ersten Spielers eingeben: ");
 		}
 	}
+	
 	
 //	@Override
 //	public void update() {
