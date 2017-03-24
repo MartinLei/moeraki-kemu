@@ -164,9 +164,7 @@ public class TextUI implements IObserver {
 	}
 
 	public void processInputLine(String inputLine) {
-		LOGGER.info("Your input was: " + inputLine);
 		if (inputLine.matches("q")){
-			LOGGER.info("quit");
 			myController.quitGame();
 		}
 			
@@ -179,17 +177,12 @@ public class TextUI implements IObserver {
 
 	@Override
 	public void update(Event e) {
-		LOGGER.info("TUI EVENT");
-		
 		State state = myController.getState();
 		if (state.equals(State.EXIT_GAME)) {
+			LOGGER.info("Exit MoerakiKemu");
 			LOGGER.info("Have a nice day :)");
 			return;
 		}
-	}
-
-	public void setController(IController controller) {
-		myController = controller;
 	}
 	
 //	@Override
