@@ -69,5 +69,9 @@ public interface IController extends IObservable {
 	 * Reset all values without the names of the players to zero.
 	 */
 	void newGame();
+	
+	void setPlayer1Name(String name);
+	
+	void setPlayer2Name(String name);
 
 }

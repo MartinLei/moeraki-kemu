@@ -78,5 +78,15 @@ public class ControllerPlayer implements IControllerPlayer {
 		return currentPlayer.getName();
 	}
 
+	@Override
+	public void setPlayer1Name(String name) {
+		player1.setName(name);
+	}
+
+	@Override
+	public void setPlayer2Name(String name) {
+		player2.setName(name);
+	}
+
 
 }

@@ -72,4 +72,8 @@ public interface IControllerPlayer {
 	void selectNextPlayer();
 	
 	
+	void setPlayer1Name(String name);
+	
+	void setPlayer2Name(String name);
+	
 }

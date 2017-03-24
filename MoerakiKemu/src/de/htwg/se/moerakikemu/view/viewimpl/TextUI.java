@@ -166,6 +166,11 @@ public class TextUI implements IObserver {
 	public void processInputLine(String inputLine) {
 		if (inputLine.matches("q")){
 			myController.quitGame();
+		}else if (myController.getState().equals(State.GET_FIRST_PLAYER_NAME)){
+			//TODO input check
+			myController.setPlayer1Name(inputLine);
+		}else{
+			LOGGER.info("Keine Ahnung :/ [h Hilfe] ");
 		}
 			
 	}
