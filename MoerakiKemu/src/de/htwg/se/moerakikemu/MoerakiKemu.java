@@ -1,57 +1,76 @@
 package de.htwg.se.moerakikemu;
 
 
+import java.util.Scanner;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import de.htwg.se.moerakikemu.controller.ControllerModuleWithController;
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.controllerimpl.Controller;
-import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.moerakikemu.view.viewimpl.TextUI;
 import de.htwg.se.moerakikemu.view.viewimpl.gui.GUI;
-import de.htwg.se.util.observer.ObserverObserver;
-import de.htwg.se.util.observer.IObserverSubject;
 
 
 public class MoerakiKemu {
 
+	private static Scanner scanner;
+	private static TextUI tui;
+	private IController controller;
+	private static MoerakiKemu instance = null;
+	
+	public static MoerakiKemu getInstance() {
+		if (instance == null) instance = new MoerakiKemu();
+		return instance;
+	}
+		
 	private MoerakiKemu() {
-		// Private Constructor because it must not be used elsewhere
+		Injector injector = Guice.createInjector(new MoerakiKemuModule());
+
+		controller = injector.getInstance(IController.class);
+	    //@SuppressWarnings("unused")
+		//GUI gui = injector.getInstance(GUI.class);
+		tui = injector.getInstance(TextUI.class);
+		tui.printWelcome();
+
+		// Create an initial game
+		//controller.create();
 	}
 
-	/**
-	 * Starts the game with TUI, GUI.
-	 *
-	 * @param args Unused parameters.
-	 */
 	public static void main(String[] args) {
-		Injector injector = Guice.createInjector(new ControllerModuleWithController());
+//		Injector injector = Guice.createInjector(new ControllerModuleWithController());
+//		
+//		IController controller = injector.getInstance(Controller.class);
+//	
+//		UserInterface[] interfaces;
+//		interfaces = new UserInterface[2];
+//		interfaces[0] = injector.getInstance(TextUI.class);
+//		interfaces[1] = injector.getInstance(GUI.class);
+//
+//		for (int i = 0; i < interfaces.length; i++) {
+//			((IObserverSubject) controller).attatch((ObserverObserver) interfaces[i]);
+//			interfaces[i].drawCurrentState();
+//		}
+//
+//		// Used to query Player names
+//		((ObserverObserver) interfaces[1]).update();
+//		
+//		boolean finished = false;
+//		while (!finished) {
+//			finished = controller.testIfEnd();
+//			interfaces[0].update();
+//			interfaces[1].update();
+//		}
+//		
+//		for (UserInterface ui : interfaces) {
+//			ui.quit();
+//		}
 		
-		IController controller = injector.getInstance(Controller.class);
-	
-		UserInterface[] interfaces;
-		interfaces = new UserInterface[2];
-		interfaces[0] = injector.getInstance(TextUI.class);
-		interfaces[1] = injector.getInstance(GUI.class);
+		MoerakiKemu.getInstance();
 
-		for (int i = 0; i < interfaces.length; i++) {
-			((IObserverSubject) controller).attatch((ObserverObserver) interfaces[i]);
-			interfaces[i].drawCurrentState();
-		}
-
-		// Used to query Player names
-		((ObserverObserver) interfaces[1]).update();
-		
-		boolean finished = false;
-		while (!finished) {
-			finished = controller.testIfEnd();
-			interfaces[0].update();
-			interfaces[1].update();
-		}
-		
-		for (UserInterface ui : interfaces) {
-			ui.quit();
+		boolean continu = true;
+		scanner = new Scanner(System.in);
+		while (continu) {
+			continu = tui.processInputLine(scanner.next());
 		}
 	}
 

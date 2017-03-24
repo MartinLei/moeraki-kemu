@@ -53,6 +53,11 @@ public interface IController {
 	void setEnd(boolean end);
 
 	/**
+	 * exit game handler
+	 */
+	void quitGame();
+	
+	/**
 	 * Returns the current State for the Controller to determine the correct UI response.
 	 * @return A constant from the enum State.
 	 */
