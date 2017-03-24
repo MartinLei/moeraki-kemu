@@ -55,7 +55,7 @@ public class Controller extends Observable implements IController {
 
 		state = State.GET_FIRST_PLAYER_NAME;
 
-		//quicStartForTest();
+		quicStartForTest();
 
 		notifyObservers();
 	}
@@ -275,18 +275,12 @@ public class Controller extends Observable implements IController {
 
 	public void setEnd(boolean end) {
 		quitGame = end;
-		printInfoALLUIs();
+		state = State.GAME_FINISHED;
+		notifyObservers();
 	}
 
 	public boolean testIfEnd() {
 		return quitGame;
-	}
-
-	private void printInfoALLUIs() {
-		// String pointString = "Das Spiel endet";
-		// for (ObserverObserver ui : observers) {
-		// ((UserInterface) ui).printMessage(pointString);
-		// }
 	}
 
 	private void printInfoALLUIs(String player) {
@@ -313,16 +307,6 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public State getState() {
-		// if ("".equals(playerController.getPlayer1Name()) ||
-		// "".equals(playerController.getPlayer2Name())) {
-		// return State.QUERY_PLAYER_NAME;
-		// } else if (quitGame) {
-		// return State.GAME_FINISHED;
-		// } else if (winner) {
-		// return State.PLAYER_WON;
-		// } else {
-		// return State.PLAYER_OCCUPIED;
-		// }
 		return state;
 	}
 

@@ -28,7 +28,7 @@ public class MoerakiKemu {
 		Injector injector = Guice.createInjector(new MoerakiKemuModule());
 
 		controller = injector.getInstance(IController.class);
-	   // @SuppressWarnings("unused")
+	    @SuppressWarnings("unused")
 		GUI gui = injector.getInstance(GUI.class);
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();

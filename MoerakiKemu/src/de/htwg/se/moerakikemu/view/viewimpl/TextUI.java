@@ -170,7 +170,7 @@ public class TextUI implements IObserver {
 		LOGGER.info("Hilfe: ");
 		LOGGER.info("h Hilfe");
 		LOGGER.info("q Beenden");
-		LOGGER.info("x-y Koordinaten z.b 1-2");
+		LOGGER.info("y-x Koordinaten z.b 1-2");
 	}
 
 	private void setStone(Point position) {
