@@ -2,6 +2,7 @@ package de.htwg.se.moerakikemu.view.viewimpl.gui;
 
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -42,7 +43,9 @@ public class MainPanel extends JPanel {
 			String name = myController.getIsOccupiedByPlayer(coordinates[0]-1, coordinates[1]-1);
 			if ("".equals(name)) {
 				setSpotColor(pressedButton, myPlayerController.getCurrentPlayerName());
-				myController.occupy(coordinates[0]-1, coordinates[1]-1);
+				//myController.occupy(coordinates[0]-1, coordinates[1]-1);
+				Point mousePosition = new Point(coordinates[0]-1, coordinates[1]-1);
+				myController.setDot(mousePosition);
 			}
 			
 		}

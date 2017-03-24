@@ -29,7 +29,7 @@ public class MoerakiKemu {
 
 		controller = injector.getInstance(IController.class);
 	   // @SuppressWarnings("unused")
-		//GUI gui = injector.getInstance(GUI.class);
+		GUI gui = injector.getInstance(GUI.class);
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
 		

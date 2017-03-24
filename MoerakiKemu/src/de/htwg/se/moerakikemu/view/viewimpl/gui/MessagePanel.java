@@ -68,17 +68,17 @@ public class MessagePanel extends JPanel {
 		}
 		messages.append("\n" + msg);
 	}	
-	
-	public void setPlayerNames(String player1Name, String player2Name){
-		player1.setText(player1Name);
-		player2.setText(player2Name);
-	}
-	
+
 	public void setPlayerPoints(int player1Points, int player2Points){
 		String pointsP1 = String.valueOf(player1Points);
 		String pointsP2 = String.valueOf(player2Points);
 		pointsPlayer1.setText(pointsP1);
 		pointsPlayer2.setText(pointsP2);
+	}
+
+	public void updateView() {
+		player1.setText(myController.getPlayer1Name());
+		player2.setText(myController.getPlayer2Name());
 	}
 
 }

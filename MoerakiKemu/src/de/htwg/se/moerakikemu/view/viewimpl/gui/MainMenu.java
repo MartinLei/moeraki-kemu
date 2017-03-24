@@ -81,7 +81,7 @@ public class MainMenu extends JMenuBar implements ActionListener{
 	}
 
 	private void printInfo(){
-		JOptionPane.showMessageDialog(null, "This Game was developed from Etienne Gramlich and Daniel Hipp");
+		JOptionPane.showMessageDialog(null, "Developed 2017");
 	}
 	
 	private void printHelper(){

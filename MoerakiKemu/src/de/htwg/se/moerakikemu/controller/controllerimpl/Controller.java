@@ -55,7 +55,7 @@ public class Controller extends Observable implements IController {
 
 		state = State.GET_FIRST_PLAYER_NAME;
 
-		quicStartForTest();
+		//quicStartForTest();
 
 		notifyObservers();
 	}
