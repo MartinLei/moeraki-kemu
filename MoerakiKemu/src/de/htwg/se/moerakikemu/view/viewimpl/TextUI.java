@@ -239,8 +239,15 @@ public class TextUI implements IObserver {
 			drawCurrentState();
 			String player2Name = myController.getPlayer2Name();
 			LOGGER.info(player2Name + " du bist dran:: ");
+		} else if (state.equals(State.PLAYER_WON)) {
+			//TODO test ?
+			String winner = myController.getWinner();
+		    String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
+			LOGGER.info(display);
+		} else if (state.equals(State.GAME_FINISHED)) {
+			//TODO teset ?
+			LOGGER.info("Spiel ist beendet");
 		}
-
 	}
 
 	// @Override
