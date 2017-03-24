@@ -11,6 +11,8 @@ public enum State {
 	GAME_FINISHED,		// The game is ended by the user and the program must be aborted
 
 	GET_FIRST_PLAYER_NAME,
+	GET_SECOND_PLAYER_NAME,
+	SET_START_DOT,
 	EXIT_GAME			// Exit the game
 	;
 	

@@ -1,5 +1,7 @@
 package de.htwg.se.moerakikemu.controller;
 
+import java.awt.Point;
+
 import de.htwg.se.util.observerNEW.IObservable;
 
 public interface IController extends IObservable {
@@ -73,5 +75,15 @@ public interface IController extends IObservable {
 	void setPlayer1Name(String name);
 	
 	void setPlayer2Name(String name);
+
+	String getPlayer1Name();
+
+	int getPlayer1Point();
+
+	String getPlayer2Name();
+
+	int getPlayer2Point();
+
+	boolean setStartDot(Point position);
 
 }

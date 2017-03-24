@@ -1,5 +1,8 @@
 package de.htwg.se.moerakikemu.view.viewimpl;
 
+import java.awt.Point;
+import java.util.Vector;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
@@ -20,17 +23,10 @@ public class TextUI implements IObserver {
 	IControllerPlayer myPlayerController;
 
 	@Inject
-	public TextUI(IController controller){//, IControllerPlayer playerController) {
+	public TextUI(IController controller) {// , IControllerPlayer
+											// playerController) {
 		myController = controller;
 		myController.addObserver(this);
-		//myPlayerController = playerController;
-		//queryPlayerName();
-	}
-
-	public void queryPlayerName() {
-		LOGGER.error("Noch keine Spieler-Namen eingegeben!");
-		LOGGER.info("Bitte Namen des ersten Spielers eingeben: ");
-		LOGGER.info("Bitte Namen des zweiten Spielers eingeben: ");
 	}
 
 	/**
@@ -73,8 +69,13 @@ public class TextUI implements IObserver {
 	 * Prints the points for both players.
 	 */
 	private void printPoints() {
-		LOGGER.info(myPlayerController.getPlayer1Name() + ": " + myPlayerController.getPlayer1Points() + " Punkte");
-		LOGGER.info(myPlayerController.getPlayer2Name() + ": " + myPlayerController.getPlayer2Points() + " Punkte\n");
+		String player1Name = myController.getPlayer1Name();
+		int player1Point = myController.getPlayer1Point();
+		String player2Name = myController.getPlayer2Name();
+		int player2Point = myController.getPlayer2Point();
+
+		LOGGER.info(player1Name + ": " + player1Point + " Punkte");
+		LOGGER.info(player2Name + ": " + player2Point + " Punkte\n");
 	}
 
 	/**
@@ -148,7 +149,7 @@ public class TextUI implements IObserver {
 	 * @return the boolean - value for the MoerakiKemu - class to finish the
 	 *         game.
 	 */
-	
+
 	public void quit() {
 		String winner = myController.getWinner();
 		if (!"".equals(winner)) {
@@ -163,21 +164,54 @@ public class TextUI implements IObserver {
 		LOGGER.error(myPlayerController.getPlayer2Name() + " hat " + pointsPlayer2 + "Punkte");
 	}
 
-	public void processInputLine(String inputLine) {
-		if (inputLine.matches("q")){
-			myController.quitGame();
-		}else if (myController.getState().equals(State.GET_FIRST_PLAYER_NAME)){
-			//TODO input check
-			myController.setPlayer1Name(inputLine);
-		}else{
-			LOGGER.info("Keine Ahnung :/ [h Hilfe] ");
-		}
-			
-	}
-
-	
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
+	}
+
+	public void processInputLine(String inputLine) {
+		if (inputLine.matches("q")) {
+			myController.quitGame();
+		} else if (myController.getState().equals(State.GET_FIRST_PLAYER_NAME)) {
+			// TODO input check
+			myController.setPlayer1Name(inputLine);
+		} else if (myController.getState().equals(State.GET_SECOND_PLAYER_NAME)) {
+			// TODO input check
+			myController.setPlayer2Name(inputLine);
+		} else if (inputLine.matches("([1-9][0-9]|[1-9])-([1-9][0-9]|[1-9])")) {
+			Point position = getPosition(inputLine);
+
+			if (position == null)
+				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
+
+			if (setStone(position))
+				drawCurrentState();
+		} else {
+			LOGGER.info("Keine Ahnung :/ [h Hilfe] ");
+		}
+
+	}
+
+	private boolean setStone(Point position) {
+		if (myController.getState().equals(State.SET_START_DOT))
+			if (myController.setStartDot(position) == false) {
+				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
+				return false;
+			} else {
+				LOGGER.info("Moege der Bessere gewinnen:");
+			}
+
+		return true;
+	}
+
+	private Point getPosition(String coordinate) {
+		String[] parts = coordinate.split("-");
+		int x = Integer.parseInt(parts[0]);
+		int y = Integer.parseInt(parts[1]);
+
+		if (x <= 12 && y <= 12)
+			return new Point(x, y);
+
+		return null;
 	}
 
 	@Override
@@ -187,26 +221,31 @@ public class TextUI implements IObserver {
 			LOGGER.info("Exit MoerakiKemu");
 			LOGGER.info("Have a nice day :)");
 			return;
-		}else if (state.equals(State.GET_FIRST_PLAYER_NAME)) {
-			LOGGER.info("Bitte Namen des ersten Spielers eingeben: ");
+		} else if (state.equals(State.GET_FIRST_PLAYER_NAME)) {
+			LOGGER.info("Spieler1 bitte gebe dein Name ein:: ");
+		} else if (state.equals(State.GET_SECOND_PLAYER_NAME)) {
+			LOGGER.info("Spieler2 bitte gebe dein Name ein:: ");
+		} else if (state.equals(State.SET_START_DOT)) {
+			drawCurrentState();
+			LOGGER.info("Spieler2: bitte setze den StartStein:: ");
 		}
 	}
-	
-	
-//	@Override
-//	public void update() {
-//		State controllerState = myController.getState();
-//		if (controllerState == State.PLAYER_OCCUPIED) {
-//			drawCurrentState();
-//		} else if (controllerState == State.GAME_FINISHED) {
-//			LOGGER.info("Spiel ist beendet");
-//		} else if (controllerState == State.QUERY_PLAYER_NAME) {
-//			queryPlayerName();
-//		} else if (controllerState == State.PLAYER_WON) {
-//			String winner = myController.getWinner();
-//			String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
-//			LOGGER.error(display);
-//		}
-//	}
+
+	// @Override
+	// public void update() {
+	// State controllerState = myController.getState();
+	// if (controllerState == State.PLAYER_OCCUPIED) {
+	// drawCurrentState();
+	// } else if (controllerState == State.GAME_FINISHED) {
+	// LOGGER.info("Spiel ist beendet");
+	// } else if (controllerState == State.QUERY_PLAYER_NAME) {
+	// queryPlayerName();
+	// } else if (controllerState == State.PLAYER_WON) {
+	// String winner = myController.getWinner();
+	// String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der
+	// Gewinner ist: " + winner + "!!!";
+	// LOGGER.error(display);
+	// }
+	// }
 
 }

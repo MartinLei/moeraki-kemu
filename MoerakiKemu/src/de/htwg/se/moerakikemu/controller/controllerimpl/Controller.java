@@ -1,5 +1,7 @@
 package de.htwg.se.moerakikemu.controller.controllerimpl;
 
+import java.awt.Point;
+
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
@@ -119,7 +121,6 @@ public class Controller extends Observable implements IController {
 			return true;
 		}
 		return false;
-
 	}
 
 	private void testListOfSquares() {
@@ -326,11 +327,43 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void setPlayer1Name(String name) {
 		playerController.setPlayer1Name(name);
+		state = State.GET_SECOND_PLAYER_NAME;
+		notifyObservers();
 	}
 
 	@Override
 	public void setPlayer2Name(String name) {
-		playerController.setPlayer1Name(name);
+		playerController.setPlayer2Name(name);
+		state = State.SET_START_DOT;
+		notifyObservers();
+	}
+
+	@Override
+	public String getPlayer1Name() {
+		return playerController.getPlayer1Name();
+	}
+
+	@Override
+	public int getPlayer1Point() {
+		return playerController.getPlayer1Points();
+	}
+
+	@Override
+	public String getPlayer2Name() {
+		return playerController.getPlayer2Name();
+	}
+
+	@Override
+	public int getPlayer2Point() {
+		return playerController.getPlayer2Points();
+	}
+
+	@Override
+	public boolean setStartDot(Point position) {
+		if(position == null)
+			return false;
+		
+		return setStartDot(position.x, position.y);
 	}
 
 }
