@@ -17,8 +17,6 @@ import de.htwg.se.util.observer.Observable;
 public class Controller extends Observable implements IController {
 
 	private IField gameField;
-	private int fieldLength;
-
 	private State state;
 
 	private ControllerHelper helper;
@@ -30,7 +28,6 @@ public class Controller extends Observable implements IController {
 	public Controller(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
 		super();
 		gameField = new Field(fieldLength);
-		this.fieldLength = fieldLength;
 		this.playerController = playerCon;
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
@@ -40,6 +37,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public void newGame() {
+		int fieldLength = 12;
 		gameField = new Field(fieldLength);
 		playerController.newGame();
 		state = State.GET_FIRST_PLAYER_NAME;
@@ -67,7 +65,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public int getEdgeLength() {
-		return fieldLength;
+		return gameField.getEdgeLength();
 	}
 
 	private boolean noProperStartDot(final int x, final int y) {
@@ -80,7 +78,7 @@ public class Controller extends Observable implements IController {
 		}
 
 		gameField.occupy(x, y, playerController.getCurrentPlayerName());
-		helper = new ControllerHelper(x, y, fieldLength - 1);
+		helper = new ControllerHelper(x, y, getEdgeLength()  - 1);
 		helper.testSquare();
 		testListOfSquares();
 		if (playerController.getCurrentPlayerName() != "StartDot") {
@@ -100,8 +98,8 @@ public class Controller extends Observable implements IController {
 	private boolean setStartDot(int xCoordinate, int yCoordinate) {
 		int radiusLow;
 		int radiusUp;
-		int length = fieldLength - 1;
-		if (fieldLength % 2 != 0) {
+		int length = getEdgeLength()  - 1;
+		if (getEdgeLength()  % 2 != 0) {
 			radiusLow = (length / 2) - 1;
 			radiusUp = (length / 2) + 1;
 		} else {
@@ -195,13 +193,13 @@ public class Controller extends Observable implements IController {
 			return;
 		}
 		int distanceTop = xCoordinateStartDot;
-		int distanceBot = fieldLength;
-		int distanceRight = fieldLength;
+		int distanceBot = getEdgeLength() ;
+		int distanceRight = getEdgeLength() ;
 		int distanceLeft = yCoordinateStartDot;
 
 		if (y == yCoordinateStartDot) {
 			if (x > xCoordinateStartDot) {
-				testInLine("x", xCoordinateStartDot, distanceBot, y, fieldLength - xCoordinateStartDot - 1);
+				testInLine("x", xCoordinateStartDot, distanceBot, y, getEdgeLength()  - xCoordinateStartDot - 1);
 			} else {
 
 				testInLine("x", 0, distanceTop, y, distanceTop);
@@ -210,7 +208,7 @@ public class Controller extends Observable implements IController {
 			if (y < yCoordinateStartDot) {
 				testInLine("y", 0, distanceLeft, x, distanceLeft);
 			} else {
-				testInLine("y", yCoordinateStartDot, distanceRight, x, fieldLength - yCoordinateStartDot - 1);
+				testInLine("y", yCoordinateStartDot, distanceRight, x, getEdgeLength()  - yCoordinateStartDot - 1);
 			}
 		}
 	}
