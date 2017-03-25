@@ -1,5 +1,7 @@
 package de.htwg.se.moerakikemu.modellayer;
 
+import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
+
 public interface IField {
 
 	/**
@@ -41,4 +43,16 @@ public interface IField {
 	 * @return
 	 */
 	int getEdgeLength();
+	
+	/**
+	 * Get the game state
+	 * @return state
+	 */
+	State getState();
+	
+	/**
+	 * Set the game state
+	 * @param newState 
+	 */
+	void setState(State newState);
 }

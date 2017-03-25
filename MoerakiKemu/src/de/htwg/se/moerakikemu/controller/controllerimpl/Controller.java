@@ -8,17 +8,16 @@ import com.google.inject.name.Named;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
-import de.htwg.se.moerakikemu.controller.State;
 import de.htwg.se.moerakikemu.modellayer.IField;
 import de.htwg.se.moerakikemu.modellayer.modellayerimpl.Field;
+import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
 import de.htwg.se.util.observer.Observable;
 
 @Singleton
 public class Controller extends Observable implements IController {
 
 	private IField gameField;
-	private State state;
-
+	
 	private ControllerHelper helper;
 	private IControllerPlayer playerController;
 
@@ -32,7 +31,7 @@ public class Controller extends Observable implements IController {
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
 
-		state = State.GET_FIRST_PLAYER_NAME;
+		gameField.setState(State.GET_FIRST_PLAYER_NAME);
 	}
 
 	@Override
@@ -40,7 +39,7 @@ public class Controller extends Observable implements IController {
 		int fieldLength = 12;
 		gameField = new Field(fieldLength);
 		playerController.newGame();
-		state = State.GET_FIRST_PLAYER_NAME;
+		gameField.setState(State.GET_FIRST_PLAYER_NAME);
 
 		quicStartForTest();
 
@@ -55,7 +54,7 @@ public class Controller extends Observable implements IController {
 		Point starDotPosisiton = new Point(4, 4);
 		setStartDot(starDotPosisiton);
 
-		state = State.TURN_PLAYER1;
+		gameField.setState(State.TURN_PLAYER1);
 	}
 
 	@Override
@@ -88,7 +87,7 @@ public class Controller extends Observable implements IController {
 		playerController.selectNextPlayer();
 
 		if (gameField.isFilled()) {
-			state = State.GAME_FINISHED;
+			gameField.setState(State.GAME_FINISHED);
 			notifyObservers();
 		}
 
@@ -174,7 +173,7 @@ public class Controller extends Observable implements IController {
 		if (counter1 == 4) {
 			playerController.addAPointPlayer1();
 
-			state = State.PLAYER1_WON;
+			gameField.setState(State.PLAYER1_WON);
 			notifyObservers();
 		}
 		if (counter2 == 3 && counter1 == 1) {
@@ -183,7 +182,7 @@ public class Controller extends Observable implements IController {
 		if (counter2 == 4) {
 			playerController.addAPointPlayer2();
 
-			state = State.PLAYER2_WON;
+			gameField.setState(State.PLAYER2_WON);
 			notifyObservers();
 		}
 	}
@@ -248,26 +247,26 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public State getState() {
-		return state;
+		return gameField.getState();
 	}
 
 	@Override
 	public void quitGame() {
-		state = State.EXIT_GAME;
+		gameField.setState(State.EXIT_GAME);
 		notifyObservers();
 	}
 
 	@Override
 	public void setPlayer1Name(String name) {
 		playerController.setPlayer1Name(name);
-		state = State.GET_SECOND_PLAYER_NAME;
+		gameField.setState(State.GET_SECOND_PLAYER_NAME);
 		notifyObservers();
 	}
 
 	@Override
 	public void setPlayer2Name(String name) {
 		playerController.setPlayer2Name(name);
-		state = State.SET_START_DOT;
+		gameField.setState(State.SET_START_DOT);
 		notifyObservers();
 	}
 
@@ -299,7 +298,7 @@ public class Controller extends Observable implements IController {
 		if (!setStartDot(position.x, position.y))
 			return false;
 
-		state = State.TURN_PLAYER1;
+		gameField.setState(State.TURN_PLAYER1);
 		occupy(position.x, position.y);
 
 		notifyObservers();
@@ -319,11 +318,12 @@ public class Controller extends Observable implements IController {
 	}
 
 	private void changePlayer() {
-		if (state.equals(State.TURN_PLAYER1)) {
-			state = State.TURN_PLAYER2;
+		State sate = getState();
+		if (sate.equals(State.TURN_PLAYER1)) {
+			gameField.setState(State.TURN_PLAYER2);
 			notifyObservers();
-		} else if (state.equals(State.TURN_PLAYER2)) {
-			state = State.TURN_PLAYER1;
+		} else if (sate.equals(State.TURN_PLAYER2)) {
+			gameField.setState(State.TURN_PLAYER1);
 			notifyObservers();
 		}
 	}

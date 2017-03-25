@@ -8,7 +8,7 @@ import org.apache.logging.log4j.core.Logger;
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.State;
+import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
 import de.htwg.se.util.observer.Event;
 import de.htwg.se.util.observer.IObserver;
 

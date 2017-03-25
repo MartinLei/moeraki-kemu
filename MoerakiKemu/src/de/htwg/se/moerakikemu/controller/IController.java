@@ -2,6 +2,7 @@ package de.htwg.se.moerakikemu.controller;
 
 import java.awt.Point;
 
+import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
 import de.htwg.se.util.observer.IObservable;
 
 public interface IController extends IObservable {

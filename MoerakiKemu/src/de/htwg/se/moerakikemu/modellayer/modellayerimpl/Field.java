@@ -7,6 +7,8 @@ public class Field implements IField {
 	private int occupiedSpots;
 	private Spot[][] array;
 	
+	private State state;
+	
 	
 	public Field(int edgeLength) throws IllegalArgumentException {
 		if(edgeLength < 1) {
@@ -49,6 +51,16 @@ public class Field implements IField {
 
 	public boolean isFilled(){
 		return occupiedSpots == (edgeLength * edgeLength);
+	}
+
+	@Override
+	public State getState() {
+		return state;
+	}
+
+	@Override
+	public void setState(State newState) {
+		state  = newState;
 	}
 	
 }

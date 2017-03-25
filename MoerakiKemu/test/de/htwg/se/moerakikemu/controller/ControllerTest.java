@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import de.htwg.se.moerakikemu.controller.*;
 import de.htwg.se.moerakikemu.controller.controllerimpl.*;
+import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
 
 public class ControllerTest {
 	IController controller;
