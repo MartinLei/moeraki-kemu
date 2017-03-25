@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.view.viewimpl.gui;
+package de.htwg.se.moerakikemu.view.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

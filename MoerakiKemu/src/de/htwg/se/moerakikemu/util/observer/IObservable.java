@@ -1,4 +1,4 @@
-package de.htwg.se.util.observer;
+package de.htwg.se.moerakikemu.util.observer;
 
 public interface IObservable {
 

@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.view.viewimpl.gui;
+package de.htwg.se.moerakikemu.view.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

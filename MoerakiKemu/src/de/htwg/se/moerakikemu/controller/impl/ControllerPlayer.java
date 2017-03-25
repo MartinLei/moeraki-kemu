@@ -1,10 +1,10 @@
-package de.htwg.se.moerakikemu.controller.controllerimpl;
+package de.htwg.se.moerakikemu.controller.impl;
 
 import com.google.inject.Singleton;
 
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.modellayer.IPlayer;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.Player;
+import de.htwg.se.moerakikemu.modellayer.impl.Player;
 
 @Singleton
 public class ControllerPlayer implements IControllerPlayer {

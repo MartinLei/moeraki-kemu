@@ -1,4 +1,4 @@
-package de.htwg.se.util.observer;
+package de.htwg.se.moerakikemu.util.observer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.view.viewimpl.gui;
+package de.htwg.se.moerakikemu.view.gui;
 
 import java.awt.BorderLayout;
 
@@ -9,9 +9,10 @@ import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
-import de.htwg.se.util.observer.Event;
-import de.htwg.se.util.observer.IObserver;
+import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.util.observer.Event;
+import de.htwg.se.moerakikemu.util.observer.IObserver;
+
 
 public class GUI extends JFrame implements IObserver {
 	private static final long serialVersionUID = 2078463309153663728L;

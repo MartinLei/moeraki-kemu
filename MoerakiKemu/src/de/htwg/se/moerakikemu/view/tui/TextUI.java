@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.view.viewimpl;
+package de.htwg.se.moerakikemu.view.tui;
 
 import java.awt.Point;
 
@@ -8,9 +8,10 @@ import org.apache.logging.log4j.core.Logger;
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
-import de.htwg.se.util.observer.Event;
-import de.htwg.se.util.observer.IObserver;
+import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.util.observer.Event;
+import de.htwg.se.moerakikemu.util.observer.IObserver;
+
 
 public class TextUI implements IObserver {
 

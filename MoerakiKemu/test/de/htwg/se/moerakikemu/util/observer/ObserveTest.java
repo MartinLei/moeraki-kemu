@@ -6,9 +6,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.util.observer.Event;
-import de.htwg.se.util.observer.IObserver;
-import de.htwg.se.util.observer.Observable;
 
 public class ObserveTest {
 	private boolean ping = false;

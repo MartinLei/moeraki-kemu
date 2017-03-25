@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.controller.controllerimpl;
+package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
 
@@ -9,9 +9,10 @@ import com.google.inject.name.Named;
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.modellayer.IField;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.Field;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
-import de.htwg.se.util.observer.Observable;
+import de.htwg.se.moerakikemu.modellayer.impl.Field;
+import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.util.observer.Observable;
+
 
 @Singleton
 public class Controller extends Observable implements IController {

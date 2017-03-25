@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.view.viewimpl.gui;
+package de.htwg.se.moerakikemu.view.gui;
 
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
+import de.htwg.se.moerakikemu.modellayer.impl.State;
 
 import java.awt.Color;
 

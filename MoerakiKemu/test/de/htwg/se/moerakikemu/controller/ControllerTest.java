@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.se.moerakikemu.controller.*;
-import de.htwg.se.moerakikemu.controller.controllerimpl.*;
-import de.htwg.se.moerakikemu.modellayer.modellayerimpl.State;
+import de.htwg.se.moerakikemu.controller.impl.*;
+import de.htwg.se.moerakikemu.modellayer.impl.State;
 
 public class ControllerTest {
 	IController controller;
