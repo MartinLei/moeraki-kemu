@@ -231,14 +231,15 @@ public class Controller extends Observable implements IController {
 			}
 		}
 		if (counter == counterEnd) {
-			
+
 			// TODO LINE strike
-//			System.out.println(counter + " " + counterEnd + " " + getState());
-//			if (getState().equals(State.TURN_PLAYER1))
-//				state = State.PLAYER1_WON;
-//			else
-//				state = State.PLAYER2_WON;
-//			notifyObservers();
+			// System.out.println(counter + " " + counterEnd + " " +
+			// getState());
+			// if (getState().equals(State.TURN_PLAYER1))
+			// state = State.PLAYER1_WON;
+			// else
+			// state = State.PLAYER2_WON;
+			// notifyObservers();
 		}
 	}
 
@@ -318,15 +319,16 @@ public class Controller extends Observable implements IController {
 			return false;
 
 		changePlayer();
-		notifyObservers();
 		return true;
 	}
 
 	private void changePlayer() {
 		if (state.equals(State.TURN_PLAYER1)) {
 			state = State.TURN_PLAYER2;
+			notifyObservers();
 		} else if (state.equals(State.TURN_PLAYER2)) {
 			state = State.TURN_PLAYER1;
+			notifyObservers();
 		}
 	}
 

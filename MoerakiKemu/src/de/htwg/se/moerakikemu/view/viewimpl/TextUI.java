@@ -239,22 +239,4 @@ public class TextUI implements IObserver {
 			LOGGER.info("Ende keiner hat gewonnen");
 		}
 	}
-
-	// @Override
-	// public void update() {
-	// State controllerState = myController.getState();
-	// if (controllerState == State.PLAYER_OCCUPIED) {
-	// drawCurrentState();
-	// } else if (controllerState == State.GAME_FINISHED) {
-	// LOGGER.info("Spiel ist beendet");
-	// } else if (controllerState == State.QUERY_PLAYER_NAME) {
-	// queryPlayerName();
-	// } else if (controllerState == State.PLAYER_WON) {
-	// String winner = myController.getWinner();
-	// String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der
-	// Gewinner ist: " + winner + "!!!";
-	// LOGGER.error(display);
-	// }
-	// }
-
 }
