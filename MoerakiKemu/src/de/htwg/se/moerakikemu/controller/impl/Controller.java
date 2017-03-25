@@ -10,21 +10,23 @@ import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
 import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
+import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 import de.htwg.se.moerakikemu.util.observer.Observable;
 
 @Singleton
 public class Controller extends Observable implements IController {
 
 	private final int FIELDLENGTH = 12;
+	private IField gameField;
+	private IFieldDAO fieldDAO;
 	
 	private ControllerHelper helper;
-
-	private IField gameField;
-	
 	private int xCoordinateStartDot, yCoordinateStartDot;
 
 	@Inject
-	public Controller() {
+	public Controller(IFieldDAO fieldDAO) {
+		this.fieldDAO = fieldDAO;
+		
 		gameField = new Field(FIELDLENGTH);
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
@@ -337,6 +339,22 @@ public class Controller extends Observable implements IController {
 			gameField.setState(State.TURN_PLAYER1);
 			notifyObservers();
 		}
+	}
+
+	@Override
+	public void saveToDB() {
+		fieldDAO.saveField(gameField);
+	}
+
+	@Override
+	public boolean loadDB() {
+		IField loadField = fieldDAO.getField();
+		
+		if(loadField == null)
+			return false;
+		
+		gameField = loadField; // deep copy ?
+		return true;
 	}
 
 }

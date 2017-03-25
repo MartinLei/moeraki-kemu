@@ -132,6 +132,20 @@ public interface IController extends IObservable {
 	 */
 	boolean setDot(Point position);
 
+	/**
+	 * Get the actual Person
+	 * @return person
+	 */
 	Person getActualPerson();
 
+	/**
+	 * Save game to db
+	 */
+	void saveToDB();
+	
+	/**
+	 * Load game from db
+	 * @return true if load was no problem
+	 */
+	boolean loadDB();
 }
