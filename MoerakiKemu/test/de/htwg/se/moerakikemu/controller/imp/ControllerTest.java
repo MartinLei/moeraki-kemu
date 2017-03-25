@@ -15,7 +15,7 @@ import de.htwg.se.moerakikemu.model.impl.State;
 
 public class ControllerTest {
 	IController controller;
-	IControllerPlayer playerController;
+	IControllerPlayer playerController; // todo remove
 
 	private final String PLAYER1NAME = "Andrew";
 	private final String PLAYER2NAME = "Walter";
@@ -85,37 +85,48 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void test_getPointsOfPlayer_returnPointsofCurrentPlayer() {
-		// todo
+	public void test_player1_getPointr() {
+		assertTrue(controller.setStartDot(new Point(5, 5)));
+		
+		assertTrue(controller.setDot(new Point(0, 0)));
+		assertTrue(controller.setDot(new Point(0, 1)));
+		assertTrue(controller.setDot(new Point(1, 0)));
+		assertTrue(controller.setDot(new Point(3, 0)));
+		assertTrue(controller.setDot(new Point(1, 1)));
 
-		controller.setDot(new Point(1, 1));
-		controller.setDot(new Point(3, 3));
-		controller.setDot(new Point(1, 2));
-		controller.setDot(new Point(3, 4));
-		controller.setDot(new Point(2, 1));
-		controller.setDot(new Point(2, 2));
-
-		assertEquals(PLAYER1NAME, playerController.getPlayer1Name());
-		assertEquals(PLAYER2NAME, playerController.getPlayer2Name());
+		assertEquals(1, controller.getPlayer1Point());
+		assertEquals(0, controller.getPlayer2Point());
 	}
 
 	@Test
-	public void test_selectNextPlayer_wasPlayerOneIsPlayerTwoNextPlayerOne() {
-		assertEquals(playerController.getCurrentPlayerName(), "StartDot");
-		playerController.selectNextPlayer();
-		assertEquals(playerController.getCurrentPlayerName(), PLAYER1NAME);
-		playerController.selectNextPlayer();
-		assertEquals(playerController.getCurrentPlayerName(), PLAYER2NAME);
-		playerController.selectNextPlayer();
-		assertEquals(playerController.getCurrentPlayerName(), PLAYER1NAME);
-	}
-
-	@Test
-	public void test_setName_isPlayer1Player2() {
-		playerController.setPlayer1Name(PLAYER1NAME);
-		playerController.setPlayer2Name(PLAYER2NAME);
-		assertEquals(playerController.getPlayer1Name(), PLAYER1NAME);
-		assertEquals(playerController.getPlayer2Name(), PLAYER2NAME);
+	public void test_getLineOccupied() {
+		assertTrue(controller.setStartDot(new Point(5, 5)));
+		
+		assertTrue(controller.setDot(new Point(0, 0)));
+		assertTrue(controller.setDot(new Point(0, 1)));
+		assertTrue(controller.setDot(new Point(1, 0)));
+		assertTrue(controller.setDot(new Point(0, 2)));
+		assertTrue(controller.setDot(new Point(2, 0)));
+		assertTrue(controller.setDot(new Point(0, 3)));
+		assertTrue(controller.setDot(new Point(3, 0)));
+		assertTrue(controller.setDot(new Point(0, 4)));
+		assertTrue(controller.setDot(new Point(4, 0)));
+		assertTrue(controller.setDot(new Point(0, 5)));
+		assertTrue(controller.setDot(new Point(5, 0)));
+		assertTrue(controller.setDot(new Point(0, 6)));
+		assertTrue(controller.setDot(new Point(6, 0)));
+		assertTrue(controller.setDot(new Point(0, 7)));
+		assertTrue(controller.setDot(new Point(7, 0)));
+		assertTrue(controller.setDot(new Point(0, 8)));
+		assertTrue(controller.setDot(new Point(8, 0)));
+		assertTrue(controller.setDot(new Point(0, 9)));
+		assertTrue(controller.setDot(new Point(9, 0)));
+		assertTrue(controller.setDot(new Point(0, 10)));
+		assertTrue(controller.setDot(new Point(10, 0)));
+		assertTrue(controller.setDot(new Point(0, 11)));
+		assertTrue(controller.setDot(new Point(11, 0)));
+		
+		assertEquals(State.PLAYER1_WON, controller.getState());
 	}
 
 	@Test
@@ -195,7 +206,7 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(2, 1)));
 		assertTrue(controller.setDot(new Point(3, 4)));
 		assertTrue(controller.setDot(new Point(2, 2)));
-		
+
 		assertEquals(State.PLAYER1_WON, controller.getState());
 	}
 
