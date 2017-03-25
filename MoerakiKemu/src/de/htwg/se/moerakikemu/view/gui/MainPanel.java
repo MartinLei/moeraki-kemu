@@ -19,9 +19,7 @@ import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 
 public class MainPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-
-	IController myController;
+	private transient IController myController;
 
 	ImageIcon blackIcon;
 	ImageIcon redIcon;
@@ -30,7 +28,7 @@ public class MainPanel extends JPanel {
 	GridLayout gridForSpots;
 	JButton[][] field;
 
-	private MouseListener listener = new MouseAdapter() {
+	private transient MouseListener listener = new MouseAdapter() {
 		@Override
 		public void mousePressed(MouseEvent me) {
 			if (myController.getState() != State.TURN_PLAYER1 && myController.getState() != State.TURN_PLAYER2
