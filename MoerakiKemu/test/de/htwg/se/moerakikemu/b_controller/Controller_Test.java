@@ -21,9 +21,14 @@ public class Controller_Test {
 	public void setUp() {
 		playerController = new ControllerPlayer();
 		controller = new Controller(12, playerController);
+		
+		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
 		controller.setPlayer1Name(PLAYER1NAME);
+		assertEquals(State.GET_SECOND_PLAYER_NAME, controller.getState());
 		controller.setPlayer2Name(PLAYER2NAME);
+		assertEquals(State.SET_START_DOT, controller.getState());
 	}
+	
 
 	@Test
 	public void test_setStartDot() {
@@ -93,35 +98,65 @@ public class Controller_Test {
 	}
 
 	@Test
-	public void test_getQuit_gamefinished() {
-		controller = new Controller(5, playerController);
-		assertNotEquals(controller.getState(), State.PLAYER_WON);
-
-		controller.setStartDot(new Point(3,3));
-
-		controller.setDot(new Point(0,0));
+	public void test_game_finished() {
+		assertEquals(State.SET_START_DOT, controller.getState());
+		controller.setStartDot(new Point(5, 5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		for(int i = 0; i< controller.getEdgeLength();i++){
+			for(int j = 0; j< controller.getEdgeLength();j++){
+				controller.setDot(new Point(i,j));
+			}
+		}
+		
+		assertEquals(State.GAME_FINISHED, controller.getState());
+	}
+	
+	@Test
+	public void test_player1_won(){
+		assertEquals(State.SET_START_DOT, controller.getState());
+		controller.setStartDot(new Point(5, 5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		
 		controller.setDot(new Point(1,1));
-		controller.setDot(new Point(0,1));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(1,4));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
 		controller.setDot(new Point(1,2));
-		controller.setDot(new Point(1,0));
-		assertEquals(PLAYER1NAME, controller.getWinner());
-
-		playerController = new ControllerPlayer();
-		playerController.setPlayer1Name(PLAYER1NAME);
-		playerController.setPlayer2Name(PLAYER2NAME);
-		controller = new Controller(5, playerController);
-		assertEquals("", controller.getWinner());
-
-		controller.setStartDot(new Point(2, 2));
-
-		controller.setDot(new Point(4,4));
-		controller.setDot(new Point(0,0));
-		controller.setDot(new Point(3,3));
-		controller.setDot(new Point(1,0));
-		controller.setDot(new Point(2,3));
-		controller.setDot(new Point(0,1));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(1,5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		controller.setDot(new Point(2,1));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(2,4));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		controller.setDot(new Point(2,2));
+		assertEquals(State.PLAYER1_WON, controller.getState());
+	}
+	@Test
+	public void test_player2_won(){
+		assertEquals(State.SET_START_DOT, controller.getState());
+		controller.setStartDot(new Point(5, 5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		
 		controller.setDot(new Point(1,1));
-		assertEquals(PLAYER2NAME, controller.getWinner());
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(1,4));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		controller.setDot(new Point(1,2));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(1,5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		controller.setDot(new Point(2,1));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(2,4));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		controller.setDot(new Point(2,3));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
+		controller.setDot(new Point(2,5));
+		assertEquals(State.PLAYER2_WON, controller.getState());
 	}
 
 	@Test
@@ -159,7 +194,7 @@ public class Controller_Test {
 		controller.setDot(new Point(3,4));
 		controller.setDot(new Point(2,2));
 		controller.setDot(new Point(4,3));
-		assertEquals(State.PLAYER_WON, controller.getState());
+		assertEquals(State.PLAYER1_WON, controller.getState());
 
 	}
 	

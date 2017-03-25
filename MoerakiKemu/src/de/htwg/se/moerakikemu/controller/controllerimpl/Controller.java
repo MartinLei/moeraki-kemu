@@ -28,26 +28,22 @@ public class Controller extends Observable implements IController {
 
 	private int xCoordinateStartDot, yCoordinateStartDot;
 
-	private String playerWin;
-
 	@Inject
 	public Controller(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
 		super();
 		gameField = new Field(fieldLength);
 		this.fieldLength = fieldLength;
 		this.playerController = playerCon;
-		playerWin = "";
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
 
-		state = State.GET_FIRST_PLAYER_NAME; // todo none state?
+		state = State.GET_FIRST_PLAYER_NAME;
 	}
 
 	@Override
 	public void newGame() {
 		gameField = new Field(fieldLength);
 		playerController.newGame();
-		playerWin = "";
 		state = State.GET_FIRST_PLAYER_NAME;
 
 		quicStartForTest();
@@ -80,7 +76,6 @@ public class Controller extends Observable implements IController {
 		return !playerController.startDotSet() && !setStartDot(x, y);
 	}
 
-	
 	private int occupy(int x, int y) {
 		if (gameField.getIsOccupiedFrom(x, y) != "" || noProperStartDot(x, y)) {
 			return -1;
@@ -97,8 +92,8 @@ public class Controller extends Observable implements IController {
 		playerController.selectNextPlayer();
 
 		if (gameField.isFilled()) {
-			// setEnd(true);
-			// TODO game finished state
+			state = State.GAME_FINISHED;
+			notifyObservers();
 		}
 
 		return 0;
@@ -182,9 +177,8 @@ public class Controller extends Observable implements IController {
 		}
 		if (counter1 == 4) {
 			playerController.addAPointPlayer1();
-			playerWin = playerController.getPlayer1Name();
-			
-			state = State.PLAYER_WON;
+
+			state = State.PLAYER1_WON;
 			notifyObservers();
 		}
 		if (counter2 == 3 && counter1 == 1) {
@@ -192,9 +186,8 @@ public class Controller extends Observable implements IController {
 		}
 		if (counter2 == 4) {
 			playerController.addAPointPlayer2();
-			playerWin = playerController.getPlayer2Name();
-			
-			state = State.PLAYER_WON;
+
+			state = State.PLAYER2_WON;
 			notifyObservers();
 		}
 	}
@@ -238,8 +231,14 @@ public class Controller extends Observable implements IController {
 			}
 		}
 		if (counter == counterEnd) {
-			state = State.PLAYER_WON;
-			notifyObservers();
+			
+			// TODO LINE strike
+//			System.out.println(counter + " " + counterEnd + " " + getState());
+//			if (getState().equals(State.TURN_PLAYER1))
+//				state = State.PLAYER1_WON;
+//			else
+//				state = State.PLAYER2_WON;
+//			notifyObservers();
 		}
 	}
 
@@ -248,18 +247,6 @@ public class Controller extends Observable implements IController {
 			return true;
 		}
 		return false;
-	}
-
-	@Override
-	public String getWinner() {
-		if ("".equals(playerWin)) {
-			if (playerController.getPlayer1Points() > playerController.getPlayer2Points()) {
-				playerWin = playerController.getPlayer1Name();
-			} else if (playerController.getPlayer1Points() < playerController.getPlayer2Points()) {
-				playerWin = playerController.getPlayer2Name();
-			}
-		}
-		return playerWin;
 	}
 
 	@Override

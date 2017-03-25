@@ -5,14 +5,16 @@ package de.htwg.se.moerakikemu.controller;
  */
 public enum State {
 
-	PLAYER_WON,			// A Player won the game
-	GAME_FINISHED,		
-
-	GET_FIRST_PLAYER_NAME,
+	GET_FIRST_PLAYER_NAME, 
 	GET_SECOND_PLAYER_NAME,
 	SET_START_DOT,
 	TURN_PLAYER1,
 	TURN_PLAYER2,		
+
+	PLAYER2_WON,		// player2 win the game
+	PLAYER1_WON,		// player1 win the game
+	GAME_FINISHED,		// No one win the game
+
 	EXIT_GAME			// Exit the game
 	;
 	

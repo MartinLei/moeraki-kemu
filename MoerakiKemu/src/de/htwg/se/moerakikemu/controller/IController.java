@@ -43,13 +43,6 @@ public interface IController extends IObservable {
 	//int occupy(int xCoordinate, int yCoordinate);
 
 	/**
-	 * Returns the name of the player if a player has win, else an empty String.
-	 * 
-	 * @return A String, not null.
-	 */
-	String getWinner();
-
-	/**
 	 * quit the game and set the sate to exit game
 	 */
 	void quitGame();

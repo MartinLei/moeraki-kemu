@@ -50,10 +50,10 @@ public class GUI extends JFrame implements IObserver {
 		myMessagePanel.updateView();
 		repaint();
 	}
-
-	private void printWinnerPopup() {
-		String winner = myController.getWinner();
-		String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
+	
+//TODO
+	private void printWinnerPopup(String winnerName) {
+		String display = ("".equals(winnerName)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winnerName + "!!!";
 		JOptionPane.showMessageDialog(null, display);
 	}
 
@@ -63,9 +63,9 @@ public class GUI extends JFrame implements IObserver {
 
 	public void update(Event e) {
 		State state = myController.getState();
-		
+
 		drawCurrentState();
-		
+
 		if (state.equals(State.EXIT_GAME)) {
 			this.setVisible(false);
 			this.dispose();
@@ -76,14 +76,14 @@ public class GUI extends JFrame implements IObserver {
 				player1Name = "Andrew";
 
 			myController.setPlayer1Name(player1Name);
-			myMessagePanel.printMessage("Spieler1 heist: " +player1Name);
+			myMessagePanel.printMessage("Spieler1 heist: " + player1Name);
 		} else if (state.equals(State.GET_SECOND_PLAYER_NAME)) {
 			String player2Name = JOptionPane.showInputDialog("Name fuer Spieler 2 eigeben:", "Walter");
 			if (player2Name == null)
 				player2Name = "Walter";
 
 			myController.setPlayer2Name(player2Name);
-			myMessagePanel.printMessage("Spieler2 heist: " +player2Name);
+			myMessagePanel.printMessage("Spieler2 heist: " + player2Name);
 		} else if (state.equals(State.SET_START_DOT)) {
 			myMessagePanel.printMessage("Setzt nun den StartStein");
 		} else if (state.equals(State.TURN_PLAYER1)) {
@@ -92,15 +92,21 @@ public class GUI extends JFrame implements IObserver {
 		} else if (state.equals(State.TURN_PLAYER2)) {
 			String player2Name = myController.getPlayer2Name();
 			myMessagePanel.printMessage(player2Name + " du bist dran");
-		} else if (state.equals(State.PLAYER_WON)) {
+		} else if (state.equals(State.PLAYER1_WON)) {
 			// TODO test ?
-			String winner = myController.getWinner();
-			String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
-			this.printWinnerPopup();
+			String playerName = myController.getPlayer1Name();
+			myMessagePanel.printMessage("Der Gewinnder ist Spieler1 aka ->" + playerName);
+			this.printWinnerPopup(playerName);
+		} else if (state.equals(State.PLAYER2_WON)) {
+			// TODO test ?
+			String playerName = myController.getPlayer2Name();
+			myMessagePanel.printMessage("Der Gewinnder ist Spieler1 aka ->" + playerName);
+			this.printWinnerPopup(playerName);
 		} else if (state.equals(State.GAME_FINISHED)) {
 			// TODO test ?
-			myMessagePanel.printMessage("Spiel ist beendet");
+			myMessagePanel.printMessage("Ende keiner hat gewonnen");
 		}
+
 	}
 
 	// public void update() {

@@ -148,7 +148,7 @@ public class TextUI implements IObserver {
 	public void processInputLine(String inputLine) {
 		if (inputLine.matches("q")) {
 			myController.quitGame();
-		}else if (inputLine.matches("h")) {
+		} else if (inputLine.matches("h")) {
 			printHelp();
 		} else if (myController.getState().equals(State.GET_FIRST_PLAYER_NAME)) {
 			// TODO input check
@@ -165,8 +165,8 @@ public class TextUI implements IObserver {
 		}
 
 	}
-	
-	private void printHelp(){
+
+	private void printHelp() {
 		LOGGER.info("Hilfe: ");
 		LOGGER.info("h Hilfe");
 		LOGGER.info("q Beenden");
@@ -223,14 +223,20 @@ public class TextUI implements IObserver {
 			drawCurrentState();
 			String player2Name = myController.getPlayer2Name();
 			LOGGER.info(player2Name + " du bist dran:: ");
-		} else if (state.equals(State.PLAYER_WON)) {
-			//TODO test ?
-			String winner = myController.getWinner();
-		    String display = ("".equals(winner)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winner + "!!!";
-			LOGGER.info(display);
+		} else if (state.equals(State.PLAYER1_WON)) {
+			// TODO test ?
+			drawCurrentState();
+			String playerName = myController.getPlayer1Name();
+			LOGGER.info("Der Gewinnder ist Spieler1 aka ->" + playerName);
+		} else if (state.equals(State.PLAYER2_WON)) {
+			// TODO test ?
+			drawCurrentState();
+			String playerName = myController.getPlayer2Name();
+			LOGGER.info("Der Gewinnder ist Spieler1 aka ->" + playerName);
 		} else if (state.equals(State.GAME_FINISHED)) {
-			//TODO test ?
-			LOGGER.info("Spiel ist beendet");
+			// TODO test ?
+			drawCurrentState();
+			LOGGER.info("Ende keiner hat gewonnen");
 		}
 	}
 
