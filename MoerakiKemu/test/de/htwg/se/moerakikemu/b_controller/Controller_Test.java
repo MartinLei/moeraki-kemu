@@ -51,12 +51,12 @@ public class Controller_Test {
 	public void test_getPointsOfPlayer_returnPointsofCurrentPlayer() {
 		controller = new Controller(5, playerController);
 
-		controller.occupy(1, 1);
-		controller.occupy(3, 3);
-		controller.occupy(1, 2);
-		controller.occupy(3, 4);
-		controller.occupy(2, 1);
-		controller.occupy(2, 2);
+		controller.setDot(new Point(1,1));
+		controller.setDot(new Point(3,3));
+		controller.setDot(new Point(1,2));
+		controller.setDot(new Point(3,4));
+		controller.setDot(new Point(2,1));
+		controller.setDot(new Point(2,2));
 
 		assertEquals("Andrew", playerController.getPlayer1Name());
 		assertEquals("Walter", playerController.getPlayer2Name());
@@ -89,15 +89,15 @@ public class Controller_Test {
 	@Test
 	public void test_getQuit_gamefinished() {
 		controller = new Controller(5, playerController);
-		assertFalse(controller.testIfWinnerExists());
+		assertNotEquals(controller.getState(), State.PLAYER_WON);
 
-		controller.occupy(3, 3); // Set start Spot
+		controller.setStartDot(new Point(3,3));
 
-		controller.occupy(0, 0);
-		controller.occupy(1, 1);
-		controller.occupy(0, 1);
-		controller.occupy(1, 2);
-		controller.occupy(1, 0);
+		controller.setDot(new Point(0,0));
+		controller.setDot(new Point(1,1));
+		controller.setDot(new Point(0,1));
+		controller.setDot(new Point(1,2));
+		controller.setDot(new Point(1,0));
 		assertEquals("Andrew", controller.getWinner());
 
 		playerController = new ControllerPlayer();
@@ -106,16 +106,15 @@ public class Controller_Test {
 		controller = new Controller(5, playerController);
 		assertEquals("", controller.getWinner());
 
-		controller.occupy(2, 2); // Set start Spot
+		controller.setStartDot(new Point(2, 2));
 
-		controller.occupy(4, 4);
-		controller.occupy(0, 0);
-		controller.occupy(3, 3);
-		controller.occupy(1, 0);
-		controller.occupy(2, 3);
-		controller.occupy(0, 1);
-		controller.occupy(1, 1);
-
+		controller.setDot(new Point(4,4));
+		controller.setDot(new Point(0,0));
+		controller.setDot(new Point(3,3));
+		controller.setDot(new Point(1,0));
+		controller.setDot(new Point(2,3));
+		controller.setDot(new Point(0,1));
+		controller.setDot(new Point(1,1));
 		assertEquals("Walter", controller.getWinner());
 	}
 
@@ -123,21 +122,13 @@ public class Controller_Test {
 	public void test_getIsOccupiedByPlayer_ifOccupiedFromAPlayer() {
 		controller = new Controller(5, playerController);
 
-		controller.occupy(2, 2); // Set start Spot
-		controller.occupy(0, 0);
+		controller.setStartDot(new Point(2,2)); // Set start Spot
+		controller.setDot(new Point(0,0));
 
 		// 0,0 because occupy get the direkt input from a player, so there is a
 		// -1, -1 needed
 		String a = controller.getIsOccupiedByPlayer(0, 0);
 		assertEquals("Andrew", a);
-	}
-
-	@Test
-	public void test_newGame_resetController() {
-		controller.newGame();
-		assertEquals(false, controller.testIfEnd());
-		assertEquals(false, controller.testIfWinnerExists());
-		assertTrue("".equals(controller.getWinner()));
 	}
 
 	@Test
@@ -153,23 +144,17 @@ public class Controller_Test {
 		assertEquals(State.SET_START_DOT, controller.getState());
 
 		// Player occupies a square.
-		controller.occupy(3, 3); // Set start Spot
-		controller.occupy(1, 1);
-		controller.occupy(2, 3);
-		controller.occupy(1, 2);
-		controller.occupy(3, 2);
-		controller.occupy(2, 1);
-		controller.occupy(3, 4);
-		controller.occupy(2, 2);
-		controller.occupy(4, 3);
+		controller.setStartDot(new Point(3,3));
+		controller.setDot(new Point(1,1));
+		controller.setDot(new Point(2,3));
+		controller.setDot(new Point(1,2));
+		controller.setDot(new Point(3,2));
+		controller.setDot(new Point(2,1));
+		controller.setDot(new Point(3,4));
+		controller.setDot(new Point(2,2));
+		controller.setDot(new Point(4,3));
 		assertEquals(State.PLAYER_WON, controller.getState());
 
-	}
-
-	@Test
-	public void test_setEnde() {
-		controller.setEnd(true);
-		assertEquals(State.GAME_FINISHED, controller.getState());
 	}
 
 	@Test

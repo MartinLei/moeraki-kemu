@@ -29,8 +29,6 @@ public class Controller extends Observable implements IController {
 	private int xCoordinateStartDot, yCoordinateStartDot;
 
 	private String playerWin;
-	private boolean quitGame;
-	private boolean winner;
 
 	@Inject
 	public Controller(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
@@ -38,7 +36,6 @@ public class Controller extends Observable implements IController {
 		gameField = new Field(fieldLength);
 		this.fieldLength = fieldLength;
 		this.playerController = playerCon;
-		quitGame = false;
 		playerWin = "";
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
@@ -46,13 +43,11 @@ public class Controller extends Observable implements IController {
 		state = State.GET_FIRST_PLAYER_NAME; // todo none state?
 	}
 
+	@Override
 	public void newGame() {
 		gameField = new Field(fieldLength);
 		playerController.newGame();
 		playerWin = "";
-		quitGame = false;
-		winner = false;
-
 		state = State.GET_FIRST_PLAYER_NAME;
 
 		quicStartForTest();
@@ -71,10 +66,12 @@ public class Controller extends Observable implements IController {
 		state = State.TURN_PLAYER1;
 	}
 
+	@Override
 	public String getIsOccupiedByPlayer(int x, int y) {
 		return gameField.getIsOccupiedFrom(x, y);
 	}
 
+	@Override
 	public int getEdgeLength() {
 		return fieldLength;
 	}
@@ -83,7 +80,8 @@ public class Controller extends Observable implements IController {
 		return !playerController.startDotSet() && !setStartDot(x, y);
 	}
 
-	public int occupy(int x, int y) {
+	
+	private int occupy(int x, int y) {
 		if (gameField.getIsOccupiedFrom(x, y) != "" || noProperStartDot(x, y)) {
 			return -1;
 		}
@@ -99,13 +97,14 @@ public class Controller extends Observable implements IController {
 		playerController.selectNextPlayer();
 
 		if (gameField.isFilled()) {
-			setEnd(true);
+			// setEnd(true);
+			// TODO game finished state
 		}
 
 		return 0;
 	}
 
-	public boolean setStartDot(int xCoordinate, int yCoordinate) {
+	private boolean setStartDot(int xCoordinate, int yCoordinate) {
 		int radiusLow;
 		int radiusUp;
 		int length = fieldLength - 1;
@@ -184,7 +183,9 @@ public class Controller extends Observable implements IController {
 		if (counter1 == 4) {
 			playerController.addAPointPlayer1();
 			playerWin = playerController.getPlayer1Name();
-			setWinner(true);
+			
+			state = State.PLAYER_WON;
+			notifyObservers();
 		}
 		if (counter2 == 3 && counter1 == 1) {
 			playerController.addAPointPlayer2();
@@ -192,7 +193,9 @@ public class Controller extends Observable implements IController {
 		if (counter2 == 4) {
 			playerController.addAPointPlayer2();
 			playerWin = playerController.getPlayer2Name();
-			setWinner(true);
+			
+			state = State.PLAYER_WON;
+			notifyObservers();
 		}
 	}
 
@@ -235,7 +238,8 @@ public class Controller extends Observable implements IController {
 			}
 		}
 		if (counter == counterEnd) {
-			setWinner(true);
+			state = State.PLAYER_WON;
+			notifyObservers();
 		}
 	}
 
@@ -246,6 +250,7 @@ public class Controller extends Observable implements IController {
 		return false;
 	}
 
+	@Override
 	public String getWinner() {
 		if ("".equals(playerWin)) {
 			if (playerController.getPlayer1Points() > playerController.getPlayer2Points()) {
@@ -255,24 +260,6 @@ public class Controller extends Observable implements IController {
 			}
 		}
 		return playerWin;
-	}
-
-	public boolean testIfWinnerExists() {
-		return winner;
-	}
-
-	private void setWinner(boolean win) {
-		winner = win;
-	}
-
-	public void setEnd(boolean end) {
-		quitGame = end;
-		state = State.GAME_FINISHED;
-		notifyObservers();
-	}
-
-	public boolean testIfEnd() {
-		return quitGame;
 	}
 
 	@Override
