@@ -1,25 +1,25 @@
 package de.htwg.se.moerakikemu.model.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.moerakikemu.model.impl.Field;
-import de.htwg.se.moerakikemu.model.impl.Player;
+import de.htwg.se.moerakikemu.model.IField;
 
 public class FieldTest {
+	private static final int EDGE_LENGTH = 12;
 	
-	private static final int EDGELENGTH = 6;
-
-	Field errorField;
-	Field field;
+	IField errorField;
+	IField field;
 	Player player1;
 	Player player2;
 
 	@Before
 	public void setUp() {
-		field = new Field(EDGELENGTH);
+		field = new Field();
 		player1 = new Player();
 		player2 = new Player();
 	}
@@ -41,7 +41,7 @@ public class FieldTest {
 	
 	@Test
 	public void test_getEdgeLength_sixAsInitialized() {
-		assertEquals(field.getEdgeLength(), EDGELENGTH);
+		assertEquals(field.getEdgeLength(), EDGE_LENGTH);
 	}
 	
 
@@ -67,16 +67,12 @@ public class FieldTest {
 	
 	@Test
 	public void test_isFilled_allOccupiedReturnsTrue() {
-		for(int i = 0; i < EDGELENGTH; i++) {
-			for(int j = 0; j < EDGELENGTH; j++) {
+		for(int i = 0; i < EDGE_LENGTH; i++) {
+			for(int j = 0; j < EDGE_LENGTH; j++) {
 				field.occupy(i, j,  Person.PLAYER1);
 			}
 		}
 		assertTrue(field.isFilled());
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
-	public void test_constructor_negativeEdgelengthThrowsException() {
-		errorField = new Field(-1);
-	}
 }

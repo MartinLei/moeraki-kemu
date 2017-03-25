@@ -3,8 +3,11 @@ package de.htwg.se.moerakikemu.model.impl;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.IPlayer;
 
+/*
+ * The implementation of field
+ */
 public class Field implements IField {
-	private int edgeLength;
+	private static final int EDGE_LENGTH = 12;
 	private int occupiedSpots;
 	private Spot[][] array;
 
@@ -13,14 +16,10 @@ public class Field implements IField {
 	private IPlayer player1;
 	private IPlayer player2;
 	
-	public Field(int edgeLength) throws IllegalArgumentException {
-		if (edgeLength < 1) {
-			throw new IllegalArgumentException("Edgelength too small: " + edgeLength);
-		}
-		this.edgeLength = edgeLength;
-		array = new Spot[edgeLength][edgeLength];
-		for (int i = 0; i < edgeLength; i++) {
-			for (int j = 0; j < edgeLength; j++) {
+	public Field() {
+		array = new Spot[EDGE_LENGTH][EDGE_LENGTH];
+		for (int i = 0; i < EDGE_LENGTH; i++) {
+			for (int j = 0; j < EDGE_LENGTH; j++) {
 				array[i][j] = new Spot();
 			}
 		}
@@ -32,7 +31,7 @@ public class Field implements IField {
 	
 	@Override
 	public int getEdgeLength() {
-		return this.edgeLength;
+		return this.EDGE_LENGTH;
 	}
 
 	@Override
@@ -57,7 +56,7 @@ public class Field implements IField {
 
 	@Override
 	public boolean isFilled() {
-		return occupiedSpots == (edgeLength * edgeLength);
+		return occupiedSpots == (EDGE_LENGTH * EDGE_LENGTH);
 	}
 
 	@Override

@@ -13,10 +13,11 @@ import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 import de.htwg.se.moerakikemu.util.observer.Observable;
 
+/**
+ * The controller implementation
+ */
 @Singleton
 public class Controller extends Observable implements IController {
-
-	private final static int FIELDLENGTH = 12;
 	private IField gameField;
 	private IFieldDAO fieldDAO;
 	
@@ -24,11 +25,12 @@ public class Controller extends Observable implements IController {
 	private int xCoordinateStartDot;
 	private int yCoordinateStartDot;
 
+
 	@Inject
 	public Controller(IFieldDAO fieldDAO) {
 		this.fieldDAO = fieldDAO;
 		
-		gameField = new Field(FIELDLENGTH);
+		gameField = new Field();
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
 
@@ -37,8 +39,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public void newGame() {
-		int fieldLength = 12;
-		gameField = new Field(fieldLength);
+		gameField = new Field();
 		gameField.setState(State.GET_FIRST_PLAYER_NAME);
 
 		notifyObservers();
@@ -46,8 +47,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public void newGameQuickStart() {
-		int fieldLength = 12;
-		gameField = new Field(fieldLength);
+		gameField = new Field();
 		
 		String player1Name = "Andrew";
 		String player2Name = "Walter";
@@ -127,7 +127,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	private void testListOfSquares() {
-		int[] squareArray = new int[17];
+		int number = 17;
+		int[] squareArray = new int[number];
 		squareArray = helper.getSquareArray();
 		if (squareArray[0] == 1) {
 			testSquare(squareArray[1], squareArray[2], squareArray[3], squareArray[4]);
@@ -241,7 +242,6 @@ public class Controller extends Observable implements IController {
 		if (counter == counterEnd) {
 
 			// TODO LINE strike
-			// System.out.println(counter + " " + counterEnd + " " +
 			// getState());
 			// if (getState().equals(State.TURN_PLAYER1))
 			// state = State.PLAYER1_WON;

@@ -3,6 +3,9 @@ package de.htwg.se.moerakikemu.model;
 import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 
+/**
+ * The field of the game
+ */
 public interface IField {
 
 	/**
@@ -11,7 +14,7 @@ public interface IField {
 	 * another can not re-occupy this field.
 	 * @param x The x-coordinate of the Spot to occupy.
 	 * @param y The y-coordinate of the Spot to occupy.
-	 * @param getCurrentPlayerName The name of the player that tries to occupy.
+	 * @param person The person  which occupy the cell.
 	 * @return True if the Spot was empty and is now successfully occupied,
 	 * 			false if the Spot was already occupied.
 	 */
