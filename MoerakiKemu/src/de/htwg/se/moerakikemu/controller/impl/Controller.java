@@ -7,7 +7,6 @@ import com.google.inject.Singleton;
 import com.google.inject.name.Named;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
 import de.htwg.se.moerakikemu.model.impl.Person;
@@ -20,15 +19,13 @@ public class Controller extends Observable implements IController {
 	private IField gameField;
 
 	private ControllerHelper helper;
-	private IControllerPlayer playerController;
 
 	private int xCoordinateStartDot, yCoordinateStartDot;
 
 	@Inject
-	public Controller(@Named("fieldLength") int fieldLength, IControllerPlayer playerCon) {
+	public Controller(@Named("fieldLength") int fieldLength) {
 		super();
 		gameField = new Field(fieldLength);
-		this.playerController = playerCon;
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
 
@@ -39,7 +36,6 @@ public class Controller extends Observable implements IController {
 	public void newGame() {
 		int fieldLength = 12;
 		gameField = new Field(fieldLength);
-		playerController.newGame();
 		gameField.setState(State.GET_FIRST_PLAYER_NAME);
 
 		notifyObservers();
@@ -49,11 +45,11 @@ public class Controller extends Observable implements IController {
 	public void newGameQuickStart() {
 		int fieldLength = 12;
 		gameField = new Field(fieldLength);
-		playerController.newGame();
 		
 		String player1Name = "Andrew";
 		String player2Name = "Walter";
-		playerController.setName(player1Name, player2Name);
+		gameField.setPlayer1Name(player1Name);
+		gameField.setPlayer2Name(player2Name);
 
 		gameField.setState(State.SET_START_DOT);
 		Point starDotPosisiton = new Point(4, 4);
@@ -70,12 +66,8 @@ public class Controller extends Observable implements IController {
 		return gameField.getEdgeLength();
 	}
 
-	private boolean noProperStartDot(final int x, final int y) {
-		return !playerController.startDotSet() && !setStartDot(x, y);
-	}
-
 	private int occupy(int x, int y) {
-		if (!gameField.getIsOccupiedFrom(x, y).equals(Person.NONE) || noProperStartDot(x, y)) 
+		if (!gameField.getIsOccupiedFrom(x, y).equals(Person.NONE)) 
 			return -1;
 		
 
@@ -84,11 +76,11 @@ public class Controller extends Observable implements IController {
 		helper = new ControllerHelper(x, y, getEdgeLength() - 1);
 		helper.testSquare();
 		testListOfSquares();
-		if (playerController.getCurrentPlayerName() != "StartDot") {
+		if (gameField.getCurrentPlayerName() != "StartDot") {
 			testAllInLine(x, y);
 		}
 		helper.resetSquareTest();
-		playerController.selectNextPlayer();
+		gameField.selectNextPlayer();
 
 		if (gameField.isFilled()) {
 			gameField.setState(State.GAME_FINISHED);
@@ -186,19 +178,19 @@ public class Controller extends Observable implements IController {
 
 	private void setPointsOfPlayer(int counter1, int counter2) {
 		if (counter1 == 3 && counter2 == 1) {
-			playerController.addAPointPlayer1();
+			gameField.addAPointPlayer1();
 		}
 		if (counter1 == 4) {
-			playerController.addAPointPlayer1();
+			gameField.addAPointPlayer1();
 
 			gameField.setState(State.PLAYER1_WON);
 			notifyObservers();
 		}
 		if (counter2 == 3 && counter1 == 1) {
-			playerController.addAPointPlayer2();
+			gameField.addAPointPlayer2();
 		}
 		if (counter2 == 4) {
-			playerController.addAPointPlayer2();
+			gameField.addAPointPlayer2();
 
 			gameField.setState(State.PLAYER2_WON);
 			notifyObservers();
@@ -231,7 +223,7 @@ public class Controller extends Observable implements IController {
 	}
 
 	private boolean isOccupiedByCurrentPlayer(final int x, final int y) {
-		return gameField.getIsOccupiedFrom(x, y).equals(playerController.getCurrentPlayerName());
+		return gameField.getIsOccupiedFrom(x, y).equals(gameField.getCurrentPlayerName());
 	}
 
 	private void testInLine(String xy, int start, int end, int secondValue, int counterEnd) {
@@ -276,36 +268,36 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public void setPlayer1Name(String name) {
-		playerController.setPlayer1Name(name);
+		gameField.setPlayer1Name(name);
 		gameField.setState(State.GET_SECOND_PLAYER_NAME);
 		notifyObservers();
 	}
 
 	@Override
 	public void setPlayer2Name(String name) {
-		playerController.setPlayer2Name(name);
+		gameField.setPlayer2Name(name);
 		gameField.setState(State.SET_START_DOT);
 		notifyObservers();
 	}
 
 	@Override
 	public String getPlayer1Name() {
-		return playerController.getPlayer1Name();
+		return gameField.getPlayer1Name();
 	}
 
 	@Override
 	public int getPlayer1Point() {
-		return playerController.getPlayer1Points();
+		return gameField.getPlayer1Points();
 	}
 
 	@Override
 	public String getPlayer2Name() {
-		return playerController.getPlayer2Name();
+		return gameField.getPlayer2Name();
 	}
 
 	@Override
 	public int getPlayer2Point() {
-		return playerController.getPlayer2Points();
+		return gameField.getPlayer2Points();
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package de.htwg.se.moerakikemu.controller.imp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
 
@@ -8,22 +10,18 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.IControllerPlayer;
-import de.htwg.se.moerakikemu.controller.imp.*;
-import de.htwg.se.moerakikemu.controller.impl.*;
+import de.htwg.se.moerakikemu.controller.impl.Controller;
 import de.htwg.se.moerakikemu.model.impl.State;
 
 public class ControllerTest {
 	IController controller;
-	IControllerPlayer playerController; // todo remove
 
 	private final String PLAYER1NAME = "Andrew";
 	private final String PLAYER2NAME = "Walter";
 
 	@Before
 	public void setUp() {
-		playerController = new ControllerPlayer();
-		controller = new Controller(12, playerController);
+		controller = new Controller(12);
 
 		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
 		controller.setPlayer1Name(PLAYER1NAME);
