@@ -11,10 +11,7 @@ import javax.swing.JOptionPane;
 import de.htwg.se.moerakikemu.controller.IController;
 
 public class MainMenu extends JMenuBar implements ActionListener{
-	private static final long serialVersionUID = -6197107387907014280L;
-
-	
-	IController myController;
+	private transient IController myController;
 	
 	JMenu game;
 	JMenuItem quit;

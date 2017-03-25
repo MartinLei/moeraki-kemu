@@ -18,7 +18,7 @@ import de.htwg.se.moerakikemu.util.observer.IObserver;
 public class GUI extends JFrame implements IObserver {
 	private static final long serialVersionUID = 2078463309153663728L;
 
-	private IController myController;
+	private transient IController myController;
 
 	private MainPanel myMainPanel;
 	private MessagePanel myMessagePanel;

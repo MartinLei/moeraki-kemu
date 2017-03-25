@@ -59,7 +59,6 @@ public class MainPanel extends JPanel {
 	public MainPanel(IController controller, final int fieldLength) {
 		super();
 		this.myController = controller;
-		//this.myPlayerController = playerController;
 		this.setBackground(new Color(200, 120, 40));
 
 		// Read and scale images for occupied spots

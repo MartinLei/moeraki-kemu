@@ -16,8 +16,7 @@ import de.htwg.se.moerakikemu.controller.IController;
 public class MessagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
-	IController myController;
-	
+	private transient IController myController;
 	
 	private JPanel playerPanel;
 	
