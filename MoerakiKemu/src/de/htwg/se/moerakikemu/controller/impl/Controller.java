@@ -4,7 +4,6 @@ import java.awt.Point;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.google.inject.name.Named;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.IField;
