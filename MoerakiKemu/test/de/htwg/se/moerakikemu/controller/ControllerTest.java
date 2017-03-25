@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.b_controller;
+package de.htwg.se.moerakikemu.controller;
 
 import static org.junit.Assert.*;
 
@@ -10,7 +10,7 @@ import org.junit.Test;
 import de.htwg.se.moerakikemu.controller.*;
 import de.htwg.se.moerakikemu.controller.controllerimpl.*;
 
-public class Controller_Test {
+public class ControllerTest {
 	IController controller;
 	IControllerPlayer playerController;
 
