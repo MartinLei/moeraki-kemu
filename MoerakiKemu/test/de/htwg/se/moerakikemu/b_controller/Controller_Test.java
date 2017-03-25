@@ -14,12 +14,15 @@ public class Controller_Test {
 	IController controller;
 	IControllerPlayer playerController;
 
+	private final String PLAYER1NAME = "Andrew";
+	private final String PLAYER2NAME = "Walter";
+	
 	@Before
 	public void setUp() {
 		playerController = new ControllerPlayer();
 		controller = new Controller(12, playerController);
-		controller.setPlayer1Name("Andrew");
-		controller.setPlayer2Name("Walter");
+		controller.setPlayer1Name(PLAYER1NAME);
+		controller.setPlayer2Name(PLAYER2NAME);
 	}
 
 	@Test
@@ -45,6 +48,9 @@ public class Controller_Test {
 		assertEquals(State.TURN_PLAYER2, controller.getState());
 		assertTrue(controller.setDot(new Point(0, 1)));
 		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		assertFalse(controller.setDot(new Point(0, 1)));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
 	}
 
 	@Test
@@ -58,27 +64,27 @@ public class Controller_Test {
 		controller.setDot(new Point(2,1));
 		controller.setDot(new Point(2,2));
 
-		assertEquals("Andrew", playerController.getPlayer1Name());
-		assertEquals("Walter", playerController.getPlayer2Name());
+		assertEquals(PLAYER1NAME, playerController.getPlayer1Name());
+		assertEquals(PLAYER2NAME, playerController.getPlayer2Name());
 	}
 
 	@Test
 	public void test_selectNextPlayer_wasPlayerOneIsPlayerTwoNextPlayerOne() {
 		assertEquals(playerController.getCurrentPlayerName(), "StartDot");
 		playerController.selectNextPlayer();
-		assertEquals(playerController.getCurrentPlayerName(), "Andrew");
+		assertEquals(playerController.getCurrentPlayerName(), PLAYER1NAME);
 		playerController.selectNextPlayer();
-		assertEquals(playerController.getCurrentPlayerName(), "Walter");
+		assertEquals(playerController.getCurrentPlayerName(), PLAYER2NAME);
 		playerController.selectNextPlayer();
-		assertEquals(playerController.getCurrentPlayerName(), "Andrew");
+		assertEquals(playerController.getCurrentPlayerName(), PLAYER1NAME);
 	}
 
 	@Test
 	public void test_setName_isPlayer1Player2() {
-		playerController.setPlayer1Name("Andrew");
-		playerController.setPlayer2Name("Walter");
-		assertEquals(playerController.getPlayer1Name(), "Andrew");
-		assertEquals(playerController.getPlayer2Name(), "Walter");
+		playerController.setPlayer1Name(PLAYER1NAME);
+		playerController.setPlayer2Name(PLAYER2NAME);
+		assertEquals(playerController.getPlayer1Name(), PLAYER1NAME);
+		assertEquals(playerController.getPlayer2Name(), PLAYER2NAME);
 	}
 
 	@Test
@@ -98,11 +104,11 @@ public class Controller_Test {
 		controller.setDot(new Point(0,1));
 		controller.setDot(new Point(1,2));
 		controller.setDot(new Point(1,0));
-		assertEquals("Andrew", controller.getWinner());
+		assertEquals(PLAYER1NAME, controller.getWinner());
 
 		playerController = new ControllerPlayer();
-		playerController.setPlayer1Name("Andrew");
-		playerController.setPlayer2Name("Walter");
+		playerController.setPlayer1Name(PLAYER1NAME);
+		playerController.setPlayer2Name(PLAYER2NAME);
 		controller = new Controller(5, playerController);
 		assertEquals("", controller.getWinner());
 
@@ -115,7 +121,7 @@ public class Controller_Test {
 		controller.setDot(new Point(2,3));
 		controller.setDot(new Point(0,1));
 		controller.setDot(new Point(1,1));
-		assertEquals("Walter", controller.getWinner());
+		assertEquals(PLAYER2NAME, controller.getWinner());
 	}
 
 	@Test
@@ -128,7 +134,7 @@ public class Controller_Test {
 		// 0,0 because occupy get the direkt input from a player, so there is a
 		// -1, -1 needed
 		String a = controller.getIsOccupiedByPlayer(0, 0);
-		assertEquals("Andrew", a);
+		assertEquals(PLAYER1NAME, a);
 	}
 
 	@Test
@@ -138,9 +144,9 @@ public class Controller_Test {
 
 		// Test player names
 		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
-		controller.setPlayer1Name("Andrew");
+		controller.setPlayer1Name(PLAYER1NAME);
 		assertEquals(State.GET_SECOND_PLAYER_NAME, controller.getState());
-		controller.setPlayer2Name("Walter");
+		controller.setPlayer2Name(PLAYER2NAME);
 		assertEquals(State.SET_START_DOT, controller.getState());
 
 		// Player occupies a square.
@@ -156,11 +162,30 @@ public class Controller_Test {
 		assertEquals(State.PLAYER_WON, controller.getState());
 
 	}
-
+	
 	@Test
 	public void test_quitGamee() {
 		controller.quitGame();
-		;
 		assertEquals(State.EXIT_GAME, controller.getState());
+	}
+	
+	@Test
+	public void test_getPlayer1Name(){
+		assertEquals(PLAYER1NAME, controller.getPlayer1Name());
+	}
+
+	@Test
+	public void test_getPlayer2Name(){
+		assertEquals(PLAYER2NAME, controller.getPlayer2Name());
+	}
+	
+	@Test
+	public void test_getPlayer1Point(){
+		assertEquals(0, controller.getPlayer1Point());
+	}
+	
+	@Test
+	public void test_getPlayer2Point(){
+		assertEquals(0, controller.getPlayer2Point());
 	}
 }
