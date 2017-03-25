@@ -30,6 +30,30 @@ public class ControllerTest {
 		assertEquals(State.SET_START_DOT, controller.getState());
 	}
 	
+	@Test
+	public void test_newGame(){
+		controller.setStartDot(new Point(5, 5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		controller.newGame();
+		
+		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
+		controller.setPlayer1Name(PLAYER1NAME);
+		assertEquals(State.GET_SECOND_PLAYER_NAME, controller.getState());
+		controller.setPlayer2Name(PLAYER2NAME);
+		assertEquals(State.SET_START_DOT, controller.getState());
+	}
+	
+	@Test
+	public void test_newGameQickStart(){
+		controller.setStartDot(new Point(5, 5));
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		controller.newGameQuickStart();
+		
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+	}
+	
 
 	@Test
 	public void test_setStartDot() {
@@ -61,6 +85,7 @@ public class ControllerTest {
 
 	@Test
 	public void test_getPointsOfPlayer_returnPointsofCurrentPlayer() {
+		// todo
 		controller = new Controller(5, playerController);
 
 		controller.setDot(new Point(1,1));

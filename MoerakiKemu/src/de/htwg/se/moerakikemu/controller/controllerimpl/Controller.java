@@ -40,22 +40,24 @@ public class Controller extends Observable implements IController {
 		gameField = new Field(fieldLength);
 		playerController.newGame();
 		gameField.setState(State.GET_FIRST_PLAYER_NAME);
-
-		quicStartForTest();
-
+		
 		notifyObservers();
 	}
 
-	private void quicStartForTest() {
+	@Override
+	public void newGameQuickStart() {
+		int fieldLength = 12;
+		gameField = new Field(fieldLength);
+		playerController.newGame();
+		
 		String player1Name = "Andrew";
 		String player2Name = "Walter";
 		playerController.setName(player1Name, player2Name);
 
 		Point starDotPosisiton = new Point(4, 4);
 		setStartDot(starDotPosisiton);
-
-		gameField.setState(State.TURN_PLAYER1);
 	}
+
 
 	@Override
 	public String getIsOccupiedByPlayer(int x, int y) {

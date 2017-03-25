@@ -33,7 +33,8 @@ public class MoerakiKemu {
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
 		
-		controller.newGame();
+		//controller.newGame();
+		controller.newGameQuickStart();
 	}
 
 	public boolean isExitGame(){

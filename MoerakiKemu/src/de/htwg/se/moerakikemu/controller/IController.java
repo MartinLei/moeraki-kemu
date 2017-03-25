@@ -60,6 +60,13 @@ public interface IController extends IObservable {
 	 * Start a new game and set the state to name player1
 	 */
 	void newGame();
+	
+	/**
+	 * Start a new game and set the state to turn player1
+	 * Give the player names and set the start stone for a quick start
+	 */
+	void newGameQuickStart();
+	
 
 	/**
 	 * Set the name of player1 After setting, it change the sate to set the name
