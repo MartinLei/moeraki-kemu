@@ -6,12 +6,11 @@ public class Field implements IField {
 	private int edgeLength;
 	private int occupiedSpots;
 	private Spot[][] array;
-	
+
 	private State state;
-	
-	
+
 	public Field(int edgeLength) throws IllegalArgumentException {
-		if(edgeLength < 1) {
+		if (edgeLength < 1) {
 			throw new IllegalArgumentException("Edgelength too small: " + edgeLength);
 		}
 		this.edgeLength = edgeLength;
@@ -23,33 +22,34 @@ public class Field implements IField {
 		}
 		occupiedSpots = 0;
 	}
-	
+
+	@Override
 	public int getEdgeLength() {
 		return this.edgeLength;
 	}
 
+	@Override
 	public boolean getIsOccupied(int x, int y) {
-		return !getIsOccupiedFrom(x, y).isEmpty();
+		return array[x][y].isOccupied();
 	}
 
-	public boolean occupy(int x, int y, final String playerName) {
-		if (array[x][y].isOccupied()) {
+	@Override
+	public boolean occupy(int x, int y, Person person) {
+		if (array[x][y].isOccupied())
 			return false;
-		} else {
-			array[x][y].occupy(playerName);
-			occupiedSpots++;
-			return true;
-		}
+
+		array[x][y].occupy(person);
+		occupiedSpots++;
+		return true;
 	}
 
-	public String getIsOccupiedFrom(int xCoordinate, int yCoordinate) {
-		if(array[xCoordinate][yCoordinate].isOccupied()){
-			return array[xCoordinate][yCoordinate].getOccupiedByPlayer();
-		}
-		return "";
+	@Override
+	public Person getIsOccupiedFrom(int xCoordinate, int yCoordinate) {
+		return array[xCoordinate][yCoordinate].getOccupiedBy();
 	}
 
-	public boolean isFilled(){
+	@Override
+	public boolean isFilled() {
 		return occupiedSpots == (edgeLength * edgeLength);
 	}
 
@@ -60,7 +60,7 @@ public class Field implements IField {
 
 	@Override
 	public void setState(State newState) {
-		state  = newState;
+		state = newState;
 	}
-	
+
 }

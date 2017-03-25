@@ -2,6 +2,7 @@ package de.htwg.se.moerakikemu.controller;
 
 import java.awt.Point;
 
+import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.IObservable;
 
@@ -9,16 +10,14 @@ import de.htwg.se.moerakikemu.util.observer.IObservable;
 public interface IController extends IObservable {
 
 	/**
-	 * Returns the name of the player that occupies the field with the
-	 * coordinates.
-	 *
+	 * Returns the person that occupies the field.
 	 * @param x
 	 *            X-Coordinate.
 	 * @param y
 	 *            Y-Coordinate.
-	 * @return The name of the player or an empty String.
+	 * @return person
 	 */
-	String getIsOccupiedByPlayer(int x, int y);
+	Person getIsOccupiedBy(int x, int y);
 
 	/**
 	 * Returns the length of one edge of the game field.
@@ -132,5 +131,7 @@ public interface IController extends IObservable {
 	 * @return false if the position is already occupied
 	 */
 	boolean setDot(Point position);
+
+	Person getActualPerson();
 
 }

@@ -10,15 +10,15 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
+import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Observable;
-
 
 @Singleton
 public class Controller extends Observable implements IController {
 
 	private IField gameField;
-	
+
 	private ControllerHelper helper;
 	private IControllerPlayer playerController;
 
@@ -41,7 +41,7 @@ public class Controller extends Observable implements IController {
 		gameField = new Field(fieldLength);
 		playerController.newGame();
 		gameField.setState(State.GET_FIRST_PLAYER_NAME);
-		
+
 		notifyObservers();
 	}
 
@@ -55,13 +55,13 @@ public class Controller extends Observable implements IController {
 		String player2Name = "Walter";
 		playerController.setName(player1Name, player2Name);
 
+		gameField.setState(State.SET_START_DOT);
 		Point starDotPosisiton = new Point(4, 4);
 		setStartDot(starDotPosisiton);
 	}
 
-
 	@Override
-	public String getIsOccupiedByPlayer(int x, int y) {
+	public Person getIsOccupiedBy(int x, int y) {
 		return gameField.getIsOccupiedFrom(x, y);
 	}
 
@@ -75,12 +75,13 @@ public class Controller extends Observable implements IController {
 	}
 
 	private int occupy(int x, int y) {
-		if (gameField.getIsOccupiedFrom(x, y) != "" || noProperStartDot(x, y)) {
+		if (!gameField.getIsOccupiedFrom(x, y).equals(Person.NONE) || noProperStartDot(x, y)) 
 			return -1;
-		}
+		
 
-		gameField.occupy(x, y, playerController.getCurrentPlayerName());
-		helper = new ControllerHelper(x, y, getEdgeLength()  - 1);
+		Person actPerson = getActualPerson();
+		gameField.occupy(x, y, actPerson);
+		helper = new ControllerHelper(x, y, getEdgeLength() - 1);
 		helper.testSquare();
 		testListOfSquares();
 		if (playerController.getCurrentPlayerName() != "StartDot") {
@@ -97,11 +98,24 @@ public class Controller extends Observable implements IController {
 		return 0;
 	}
 
+	@Override
+	public Person getActualPerson() {
+		State sate = gameField.getState();
+		if (sate.equals(State.TURN_PLAYER1))
+			return Person.PLAYER1;
+		else if (sate.equals(State.TURN_PLAYER2))
+			return Person.PLAYER2;
+		else if (sate.equals(State.SET_START_DOT))
+			return Person.STARTDOT;
+
+		return null;
+	}
+
 	private boolean setStartDot(int xCoordinate, int yCoordinate) {
 		int radiusLow;
 		int radiusUp;
-		int length = getEdgeLength()  - 1;
-		if (getEdgeLength()  % 2 != 0) {
+		int length = getEdgeLength() - 1;
+		if (getEdgeLength() % 2 != 0) {
 			radiusLow = (length / 2) - 1;
 			radiusUp = (length / 2) + 1;
 		} else {
@@ -159,14 +173,15 @@ public class Controller extends Observable implements IController {
 	}
 
 	private int checkOccupationReturnPlayerGettingPoint(final int x, final int y) {
-		if (!"".equals(gameField.getIsOccupiedFrom(x, y))) {
-			if (gameField.getIsOccupiedFrom(x, y).equals(playerController.getPlayer1Name())) {
-				return 0;
-			} else if (gameField.getIsOccupiedFrom(x, y).equals(playerController.getPlayer2Name())) {
-				return 1;
-			}
+		Person person = gameField.getIsOccupiedFrom(x, y);
+
+		if (person.equals(Person.PLAYER1)) {
+			return 0;
+		} else if (person.equals(Person.PLAYER2)) {
+			return 1;
+		} else {
+			return -1;
 		}
-		return -1;
 	}
 
 	private void setPointsOfPlayer(int counter1, int counter2) {
@@ -195,13 +210,13 @@ public class Controller extends Observable implements IController {
 			return;
 		}
 		int distanceTop = xCoordinateStartDot;
-		int distanceBot = getEdgeLength() ;
-		int distanceRight = getEdgeLength() ;
+		int distanceBot = getEdgeLength();
+		int distanceRight = getEdgeLength();
 		int distanceLeft = yCoordinateStartDot;
 
 		if (y == yCoordinateStartDot) {
 			if (x > xCoordinateStartDot) {
-				testInLine("x", xCoordinateStartDot, distanceBot, y, getEdgeLength()  - xCoordinateStartDot - 1);
+				testInLine("x", xCoordinateStartDot, distanceBot, y, getEdgeLength() - xCoordinateStartDot - 1);
 			} else {
 
 				testInLine("x", 0, distanceTop, y, distanceTop);
@@ -210,7 +225,7 @@ public class Controller extends Observable implements IController {
 			if (y < yCoordinateStartDot) {
 				testInLine("y", 0, distanceLeft, x, distanceLeft);
 			} else {
-				testInLine("y", yCoordinateStartDot, distanceRight, x, getEdgeLength()  - yCoordinateStartDot - 1);
+				testInLine("y", yCoordinateStartDot, distanceRight, x, getEdgeLength() - yCoordinateStartDot - 1);
 			}
 		}
 	}
@@ -301,8 +316,9 @@ public class Controller extends Observable implements IController {
 		if (!setStartDot(position.x, position.y))
 			return false;
 
-		gameField.setState(State.TURN_PLAYER1);
 		occupy(position.x, position.y);
+		gameField.setState(State.TURN_PLAYER1);
+		
 
 		notifyObservers();
 		return true;

@@ -51,9 +51,9 @@ public class GUI extends JFrame implements IObserver {
 		repaint();
 	}
 	
-//TODO
-	private void printWinnerPopup(String winnerName) {
-		String display = ("".equals(winnerName)) ? "Ein Unentschieden!" : "Der Gewinner ist: " + winnerName + "!!!";
+
+	private void printWinnerPopup(String name) {
+		String display = ("Der Gewinner ist: " + name + "!!!");
 		JOptionPane.showMessageDialog(null, display);
 	}
 

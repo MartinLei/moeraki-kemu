@@ -26,17 +26,17 @@ public class FieldTest {
 
 	@Test
 	public void test_getIsOccupied_unoccupiedSpotReturnsFalse() {
-		assertEquals("", field.getIsOccupiedFrom(1, 2));
+		assertEquals(Person.NONE, field.getIsOccupiedFrom(1, 2));
 	}
 	@Test
 	public void test_occupy_occupyEmptySpotReturnsNoPoints() {
-		assertTrue(field.occupy(2, 2, player1.getName()));
+		assertTrue(field.occupy(2, 2, Person.PLAYER1));
 	}
 
 	@Test
 	public void test_occupy_occupyNotEmptySpotReturnsFalse() {
-		assertTrue(field.occupy(2, 2, player1.getName()));
-		assertFalse(field.occupy(2, 2, player1.getName()));
+		assertTrue(field.occupy(2, 2,  Person.PLAYER1));
+		assertFalse(field.occupy(2, 2,  Person.PLAYER1));
 	}
 	
 	@Test
@@ -47,7 +47,7 @@ public class FieldTest {
 
 	@Test
 	public void test_getIsOccupied_occupyReturnsTrue() {
-		field.occupy(3, 4, "Player");
+		field.occupy(3, 4,  Person.PLAYER1);
 		assertTrue(field.getIsOccupied(3, 4));
 	}
 	
@@ -58,10 +58,10 @@ public class FieldTest {
 	
 	@Test
 	public void test_isFilled_notAllOccupiedReturnsFalse() {
-		field.occupy(2, 3, "P1");
-		field.occupy(2, 4, "P1");
-		field.occupy(4, 3, "P1");
-		field.occupy(5, 3, "P1");
+		field.occupy(2, 3,  Person.PLAYER1);
+		field.occupy(2, 4,  Person.PLAYER1);
+		field.occupy(4, 3,  Person.PLAYER1);
+		field.occupy(5, 3,  Person.PLAYER1);
 		assertFalse(field.isFilled());
 	}
 	
@@ -69,7 +69,7 @@ public class FieldTest {
 	public void test_isFilled_allOccupiedReturnsTrue() {
 		for(int i = 0; i < EDGELENGTH; i++) {
 			for(int j = 0; j < EDGELENGTH; j++) {
-				field.occupy(i, j, "Spieler");
+				field.occupy(i, j,  Person.PLAYER1);
 			}
 		}
 		assertTrue(field.isFilled());

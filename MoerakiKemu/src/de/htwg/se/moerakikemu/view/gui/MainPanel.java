@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
+import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 
 import java.awt.Color;
@@ -23,7 +24,7 @@ public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	IController myController;
-	IControllerPlayer myPlayerController;
+	// IControllerPlayer myPlayerController;
 
 	ImageIcon blackIcon;
 	ImageIcon redIcon;
@@ -43,10 +44,11 @@ public class MainPanel extends JPanel {
 
 			// Occupy Spot
 			int[] coordinates = getButtonCoordinates(pressedButton);
-			String name = myController.getIsOccupiedByPlayer(coordinates[0] - 1, coordinates[1] - 1);
-			if ("".equals(name)) {
-				setSpotColor(pressedButton, myPlayerController.getCurrentPlayerName());
-				
+			Person occupiedPerson = myController.getIsOccupiedBy(coordinates[0] - 1, coordinates[1] - 1);
+			if (occupiedPerson.equals(Person.NONE)) {
+				Person actualPerson = myController.getActualPerson();
+				setSpotColor(pressedButton,actualPerson);
+
 				Point mousePosition = new Point(coordinates[0] - 1, coordinates[1] - 1);
 				if (myController.getState().equals(State.SET_START_DOT))
 					myController.setStartDot(mousePosition);
@@ -60,7 +62,7 @@ public class MainPanel extends JPanel {
 	public MainPanel(IController controller, IControllerPlayer playerController, final int fieldLength) {
 		super();
 		this.myController = controller;
-		this.myPlayerController = playerController;
+		//this.myPlayerController = playerController;
 		this.setBackground(new Color(200, 120, 40));
 
 		// Read and scale images for occupied spots
@@ -97,7 +99,7 @@ public class MainPanel extends JPanel {
 		int fieldLength = myController.getEdgeLength();
 		for (int i = 0; i < fieldLength; i++) {
 			for (int j = 0; j < fieldLength; j++) {
-				setSpotColor(field[i][j], myController.getIsOccupiedByPlayer(i, j));
+				setSpotColor(field[i][j], myController.getIsOccupiedBy(i, j));
 			}
 		}
 		this.repaint();
@@ -115,20 +117,19 @@ public class MainPanel extends JPanel {
 		return xyCoordinates;
 	}
 
-	private void setSpotColor(JButton buttonToChange, String playerNameOnSpot) {
-		if (playerNameOnSpot == null || "".equals(playerNameOnSpot)) {
-			buttonToChange.setText("+");
-			buttonToChange.setIcon(null);
-		} else if (myPlayerController.getPlayer1Name().equals(playerNameOnSpot)) {
+	private void setSpotColor(JButton buttonToChange, Person person) {
+		if (person.equals(Person.PLAYER1)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(blackIcon);
-		} else if (myPlayerController.getPlayer2Name().equals(playerNameOnSpot)) {
+		} else if (person.equals(Person.PLAYER2)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(redIcon);
-		} else if ("StartDot".equals(playerNameOnSpot)) {
+		} else if (person.equals(Person.STARTDOT)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(greenIcon);
-
+		} else {
+			buttonToChange.setText("+");
+			buttonToChange.setIcon(null);
 		}
 	}
 

@@ -1,5 +1,6 @@
 package de.htwg.se.moerakikemu.model;
 
+import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 
 public interface IField {
@@ -14,7 +15,7 @@ public interface IField {
 	 * @return True if the Spot was empty and is now successfully occupied,
 	 * 			false if the Spot was already occupied.
 	 */
-	boolean occupy(int x, int y, String getCurrentPlayerName);
+	boolean occupy(int x, int y,  Person person);
 	
 	/**
 	 * Determines if the Spot with the given coordinates is currently occupied.
@@ -30,7 +31,7 @@ public interface IField {
 	 * @param y The y-coordinate of the Spot to occupy.
 	 * @return The name of the player as String, or an empty String if no one occupied it.
 	 */
-	String getIsOccupiedFrom(int x, int y);
+	Person getIsOccupiedFrom(int x, int y);
 	
 	/**
 	 * Determines if all Spots of the field are occupied.

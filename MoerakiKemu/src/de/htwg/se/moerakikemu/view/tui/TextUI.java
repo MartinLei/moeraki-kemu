@@ -8,10 +8,10 @@ import org.apache.logging.log4j.core.Logger;
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
-
 
 public class TextUI implements IObserver {
 
@@ -37,9 +37,9 @@ public class TextUI implements IObserver {
 
 			StringBuilder line = new StringBuilder(printLeadingNumber(i + 1, edgeLength));
 			for (int j = 0; j < edgeLength; j++) {
-				String playerString = myController.getIsOccupiedByPlayer(i, j);
-				char id = playerString.isEmpty() ? ' ' : playerString.charAt(0);
-				line.append(drawSpot(id));
+				Person person = myController.getIsOccupiedBy(i, j);
+				String name = person.toString();
+				line.append(drawSpot(name));
 			}
 			LOGGER.info(line);
 		}
@@ -69,18 +69,18 @@ public class TextUI implements IObserver {
 		String player2Name = myController.getPlayer2Name();
 		int player2Point = myController.getPlayer2Point();
 
-		LOGGER.info(player1Name + ": " + player1Point + " Punkte");
-		LOGGER.info(player2Name + ": " + player2Point + " Punkte\n");
+		LOGGER.info(player1Name + " aka " + Person.PLAYER1 + ": " + player1Point + " Punkte");
+		LOGGER.info(player2Name + " aka " + Person.PLAYER2 + ": " + player2Point + " Punkte\n");
 	}
 
 	/**
 	 * Draws a Spot with the Player identifier (i.e. number).
 	 *
-	 * @param playerChar
+	 * @param playerName
 	 *            Identifier for the player or ' ' if not occupied by player.
 	 */
-	private String drawSpot(final char playerChar) {
-		return "|" + playerChar + "|";
+	private String drawSpot(final String playerName) {
+		return "|" + playerName + "|";
 	}
 
 	/**
