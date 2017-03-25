@@ -16,16 +16,17 @@ import de.htwg.se.moerakikemu.util.observer.Observable;
 @Singleton
 public class Controller extends Observable implements IController {
 
-	private IField gameField;
-
+	private final int FIELDLENGTH = 12;
+	
 	private ControllerHelper helper;
 
+	private IField gameField;
+	
 	private int xCoordinateStartDot, yCoordinateStartDot;
 
 	@Inject
-	public Controller(@Named("fieldLength") int fieldLength) {
-		super();
-		gameField = new Field(fieldLength);
+	public Controller() {
+		gameField = new Field(FIELDLENGTH);
 		xCoordinateStartDot = 0;
 		yCoordinateStartDot = 0;
 

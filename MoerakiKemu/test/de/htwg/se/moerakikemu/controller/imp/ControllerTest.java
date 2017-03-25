@@ -21,7 +21,7 @@ public class ControllerTest {
 
 	@Before
 	public void setUp() {
-		controller = new Controller(12);
+		controller = new Controller();
 
 		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
 		controller.setPlayer1Name(PLAYER1NAME);
