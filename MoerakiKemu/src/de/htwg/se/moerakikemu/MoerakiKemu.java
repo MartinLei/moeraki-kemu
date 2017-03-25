@@ -18,12 +18,6 @@ public class MoerakiKemu {
 	private IController controller;
 	private static MoerakiKemu instance = null;
 
-	public static MoerakiKemu getInstance() {
-		if (instance == null)
-			instance = new MoerakiKemu();
-		return instance;
-	}
-
 	private MoerakiKemu() {
 		Injector injector = Guice.createInjector(new MoerakiKemuModule());
 
@@ -33,7 +27,13 @@ public class MoerakiKemu {
 		tui.printWelcome();
 
 		
-		controller.newGameQuickStart(); // controller.newGame();
+		controller.newGameQuickStart();
+	}
+	
+	public static MoerakiKemu getInstance() {
+		if (instance == null)
+			instance = new MoerakiKemu();
+		return instance;
 	}
 
 	public boolean isExitGame() {

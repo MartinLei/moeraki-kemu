@@ -6,7 +6,9 @@ import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.IObservable;
 
-
+/**
+ * Controller interface
+ */
 public interface IController extends IObservable {
 
 	/**
@@ -27,23 +29,6 @@ public interface IController extends IObservable {
 	int getEdgeLength();
 
 	/**
-	 * OBSOLENTE use setDot and setStartDot for setting a Stone now !!!
-	 * 
-	 * Occupation of a Spot by a player. Returns -1 if the Spot is already
-	 * occupied.
-	 * 
-	 * @param xCoordinate
-	 *            X coordinate of the spot beginning from 1 to edgeLength.
-	 * @param yCoordinate
-	 *            Y coordinate of the spot beginning from 1 to edgeLength.
-	 * @param playerName
-	 *            Name of the Player.
-	 * @return returns 0 if the current player occupied the field and got
-	 *         points; -1 if the spot already was occupied.
-	 */
-	//int occupy(int xCoordinate, int yCoordinate);
-
-	/**
 	 * quit the game and set the sate to exit game
 	 */
 	void quitGame();
@@ -54,7 +39,6 @@ public interface IController extends IObservable {
 	 * @return a constant from the enum State.
 	 */
 	State getState();
-	// public abstract State getState();
 
 	/**
 	 * Start a new game and set the state to name player1

@@ -16,12 +16,13 @@ import de.htwg.se.moerakikemu.util.observer.Observable;
 @Singleton
 public class Controller extends Observable implements IController {
 
-	private final int FIELDLENGTH = 12;
+	private final static int FIELDLENGTH = 12;
 	private IField gameField;
 	private IFieldDAO fieldDAO;
 	
 	private ControllerHelper helper;
-	private int xCoordinateStartDot, yCoordinateStartDot;
+	private int xCoordinateStartDot;
+	private int yCoordinateStartDot;
 
 	@Inject
 	public Controller(IFieldDAO fieldDAO) {
