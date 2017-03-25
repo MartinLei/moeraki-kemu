@@ -13,6 +13,9 @@ import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
 
+/**
+ * Text User Interface
+ */
 public class TextUI implements IObserver {
 
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
@@ -134,15 +137,18 @@ public class TextUI implements IObserver {
 		LOGGER.info(headlineBuilder.toString());
 	}
 
-	public void printMessage(String msg) {
-		LOGGER.error(msg + "\n");
-	}
-
+	/**
+	 * Print the intro
+	 */
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
 		drawCurrentState();
 	}
 
+	/**
+	 * Process a input from the user 
+	 * @param inputLine input from keyboard
+	 */
 	public void processInputLine(String inputLine) {
 		if (inputLine.matches("q")) {
 			myController.quitGame();
@@ -222,17 +228,14 @@ public class TextUI implements IObserver {
 			String player2Name = myController.getPlayer2Name();
 			LOGGER.info(player2Name + " du bist dran:: ");
 		} else if (state.equals(State.PLAYER1_WON)) {
-			// TODO test ?
 			drawCurrentState();
 			String playerName = myController.getPlayer1Name();
 			LOGGER.info("Der Gewinnder ist Spieler1 aka ->" + playerName);
 		} else if (state.equals(State.PLAYER2_WON)) {
-			// TODO test ?
 			drawCurrentState();
 			String playerName = myController.getPlayer2Name();
 			LOGGER.info("Der Gewinnder ist Spieler1 aka ->" + playerName);
 		} else if (state.equals(State.GAME_FINISHED)) {
-			// TODO test ?
 			drawCurrentState();
 			LOGGER.info("Ende keiner hat gewonnen");
 		}

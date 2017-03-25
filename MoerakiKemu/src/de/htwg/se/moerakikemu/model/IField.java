@@ -8,6 +8,7 @@ import de.htwg.se.moerakikemu.model.impl.State;
  */
 public interface IField {
 
+	
 	/**
 	 * Tries to occupy the Spot with the given coordinates.
 	 * If another player already occupied the given Spot,

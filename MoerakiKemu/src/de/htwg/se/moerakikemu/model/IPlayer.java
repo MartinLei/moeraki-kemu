@@ -1,5 +1,8 @@
 package de.htwg.se.moerakikemu.model;
 
+/**
+ * The Player contains the name of and points of the player
+ */
 public interface IPlayer {
 
 	/**

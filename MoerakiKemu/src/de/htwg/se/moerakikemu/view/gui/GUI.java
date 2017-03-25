@@ -12,7 +12,9 @@ import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
 
-
+/**
+ * Graphic Interface for the game
+ */
 public class GUI extends JFrame implements IObserver {
 	private static final long serialVersionUID = 2078463309153663728L;
 
@@ -42,22 +44,21 @@ public class GUI extends JFrame implements IObserver {
 		this.setVisible(true);
 	}
 
+	/**
+	 * redraw the window
+	 */
 	public void drawCurrentState() {
 		myMainPanel.updateField();
 		myMessagePanel.updateView();
 		repaint();
 	}
-	
 
 	private void printWinnerPopup(String name) {
-		String display = ("Der Gewinner ist: " + name + "!!!");
+		String display = "Der Gewinner ist: " + name + "!!!";
 		JOptionPane.showMessageDialog(null, display);
 	}
 
-	public void addPoints(int pointsPlayer1, int pointsPlayer2) {
-		myMessagePanel.setPlayerPoints(pointsPlayer1, pointsPlayer2);
-	}
-
+	@Override
 	public void update(Event e) {
 		State state = myController.getState();
 
@@ -90,43 +91,17 @@ public class GUI extends JFrame implements IObserver {
 			String player2Name = myController.getPlayer2Name();
 			myMessagePanel.printMessage(player2Name + " du bist dran");
 		} else if (state.equals(State.PLAYER1_WON)) {
-			// TODO test ?
 			String playerName = myController.getPlayer1Name();
 			myMessagePanel.printMessage("Der Gewinnder ist Spieler1 aka ->" + playerName);
 			this.printWinnerPopup(playerName);
 		} else if (state.equals(State.PLAYER2_WON)) {
-			// TODO test ?
 			String playerName = myController.getPlayer2Name();
 			myMessagePanel.printMessage("Der Gewinnder ist Spieler1 aka ->" + playerName);
 			this.printWinnerPopup(playerName);
 		} else if (state.equals(State.GAME_FINISHED)) {
-			// TODO test ?
 			myMessagePanel.printMessage("Ende keiner hat gewonnen");
 		}
 
 	}
-
-	// public void update() {
-	// State controllerState = myController.getState();
-	//
-	// switch (controllerState) {
-	// case GAME_FINISHED:
-	// myController.setEnd(true);
-	// this.quit();
-	// break;
-	// case PLAYER_OCCUPIED:
-	// drawCurrentState();
-	// break;
-	// case QUERY_PLAYER_NAME:
-	// queryPlayerName();
-	// break;
-	// case PLAYER_WON:
-	// this.printWinnerPopup();
-	// myController.newGame();
-	// break;
-	// default:
-	// break;
-	// }
-	// }
 
 }

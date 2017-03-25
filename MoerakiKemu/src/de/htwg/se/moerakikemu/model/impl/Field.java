@@ -3,7 +3,7 @@ package de.htwg.se.moerakikemu.model.impl;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.IPlayer;
 
-/*
+/**
  * The implementation of field
  */
 public class Field implements IField {
@@ -31,7 +31,7 @@ public class Field implements IField {
 	
 	@Override
 	public int getEdgeLength() {
-		return this.EDGE_LENGTH;
+		return EDGE_LENGTH;
 	}
 
 	@Override
