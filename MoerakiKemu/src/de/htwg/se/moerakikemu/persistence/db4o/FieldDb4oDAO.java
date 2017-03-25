@@ -3,6 +3,10 @@ package de.htwg.se.moerakikemu.persistence.db4o;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 
+/**
+ * DB implementaiton with db4O
+ *
+ */
 public class FieldDb4oDAO implements IFieldDAO{
 
 	@Override

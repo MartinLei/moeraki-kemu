@@ -1,5 +1,8 @@
 package de.htwg.se.moerakikemu.model.impl;
 
+/**
+ * Enum for the state of a spot
+ */
 public enum Person {
 	NONE, PLAYER1, PLAYER2, STARTDOT;
 	

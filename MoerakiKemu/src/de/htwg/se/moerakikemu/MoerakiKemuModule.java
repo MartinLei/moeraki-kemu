@@ -7,6 +7,9 @@ import de.htwg.se.moerakikemu.controller.impl.Controller;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 import de.htwg.se.moerakikemu.persistence.db4o.FieldDb4oDAO;
 
+/**
+ * Injection configuration
+ */
 public class MoerakiKemuModule extends AbstractModule {
 
 	@Override

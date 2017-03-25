@@ -16,6 +16,9 @@ public class Field implements IField {
 	private IPlayer player1;
 	private IPlayer player2;
 	
+	/**
+	 * Constructor
+	 */
 	public Field() {
 		array = new Spot[EDGE_LENGTH][EDGE_LENGTH];
 		for (int i = 0; i < EDGE_LENGTH; i++) {
