@@ -76,11 +76,9 @@ public class Controller extends Observable implements IController {
 		helper = new ControllerHelper(x, y, getEdgeLength() - 1);
 		helper.testSquare();
 		testListOfSquares();
-		if (gameField.getCurrentPlayerName() != "StartDot") {
-			testAllInLine(x, y);
-		}
+		testAllInLine(x, y);
+		
 		helper.resetSquareTest();
-		gameField.selectNextPlayer();
 
 		if (gameField.isFilled()) {
 			gameField.setState(State.GAME_FINISHED);
@@ -223,7 +221,9 @@ public class Controller extends Observable implements IController {
 	}
 
 	private boolean isOccupiedByCurrentPlayer(final int x, final int y) {
-		return gameField.getIsOccupiedFrom(x, y).equals(gameField.getCurrentPlayerName());
+		Person actualPerson = getActualPerson();
+		Person fieldPerson =  gameField.getIsOccupiedFrom(x, y);
+		return fieldPerson.equals(actualPerson);
 	}
 
 	private void testInLine(String xy, int start, int end, int secondValue, int counterEnd) {
