@@ -12,13 +12,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 
 public class MessagePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	IController myController;
-	IControllerPlayer myPlayerController;
+	
 	
 	private JPanel playerPanel;
 	
@@ -29,10 +28,9 @@ public class MessagePanel extends JPanel {
 	
 	private JTextArea messages;
 	
-	public MessagePanel(IController controller, IControllerPlayer playerController) {
+	public MessagePanel(IController controller) {
 		super();
 		this.myController = controller;
-		this.myPlayerController = playerController;
 		this.setPreferredSize(new Dimension(200,200));
 		this.setBackground(new Color(180, 100, 10));
 

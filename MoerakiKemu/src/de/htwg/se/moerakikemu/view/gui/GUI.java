@@ -8,7 +8,6 @@ import javax.swing.JOptionPane;
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
@@ -18,20 +17,18 @@ public class GUI extends JFrame implements IObserver {
 	private static final long serialVersionUID = 2078463309153663728L;
 
 	private IController myController;
-	private IControllerPlayer myPlayerController;
 
 	private MainPanel myMainPanel;
 	private MessagePanel myMessagePanel;
 
 	@Inject
-	public GUI(IController newController, IControllerPlayer playerController) {
+	public GUI(IController newController) {
 		super("Moeraki Kemu");
 		this.myController = newController;
 		myController.addObserver(this);
 
-		this.myPlayerController = playerController;
-		this.myMainPanel = new MainPanel(myController, myPlayerController, myController.getEdgeLength());
-		this.myMessagePanel = new MessagePanel(myController, myPlayerController);
+		this.myMainPanel = new MainPanel(myController, myController.getEdgeLength());
+		this.myMessagePanel = new MessagePanel(myController);
 
 		this.setJMenuBar(new MainMenu(myController));
 

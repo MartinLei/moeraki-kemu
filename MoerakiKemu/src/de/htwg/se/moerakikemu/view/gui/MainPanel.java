@@ -1,5 +1,6 @@
 package de.htwg.se.moerakikemu.view.gui;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
@@ -14,17 +15,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.model.impl.Person;
 import de.htwg.se.moerakikemu.model.impl.State;
-
-import java.awt.Color;
 
 public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	IController myController;
-	// IControllerPlayer myPlayerController;
 
 	ImageIcon blackIcon;
 	ImageIcon redIcon;
@@ -59,7 +56,7 @@ public class MainPanel extends JPanel {
 		}
 	};
 
-	public MainPanel(IController controller, IControllerPlayer playerController, final int fieldLength) {
+	public MainPanel(IController controller, final int fieldLength) {
 		super();
 		this.myController = controller;
 		//this.myPlayerController = playerController;
