@@ -13,6 +13,7 @@ import de.htwg.se.moerakikemu.view.tui.TextUI;
 public class MoerakiKemu {
 
 	private static Scanner scanner;
+	private GUI gui;
 	private TextUI tui;
 	private IController controller;
 	private static MoerakiKemu instance = null;
@@ -27,19 +28,22 @@ public class MoerakiKemu {
 		Injector injector = Guice.createInjector(new MoerakiKemuModule());
 
 		controller = injector.getInstance(IController.class);
-		@SuppressWarnings("unused")
-		GUI gui = injector.getInstance(GUI.class);
+	    gui = injector.getInstance(GUI.class);
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
 
-		// controller.newGame();
-		controller.newGameQuickStart();
+		
+		controller.newGameQuickStart(); // controller.newGame();
 	}
 
 	public boolean isExitGame() {
 		return controller.getState().equals(State.EXIT_GAME);
 	}
 
+	/**
+	 * Start the game
+	 * @param args not used
+	 */
 	public static void main(String[] args) {
 		MoerakiKemu moerakiKemu = MoerakiKemu.getInstance();
 
