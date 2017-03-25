@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
-import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.model.impl.State;
 
 import java.awt.Color;
 

@@ -1,14 +1,14 @@
-package de.htwg.se.moerakikemu.modellayer.impl;
+package de.htwg.se.moerakikemu.model.impl;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.moerakikemu.modellayer.impl.Field;
-import de.htwg.se.moerakikemu.modellayer.impl.Player;
+import de.htwg.se.moerakikemu.model.impl.Field;
+import de.htwg.se.moerakikemu.model.impl.Player;
 
-public class Field_Test {
+public class FieldTest {
 	
 	private static final int EDGELENGTH = 6;
 

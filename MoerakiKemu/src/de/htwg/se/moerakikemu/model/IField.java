@@ -1,6 +1,6 @@
-package de.htwg.se.moerakikemu.modellayer;
+package de.htwg.se.moerakikemu.model;
 
-import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.model.impl.State;
 
 public interface IField {
 

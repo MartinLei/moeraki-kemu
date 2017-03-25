@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.modellayer.impl;
+package de.htwg.se.moerakikemu.model.impl;
 
 /**
  * This enum represents the State of the controller.

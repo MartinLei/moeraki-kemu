@@ -1,6 +1,6 @@
-package de.htwg.se.moerakikemu.modellayer.impl;
+package de.htwg.se.moerakikemu.model.impl;
 
-import de.htwg.se.moerakikemu.modellayer.IField;
+import de.htwg.se.moerakikemu.model.IField;
 
 public class Field implements IField {
 	private int edgeLength;

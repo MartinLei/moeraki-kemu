@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.modellayer.impl;
+package de.htwg.se.moerakikemu.model.impl;
 
 public class Spot {
 

@@ -7,7 +7,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.view.gui.GUI;
 import de.htwg.se.moerakikemu.view.tui.TextUI;
 

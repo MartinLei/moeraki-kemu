@@ -1,13 +1,13 @@
-package de.htwg.se.moerakikemu.modellayer.impl;
+package de.htwg.se.moerakikemu.model.impl;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.moerakikemu.modellayer.impl.Spot;
+import de.htwg.se.moerakikemu.model.impl.Spot;
 
-public class Spot_test {
+public class SpotTest {
 	Spot spot;
 
 	@Before

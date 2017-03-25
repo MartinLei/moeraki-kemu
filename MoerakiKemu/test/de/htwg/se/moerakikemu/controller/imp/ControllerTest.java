@@ -11,7 +11,7 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.imp.*;
 import de.htwg.se.moerakikemu.controller.impl.*;
-import de.htwg.se.moerakikemu.modellayer.impl.State;
+import de.htwg.se.moerakikemu.model.impl.State;
 
 public class ControllerTest {
 	IController controller;
