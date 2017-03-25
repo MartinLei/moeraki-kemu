@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.modellayer;
+package de.htwg.se.moerakikemu.modellayer.impl;
 
 import static org.junit.Assert.*;
 

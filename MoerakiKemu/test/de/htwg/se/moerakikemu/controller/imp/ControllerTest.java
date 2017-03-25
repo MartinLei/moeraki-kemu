@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.controller;
+package de.htwg.se.moerakikemu.controller.imp;
 
 import static org.junit.Assert.*;
 
@@ -7,7 +7,9 @@ import java.awt.Point;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.moerakikemu.controller.*;
+import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.controller.IControllerPlayer;
+import de.htwg.se.moerakikemu.controller.imp.*;
 import de.htwg.se.moerakikemu.controller.impl.*;
 import de.htwg.se.moerakikemu.modellayer.impl.State;
 
