@@ -12,16 +12,19 @@ import org.junit.Test;
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.impl.Controller;
 import de.htwg.se.moerakikemu.model.impl.State;
+import de.htwg.se.moerakikemu.persistence.IFieldDAO;
+import de.htwg.se.moerakikemu.persistence.db4o.FieldDb4oDAO;
 
 public class ControllerTest {
 	IController controller;
 
 	private final String PLAYER1NAME = "Andrew";
 	private final String PLAYER2NAME = "Walter";
-
+	
+	private final IFieldDAO fieldDAO = new FieldDb4oDAO();
 	@Before
 	public void setUp() {
-		controller = new Controller();
+		controller = new Controller(fieldDAO);
 
 		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
 		controller.setPlayer1Name(PLAYER1NAME);
