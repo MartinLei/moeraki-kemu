@@ -1,7 +1,6 @@
 package de.htwg.se.moerakikemu.view.viewimpl;
 
 import java.awt.Point;
-import java.util.Vector;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
@@ -9,9 +8,7 @@ import org.apache.logging.log4j.core.Logger;
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
-import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.util.observer.Event;
 import de.htwg.se.util.observer.IObserver;
 

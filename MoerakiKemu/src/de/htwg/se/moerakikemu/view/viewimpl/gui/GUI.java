@@ -10,7 +10,6 @@ import com.google.inject.Inject;
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.IControllerPlayer;
 import de.htwg.se.moerakikemu.controller.State;
-import de.htwg.se.moerakikemu.view.UserInterface;
 import de.htwg.se.util.observer.Event;
 import de.htwg.se.util.observer.IObserver;
 
