@@ -130,23 +130,26 @@ public class Controller extends Observable implements IController {
 
 		gameField.occupy(position, Element.STARTDOT);
 
-		analyzeField();
+		analyzeField(position);
 		
 		return true;
 	}
 
-	private void analyzeField() {
+	private void analyzeField(Point position) {
 
-		actIslands();
+		actIslands(position);
 
 		if (!isGameFinish())
 			changePlayer();
 	}
 
-	private void actIslands() {
-
+	private void actIslands(Point position) {
+		rule.isOccupiedIsland(gameField,position);
 	}
 
+
+	
+	
 	private boolean isGameFinish() {
 //		if (gameField.isFilled()) {
 //			gameField.setState(State.GAME_FINISHED);

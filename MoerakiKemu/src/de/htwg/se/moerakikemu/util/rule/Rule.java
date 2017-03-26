@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.htwg.se.moerakikemu.model.IField;
+
 public final class Rule {
 
 	private static final List<Point> allowedStartPosition = new ArrayList<>();
@@ -51,4 +53,20 @@ public final class Rule {
 	private static boolean evenNumber(int number) {
 		return number % 2 == 0;
 	}
+	
+	
+	public boolean isOccupiedIsland(IField field, Point posiiton){
+		
+		
+		return false;
+	}
+//	private int occupiedLeft(Point positon){
+//	List<Point> left = new ArrayList<>();
+//	left.add(new Point(-1,1));//top
+//	left.add(new Point(-1,-1));//bottom
+//	left.add(new Point(0,0));//right
+//	left.add(new Point(-2,0));//left
+//	
+//	
+//}
 }
