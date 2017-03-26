@@ -28,153 +28,62 @@ public class TextUI implements IObserver {
 		controller.addObserver(this);
 	}
 
-	/**
-	 * Draws all Spots as squares with an Player-identifying character in it.
-	 * ------ |1||2|... ------ . . . Player 1: x points Player 2: x points
-	 */
 	private static final int MAP_LENGTH = 13;
 
-	private void printMap(){
+	private void printMap() {
 		String mapString = "\n" + getMap();
 		LOGGER.info(mapString);
 	}
+
 	private String getMap() {
-
 		StringBuilder sb = new StringBuilder();
-
+		sb.append(getCollumNumber());
+		sb.append("\n");
 		for (int y = 0; y < MAP_LENGTH; y++) {
-			
-				String line = getMapLine( y);
-				sb.append(line);
-				sb.append("\n");
-			
+			String line = getMapLine(y);
+			sb.append(getFormatNumber(y));
+			sb.append(line);
+			sb.append("\n");
 		}
-		
 		return sb.toString();
-
-		// int edgeLength = myController.getEdgeLength();
-		//
-		// printColumnIdentifiers(edgeLength);
-		// for (int i = 0; i < edgeLength; i++) {
-		// printLine(edgeLength);
-		//
-		// StringBuilder line = new StringBuilder(printLeadingNumber(i + 1,
-		// edgeLength));
-		// for (int j = 0; j < edgeLength; j++) {
-		// Element person = myController.getIsOccupiedBy(i, j);
-		// String name = person.toString();
-		// line.append(drawSpot(name));
-		// }
-		// LOGGER.info(line);
-		// }
-		// printLine(edgeLength);
-		// printPoints();
-
 	}
 
-	private String getMapLine( int y) {
+	private String getCollumNumber(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("   ");
+		for (int i = 0; i < MAP_LENGTH; i++) {
+			String number = getFormatNumber(i);
+			sb.append(number);
+		}
+		return sb.toString();
+	}
+	private String getFormatNumber(int number) {
+		if ( number == 0 || number == 12)
+			return "   ";
+		else if (number < 10)
+			return " " + number + " ";
+		return "" + number + " ";
+	}
+
+	private String getMapLine(int y) {
 		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < MAP_LENGTH; i++) {
 			Element element = controller.getFieldElement(i, y);
+			sb.append(" ");
 			sb.append(element.toString());
+			sb.append(" ");
 		}
 
 		return sb.toString();
 	}
 
-	private String printLeadingNumber(final int currentNumber, final int edgeLength) {
-		int offset = offset(edgeLength).length();
-
-		StringBuilder builder = new StringBuilder(Integer.toString(currentNumber));
-
-		while (builder.length() < offset) {
-			builder.append(" ");
-		}
-
-		return builder.toString();
-	}
-
 	/**
-	 * Prints the points for both players.
-	 */
-	private void printPoints() {
-		String player1Name = controller.getPlayer1Name();
-		int player1Point = controller.getPlayer1Point();
-		String player2Name = controller.getPlayer2Name();
-		int player2Point = controller.getPlayer2Point();
-
-		LOGGER.info(player1Name + " aka " + Element.PLAYER1 + ": " + player1Point + " Punkte");
-		LOGGER.info(player2Name + " aka " + Element.PLAYER2 + ": " + player2Point + " Punkte\n");
-	}
-
-	/**
-	 * Draws a Spot with the Player identifier (i.e. number).
-	 *
-	 * @param playerName
-	 *            Identifier for the player or ' ' if not occupied by player.
-	 */
-	private String drawSpot(final String playerName) {
-		return "|" + playerName + "|";
-	}
-
-	/**
-	 * Calculates the offset for the game field according to the length of the
-	 * number representing the edge length.
-	 *
-	 * @param edgeLength
-	 *            Length of the edge of the game field.
-	 * @return The empty spaces for offset as String, not null.
-	 */
-	private String offset(int edgeLength) {
-		int numDigits = String.valueOf(edgeLength).length();
-
-		StringBuilder offsetBuilder = new StringBuilder();
-		for (int l = 0; l < numDigits; l++) {
-			offsetBuilder.append(" ");
-		}
-		return offsetBuilder.toString();
-	}
-
-	/**
-	 * Prints a horizontal line for separating lines of Spots.
-	 *
-	 * @param edgeLength
-	 *            Number of Spots per edge.
-	 */
-	private void printLine(int edgeLength) {
-		StringBuilder line = new StringBuilder(offset(edgeLength));
-		for (int i = 0; i < edgeLength; i++) {
-			line.append("---");
-		}
-		LOGGER.info(line.toString());
-	}
-
-	/**
-	 * Prints a line with numbers above the game field that identifies the
-	 * columns.
-	 *
-	 * @param edgeLength
-	 *            Length of the game field.
-	 */
-	private void printColumnIdentifiers(final int edgeLength) {
-		StringBuilder headlineBuilder = new StringBuilder(offset(edgeLength));
-		for (int i = 1; i <= edgeLength; i++) {
-			if (i < 10) {
-				headlineBuilder.append(" ").append(i).append(" ");
-			} else {
-				headlineBuilder.append(i).append(" ");
-			}
-		}
-		LOGGER.info(headlineBuilder.toString());
-	}
-
-	/**
-	 * Print the intro
+	 * Print the into
 	 */
 	public void printWelcome() {
 		LOGGER.info("Willkommen zu MoerakiKemu :)");
-		getMap();
+		printMap();
 	}
 
 	/**
