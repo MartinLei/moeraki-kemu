@@ -4,20 +4,22 @@ package de.htwg.se.moerakikemu.model.impl;
  * Enum for the state of a spot
  */
 public enum Element {
-	NONE, WALL, PLAYER1, PLAYER2, STARTDOT;
+	NONE, WALL, ISLAND,PLAYER1, PLAYER2, STARTDOT;
 	
 	
 	@Override
 	public String toString() {
 		switch (this) {
 		case NONE:
-			return "-";
+			return " ";
 		case WALL:
 			return "W";
+		case ISLAND:
+			return "O";
 		case PLAYER1:
-			return "+";
+			return "a";
 		case PLAYER2:
-			return "o";
+			return "b";
 		case STARTDOT:
 			return "#";
 		default:

@@ -41,6 +41,10 @@ public class Field implements IField {
 		for(int y = 0; y< MAP_LENGTH;y++ ){
 			for(int x = 0; x< MAP_LENGTH;x++ ){
 				map[x][y] = new Spot();
+				
+				if( x % 2 == 1 && y %2 == 0|| x % 2 == 0 && y %2 == 1)
+					map[x][y].setElement(Element.ISLAND);
+				
 			}	
 		}		
 	}

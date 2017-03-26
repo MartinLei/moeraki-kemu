@@ -42,7 +42,7 @@ public final class Rule {
 		if (position.x <= 0 || position.x >= 13 && position.y <= 0 || position.y >= 13)
 			return false;
 		
-		if (evenNumber(position.x) && evenNumber(position.y) || !evenNumber(position.x) && !evenNumber(position.y))
+		if (!evenNumber(position.x) && evenNumber(position.y) || evenNumber(position.x) && !evenNumber(position.y))
 			return false;
 
 		return true;

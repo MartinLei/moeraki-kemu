@@ -126,7 +126,7 @@ public class TextUI implements IObserver {
 
 	private void setStone(Point position) {
 		if (position == null || !Rule.isPositionPossibleInput(position)) {
-			LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
+			LOGGER.info("Hier kannst du dein Stein nicht setzen");
 			return;
 		} else if (controller.getState().equals(State.SET_START_DOT)) {
 			if (!controller.setStartDot(position)) {
@@ -143,8 +143,8 @@ public class TextUI implements IObserver {
 
 	private Point getPosition(String coordinate) {
 		String[] parts = coordinate.split("-");
-		int x = Integer.parseInt(parts[0]) - 1;
-		int y = Integer.parseInt(parts[1]) - 1;
+		int x = Integer.parseInt(parts[0]) ;
+		int y = Integer.parseInt(parts[1]) ;
 		
 		return new Point(x, y);
 	}
