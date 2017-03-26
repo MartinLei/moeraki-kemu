@@ -1,11 +1,16 @@
 package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.rules.RunRules;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.controller.Rule;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
 import de.htwg.se.moerakikemu.model.impl.Element;
@@ -18,6 +23,7 @@ import de.htwg.se.moerakikemu.util.observer.Observable;
  */
 @Singleton
 public class Controller extends Observable implements IController {
+	private Rule  rule;
 	private IField gameField;
 	private IFieldDAO fieldDAO;
 	
@@ -28,6 +34,7 @@ public class Controller extends Observable implements IController {
 
 	@Inject
 	public Controller(IFieldDAO fieldDAO) {
+		rule = new Rule();
 		this.fieldDAO = fieldDAO;
 		
 		gameField = new Field();
@@ -55,7 +62,7 @@ public class Controller extends Observable implements IController {
 		gameField.setPlayer2Name(player2Name);
 
 		gameField.setState(State.SET_START_DOT);
-		Point starDotPosisiton = new Point(4, 4);
+		Point starDotPosisiton = new Point(6, 6);
 		setStartDot(starDotPosisiton);
 	}
 
@@ -102,28 +109,6 @@ public class Controller extends Observable implements IController {
 			return Element.STARTDOT;
 
 		return null;
-	}
-
-	private boolean setStartDot(int xCoordinate, int yCoordinate) {
-		int radiusLow;
-		int radiusUp;
-		int length = getEdgeLength() - 1;
-		if (getEdgeLength() % 2 != 0) {
-			radiusLow = (length / 2) - 1;
-			radiusUp = (length / 2) + 1;
-		} else {
-			radiusLow = (length / 2) - 1;
-			radiusUp = (length / 2) + 2;
-		}
-
-		boolean isInMidX = xCoordinate >= radiusLow && xCoordinate <= radiusUp;
-		boolean isInMidY = yCoordinate >= radiusLow && yCoordinate <= radiusUp;
-		if (isInMidX && isInMidY) {
-			xCoordinateStartDot = xCoordinate;
-			yCoordinateStartDot = yCoordinate;
-			return true;
-		}
-		return false;
 	}
 
 	private void testListOfSquares() {
@@ -308,7 +293,7 @@ public class Controller extends Observable implements IController {
 		if (position == null)
 			return false;
 
-		if (!setStartDot(position.x, position.y))
+		if (!rule.isStartDotPosCorrect(position))
 			return false;
 
 		occupy(position.x, position.y);
@@ -318,6 +303,7 @@ public class Controller extends Observable implements IController {
 		notifyObservers();
 		return true;
 	}
+	
 
 	@Override
 	public boolean setDot(Point position) {

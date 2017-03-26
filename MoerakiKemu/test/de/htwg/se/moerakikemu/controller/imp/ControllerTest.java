@@ -18,10 +18,11 @@ import de.htwg.se.moerakikemu.persistence.db4o.FieldDb4oDAO;
 
 public class ControllerTest {
 	IController controller;
+	
 
 	private final String PLAYER1NAME = "Andrew";
 	private final String PLAYER2NAME = "Walter";
-	
+	private final static Point STARTDOT = new Point(6,6);
 	private final IFieldDAO fieldDAO = new FieldDb4oDAO();
 	@Before
 	public void setUp() {
@@ -36,7 +37,7 @@ public class ControllerTest {
 
 	@Test
 	public void test_newGame() {
-		controller.setStartDot(new Point(5, 5));
+		controller.setStartDot(STARTDOT);
 		assertEquals(State.TURN_PLAYER1, controller.getState());
 
 		controller.newGame();
@@ -50,7 +51,7 @@ public class ControllerTest {
 
 	@Test
 	public void test_newGameQickStart() {
-		controller.setStartDot(new Point(5, 5));
+		controller.setStartDot(STARTDOT);
 		assertEquals(State.TURN_PLAYER1, controller.getState());
 
 		controller.newGameQuickStart();
@@ -66,7 +67,7 @@ public class ControllerTest {
 		assertFalse(controller.setStartDot(new Point(0, 0)));
 		assertEquals(State.SET_START_DOT, controller.getState());
 
-		assertTrue(controller.setStartDot(new Point(5, 5)));
+		assertTrue(controller.setStartDot(STARTDOT));
 		assertEquals(State.TURN_PLAYER1, controller.getState());
 	}
 

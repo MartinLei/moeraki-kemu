@@ -151,6 +151,9 @@ public class TextUI implements IObserver {
 	@Override
 	public void update(Event e) {
 		State state = controller.getState();
+		
+		printMap();
+		
 		if (state.equals(State.EXIT_GAME)) {
 			LOGGER.info("Exit MoerakiKemu");
 			LOGGER.info("Have a nice day :)");
@@ -175,7 +178,5 @@ public class TextUI implements IObserver {
 		} else if (state.equals(State.GAME_FINISHED)) {
 			LOGGER.info("Ende keiner hat gewonnen");
 		}
-
-		printMap();
 	}
 }

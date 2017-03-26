@@ -1,10 +1,17 @@
 package de.htwg.se.moerakikemu.controller.impl;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ControllerHelper {
 	private int x,y, maxLength;
 	private int[] squareArray;
 	private boolean finished;
 	private Square square;
+	
+	
+
 	
 	public ControllerHelper (int xCoordinates, int yCoordinates, int maxLength){
 		this.x = xCoordinates;
@@ -13,6 +20,8 @@ public class ControllerHelper {
 		this.finished = false;
 		this.squareArray = new int[17];
 		this.square = new Square();
+		
+
 	}
 
 	public void testSquare(){
