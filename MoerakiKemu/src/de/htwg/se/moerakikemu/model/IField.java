@@ -1,6 +1,7 @@
 package de.htwg.se.moerakikemu.model;
 
 import java.awt.Point;
+import java.util.List;
 
 import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
@@ -23,6 +24,14 @@ public interface IField {
 	boolean occupy(Point position, Element person);
 
 	/**
+	 * get the count of how many cells occupied given player
+	 * @param cells to test
+	 * @param player witch search of
+	 * @return amount of given player on the cells
+	 */
+	int getOccupiedCount(List<Point> cells, Element player);
+	
+	/**
 	 * Determines if the Spot with the given coordinates is currently occupied.
 	 * 
 	 * @param position
@@ -33,28 +42,10 @@ public interface IField {
 	/**
 	 * Returns the element of the cell
 	 * 
-	 * @param x
-	 *            The x-coordinate of the Spot to occupy.
-	 * @param y
-	 *            The y-coordinate of the Spot to occupy.
-	 * @return Element
-	 */
-	Element getElement(int x, int y);
-
-	/**
-	 * Returns the element of the cell
-	 * 
 	 * @param position
 	 * @return Element
 	 */
 	Element getElement(Point position);
-
-	/**
-	 * Determines if all Spots of the field are occupied.
-	 * 
-	 * @return True if all Spots are occupied, else false.
-	 */
-	boolean isFilled();
 
 	/**
 	 * Returns the length of one edge of the (quare) field.
@@ -138,7 +129,7 @@ public interface IField {
 	
 	/**
 	 * get actual player
-	 * @return
+	 * @return player element
 	 */
 	Element getActPlayer();
 	

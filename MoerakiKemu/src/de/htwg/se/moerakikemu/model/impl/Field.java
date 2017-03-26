@@ -1,9 +1,11 @@
 package de.htwg.se.moerakikemu.model.impl;
 
 import java.awt.Point;
+import java.util.List;
 
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.IPlayer;
+import de.htwg.se.moerakikemu.util.rule.Rule;
 
 /**
  * The implementation of field
@@ -13,7 +15,6 @@ public class Field implements IField {
 
 	private static final int EDGE_LENGTH = 12;
 
-	private int occupiedSpots;
 	private Spot[][] map;
 
 	private State state;
@@ -28,8 +29,6 @@ public class Field implements IField {
 	 */
 	public Field() {
 		generateMap();
-
-		occupiedSpots = 0;
 
 		player1 = new Player();
 		player2 = new Player();
@@ -100,31 +99,34 @@ public class Field implements IField {
 
 	@Override
 	public boolean occupy(Point position, Element person) {
-		if (map[position.x][position.y].isOccupied())
+		if (isOccupied(position))
 			return false;
 
 		map[position.x][position.y].occupy(person);
-		occupiedSpots++;
 		return true;
 	}
-
+	
 	@Override
-	public Element getElement(int x, int y) {
-		return map[x][y].getElement();
+	public int getOccupiedCount(List<Point> cells, Element player) {
+		int count = 0;
+		for (Point cell : cells) {
+			Element cellElement = getElement(cell);
+			if (cellElement != null && cellElement.equals(player))
+				count++;
+		}
+		return count;
 	}
+
 
 	@Override
 	public Element getElement(Point position) {
 		if (position == null)
 			return null;
 
-		return getElement(position.x, position.y);
+		return map[position.x][position.y].getElement();
 	}
 
-	@Override
-	public boolean isFilled() {
-		return occupiedSpots == (EDGE_LENGTH * EDGE_LENGTH);
-	}
+
 
 	@Override
 	public State getState() {

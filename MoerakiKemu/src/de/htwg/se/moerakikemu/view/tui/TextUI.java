@@ -36,6 +36,7 @@ public class TextUI implements IObserver {
 	private void printMap() {
 		String mapString = "\n" + getMap();
 		LOGGER.info(mapString);
+		LOGGER.info(controller.getState());
 	}
 
 	private String getMap() {

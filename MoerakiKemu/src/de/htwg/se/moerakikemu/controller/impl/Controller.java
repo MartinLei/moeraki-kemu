@@ -60,7 +60,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public Element getFieldElement(int x, int y) {
-		return gameField.getElement(x, y);
+		return gameField.getElement(new Point (x, y));
 	}
 
 	@Override
@@ -128,7 +128,7 @@ public class Controller extends Observable implements IController {
 		if (position == null || gameField.isOccupied(position))
 			return false;
 
-		gameField.occupy(position, Element.STARTDOT);
+		gameField.occupy(position, gameField.getActPlayer());
 
 		analyzeField(position);
 		
@@ -144,10 +144,24 @@ public class Controller extends Observable implements IController {
 	}
 
 	private void actIslands(Point position) {
-		rule.isOccupiedIsland(gameField,position);
+		
+		if(isOccupiedIsland( position, rule.getShiftleft())){
+			Point newPos = new Point(position.x-1, position.y);
+			gameField.occupy(newPos, Element.POINT_PLAYER1);				
+		}
 	}
 
+	private boolean isOccupiedIsland(Point position, List<Point> shiftTemplate){
+		List<Point> testCells = rule.getShiftedPositions(shiftTemplate, position);
+		int occupied = gameField.getOccupiedCount(testCells, gameField.getActPlayer());
+		
+		if (occupied == 4)
+			return true;
 
+		return false;
+	}
+	
+	
 	
 	
 	private boolean isGameFinish() {
