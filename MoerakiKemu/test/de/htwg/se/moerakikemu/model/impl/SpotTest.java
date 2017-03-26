@@ -17,17 +17,17 @@ public class SpotTest {
 	
 	@Test
 	public void test_isOccupied_firstOccupation_returnsNotEmptyString(){
-		assertTrue(spot.occupy( Person.PLAYER1));
+		assertTrue(spot.occupy( Element.PLAYER1));
 		assertTrue(spot.isOccupied());
-		assertEquals(Person.PLAYER1, spot.getOccupiedBy());
+		assertEquals(Element.PLAYER1, spot.getElement());
 	}
 	
 	@Test
 	public void test_isOccupied_alreadyOccupied_returnsFalse() {
-		assertTrue(spot.occupy( Person.PLAYER1));
+		assertTrue(spot.occupy( Element.PLAYER1));
 		assertTrue(spot.isOccupied());
 		
-		assertFalse(spot.occupy(Person.PLAYER2));
-		assertEquals(Person.PLAYER1, spot.getOccupiedBy());
+		assertFalse(spot.occupy(Element.PLAYER2));
+		assertEquals(Element.PLAYER1, spot.getElement());
 	}
 }

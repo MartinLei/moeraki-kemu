@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.model.impl.Person;
+import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
 
 public class MainPanel extends JPanel {
@@ -39,9 +39,9 @@ public class MainPanel extends JPanel {
 
 			// Occupy Spot
 			int[] coordinates = getButtonCoordinates(pressedButton);
-			Person occupiedPerson = myController.getIsOccupiedBy(coordinates[0] - 1, coordinates[1] - 1);
-			if (occupiedPerson.equals(Person.NONE)) {
-				Person actualPerson = myController.getActualPerson();
+			Element occupiedPerson = myController.getFieldElement(coordinates[0] - 1, coordinates[1] - 1);
+			if (occupiedPerson.equals(Element.NONE)) {
+				Element actualPerson = myController.getActualPerson();
 				setSpotColor(pressedButton,actualPerson);
 
 				Point mousePosition = new Point(coordinates[0] - 1, coordinates[1] - 1);
@@ -93,7 +93,7 @@ public class MainPanel extends JPanel {
 		int fieldLength = myController.getEdgeLength();
 		for (int i = 0; i < fieldLength; i++) {
 			for (int j = 0; j < fieldLength; j++) {
-				setSpotColor(field[i][j], myController.getIsOccupiedBy(i, j));
+				setSpotColor(field[i][j], myController.getFieldElement(i, j));
 			}
 		}
 		this.repaint();
@@ -111,14 +111,14 @@ public class MainPanel extends JPanel {
 		return xyCoordinates;
 	}
 
-	private void setSpotColor(JButton buttonToChange, Person person) {
-		if (person.equals(Person.PLAYER1)) {
+	private void setSpotColor(JButton buttonToChange, Element person) {
+		if (person.equals(Element.PLAYER1)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(blackIcon);
-		} else if (person.equals(Person.PLAYER2)) {
+		} else if (person.equals(Element.PLAYER2)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(redIcon);
-		} else if (person.equals(Person.STARTDOT)) {
+		} else if (person.equals(Element.STARTDOT)) {
 			buttonToChange.setText("");
 			buttonToChange.setIcon(greenIcon);
 		} else {

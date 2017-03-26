@@ -19,10 +19,10 @@ public class PersonTest {
 
 	@Test
 	public void test_toString() {
-		assertEquals(NONE, Person.NONE.toString());
-		assertEquals(PLAYER1, Person.PLAYER1.toString());
-		assertEquals(PLAYER2, Person.PLAYER2.toString());
-		assertEquals(STARTDOT, Person.STARTDOT.toString());
+		assertEquals(NONE, Element.NONE.toString());
+		assertEquals(PLAYER1, Element.PLAYER1.toString());
+		assertEquals(PLAYER2, Element.PLAYER2.toString());
+		assertEquals(STARTDOT, Element.STARTDOT.toString());
 	}
 	
 }

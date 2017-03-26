@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.impl.Controller;
-import de.htwg.se.moerakikemu.model.impl.Person;
+import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 import de.htwg.se.moerakikemu.persistence.db4o.FieldDb4oDAO;
@@ -243,6 +243,6 @@ public class ControllerTest {
 	public void test_getIsOccupiedBy(){
 		controller.setStartDot(new Point(5, 5));
 		assertTrue(controller.setDot(new Point(1, 1)));
-		assertEquals(Person.PLAYER1, controller.getIsOccupiedBy(1, 1));
+		assertEquals(Element.PLAYER1, controller.getFieldElement(1, 1));
 	}
 }

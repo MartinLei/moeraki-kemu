@@ -5,21 +5,27 @@ package de.htwg.se.moerakikemu.model.impl;
  */
 public class Spot {
 
-	private Person occupiedBy;
+	private Element occupiedBy;
 
 	/**
 	 * Initial a spot with no person who occupied it
 	 */
 	public Spot() {
-		occupiedBy = Person.NONE;
+		occupiedBy = Element.NONE;
+	}
+
+	public void setElement(Element element) {
+		occupiedBy = element;
 	}
 
 	/**
-	 * occupy the spot 
-	 * @param person a person
+	 * occupy the spot
+	 * 
+	 * @param person
+	 *            a person
 	 * @return true if the cell is not occupied
 	 */
-	public boolean occupy(final Person person) {
+	public boolean occupy(final Element person) {
 		if (isOccupied())
 			return false;
 
@@ -29,17 +35,19 @@ public class Spot {
 
 	/**
 	 * Tell if a player has occupied the cell
+	 * 
 	 * @return false if free
 	 */
 	public boolean isOccupied() {
-		return occupiedBy != Person.NONE;
+		return occupiedBy != Element.NONE;
 	}
 
 	/**
 	 * Get the person who occupied it
+	 * 
 	 * @return
 	 */
-	public Person getOccupiedBy() {
+	public Element getElement() {
 		return occupiedBy;
 	}
 

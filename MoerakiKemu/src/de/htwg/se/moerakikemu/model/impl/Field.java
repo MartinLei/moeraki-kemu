@@ -7,9 +7,12 @@ import de.htwg.se.moerakikemu.model.IPlayer;
  * The implementation of field
  */
 public class Field implements IField {
+	private static final int MAP_LENGTH = 13;
+	
 	private static final int EDGE_LENGTH = 12;
+	
 	private int occupiedSpots;
-	private Spot[][] array;
+	private Spot[][] map;
 
 	private State state;
 	
@@ -20,16 +23,59 @@ public class Field implements IField {
 	 * Constructor
 	 */
 	public Field() {
-		array = new Spot[EDGE_LENGTH][EDGE_LENGTH];
-		for (int i = 0; i < EDGE_LENGTH; i++) {
-			for (int j = 0; j < EDGE_LENGTH; j++) {
-				array[i][j] = new Spot();
-			}
-		}
+		generateMap();
+		
 		occupiedSpots = 0;
 
 		player1 = new Player();
 		player2 = new Player();
+	}
+	
+	private void generateMap(){
+		map = new Spot[MAP_LENGTH][MAP_LENGTH];
+		generateMapclean();
+		generateMapWall();
+	}
+	
+	private void generateMapclean(){
+		for(int y = 0; y< MAP_LENGTH;y++ ){
+			for(int x = 0; x< MAP_LENGTH;x++ ){
+				map[x][y] = new Spot();
+			}	
+		}		
+	}
+	
+	private void generateMapWall(){
+		for(int i = 0; i< MAP_LENGTH;i++ ){
+			// top row
+			map[i][0].setElement(Element.WALL);
+			// bottom row
+			map[i][12].setElement(Element.WALL);
+			// left side
+			map[0][i].setElement(Element.WALL);
+			// right side
+			map[12][i].setElement(Element.WALL);
+		}
+		
+		//top left corner
+		map[1][1].setElement(Element.WALL);
+		map[2][1].setElement(Element.WALL);
+		map[1][2].setElement(Element.WALL);
+		
+		//top right corner
+		map[10][1].setElement(Element.WALL);
+		map[11][1].setElement(Element.WALL);
+		map[11][2].setElement(Element.WALL);
+		
+		//bottom left corner
+		map[1][10].setElement(Element.WALL);
+		map[1][11].setElement(Element.WALL);
+		map[2][11].setElement(Element.WALL);
+		
+		//bottom right corner
+		map[11][10].setElement(Element.WALL);
+		map[10][11].setElement(Element.WALL);
+		map[11][11].setElement(Element.WALL);
 	}
 	
 	@Override
@@ -39,22 +85,22 @@ public class Field implements IField {
 
 	@Override
 	public boolean getIsOccupied(int x, int y) {
-		return array[x][y].isOccupied();
+		return map[x][y].isOccupied();
 	}
 
 	@Override
-	public boolean occupy(int x, int y, Person person) {
-		if (array[x][y].isOccupied())
+	public boolean occupy(int x, int y, Element person) {
+		if (map[x][y].isOccupied())
 			return false;
 
-		array[x][y].occupy(person);
+		map[x][y].occupy(person);
 		occupiedSpots++;
 		return true;
 	}
 
 	@Override
-	public Person getIsOccupiedFrom(int xCoordinate, int yCoordinate) {
-		return array[xCoordinate][yCoordinate].getOccupiedBy();
+	public Element getElement(int x, int y) {
+		return map[x][y].getElement();
 	}
 
 	@Override

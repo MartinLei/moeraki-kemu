@@ -8,7 +8,7 @@ import com.google.inject.Singleton;
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
-import de.htwg.se.moerakikemu.model.impl.Person;
+import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 import de.htwg.se.moerakikemu.util.observer.Observable;
@@ -60,8 +60,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public Person getIsOccupiedBy(int x, int y) {
-		return gameField.getIsOccupiedFrom(x, y);
+	public Element getFieldElement(int x, int y) {
+		return gameField.getElement(x, y);
 	}
 
 	@Override
@@ -70,11 +70,11 @@ public class Controller extends Observable implements IController {
 	}
 
 	private int occupy(int x, int y) {
-		if (!gameField.getIsOccupiedFrom(x, y).equals(Person.NONE)) 
+		if (!gameField.getElement(x, y).equals(Element.NONE)) 
 			return -1;
 		
 
-		Person actPerson = getActualPerson();
+		Element actPerson = getActualPerson();
 		gameField.occupy(x, y, actPerson);
 		helper = new ControllerHelper(x, y, getEdgeLength() - 1);
 		helper.testSquare();
@@ -92,14 +92,14 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public Person getActualPerson() {
+	public Element getActualPerson() {
 		State sate = gameField.getState();
 		if (sate.equals(State.TURN_PLAYER1))
-			return Person.PLAYER1;
+			return Element.PLAYER1;
 		else if (sate.equals(State.TURN_PLAYER2))
-			return Person.PLAYER2;
+			return Element.PLAYER2;
 		else if (sate.equals(State.SET_START_DOT))
-			return Person.STARTDOT;
+			return Element.STARTDOT;
 
 		return null;
 	}
@@ -167,11 +167,11 @@ public class Controller extends Observable implements IController {
 	}
 
 	private int checkOccupationReturnPlayerGettingPoint(final int x, final int y) {
-		Person person = gameField.getIsOccupiedFrom(x, y);
+		Element person = gameField.getElement(x, y);
 
-		if (person.equals(Person.PLAYER1)) {
+		if (person.equals(Element.PLAYER1)) {
 			return 0;
-		} else if (person.equals(Person.PLAYER2)) {
+		} else if (person.equals(Element.PLAYER2)) {
 			return 1;
 		} else {
 			return -1;
@@ -225,8 +225,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	private boolean isOccupiedByCurrentPlayer(final int x, final int y) {
-		Person actualPerson = getActualPerson();
-		Person fieldPerson =  gameField.getIsOccupiedFrom(x, y);
+		Element actualPerson = getActualPerson();
+		Element fieldPerson =  gameField.getElement(x, y);
 		return fieldPerson.equals(actualPerson);
 	}
 

@@ -3,15 +3,17 @@ package de.htwg.se.moerakikemu.model.impl;
 /**
  * Enum for the state of a spot
  */
-public enum Person {
-	NONE, PLAYER1, PLAYER2, STARTDOT;
+public enum Element {
+	NONE, WALL, PLAYER1, PLAYER2, STARTDOT;
 	
 	
 	@Override
 	public String toString() {
 		switch (this) {
 		case NONE:
-			return " ";
+			return "-";
+		case WALL:
+			return "W";
 		case PLAYER1:
 			return "+";
 		case PLAYER2:

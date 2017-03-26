@@ -22,7 +22,7 @@ public class MoerakiKemu {
 		Injector injector = Guice.createInjector(new MoerakiKemuModule());
 
 		controller = injector.getInstance(IController.class);
-	    gui = injector.getInstance(GUI.class);
+	   // gui = injector.getInstance(GUI.class);
 		tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
 
