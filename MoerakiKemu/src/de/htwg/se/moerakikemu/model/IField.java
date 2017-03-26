@@ -1,5 +1,7 @@
 package de.htwg.se.moerakikemu.model;
 
+import java.awt.Point;
+
 import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
 
@@ -8,56 +10,70 @@ import de.htwg.se.moerakikemu.model.impl.State;
  */
 public interface IField {
 
-	
 	/**
-	 * Tries to occupy the Spot with the given coordinates.
-	 * If another player already occupied the given Spot,
-	 * another can not re-occupy this field.
-	 * @param x The x-coordinate of the Spot to occupy.
-	 * @param y The y-coordinate of the Spot to occupy.
-	 * @param person The person  which occupy the cell.
+	 * Tries to occupy the Spot with the given coordinates. If another player
+	 * already occupied the given Spot, another can not re-occupy this field.
+	 * 
+	 * @param position
+	 * @param person
+	 *            The person which occupy the cell.
 	 * @return True if the Spot was empty and is now successfully occupied,
-	 * 			false if the Spot was already occupied.
+	 *         false if the Spot was already occupied.
 	 */
-	boolean occupy(int x, int y,  Element person);
-	
+	boolean occupy(Point position, Element person);
+
 	/**
 	 * Determines if the Spot with the given coordinates is currently occupied.
-	 * @param x The x-coordinate of the Spot to occupy.
-	 * @param y The y-coordinate of the Spot to occupy.
+	 * 
+	 * @param position
 	 * @return True if the current Spot is occupied, else false.
 	 */
-	boolean getIsOccupied(int x, int y);
-	
+	boolean isOccupied(Point position);
+
 	/**
 	 * Returns the element of the cell
-	 * @param x The x-coordinate of the Spot to occupy.
-	 * @param y The y-coordinate of the Spot to occupy.
+	 * 
+	 * @param x
+	 *            The x-coordinate of the Spot to occupy.
+	 * @param y
+	 *            The y-coordinate of the Spot to occupy.
 	 * @return Element
 	 */
 	Element getElement(int x, int y);
-	
+
+	/**
+	 * Returns the element of the cell
+	 * 
+	 * @param position
+	 * @return Element
+	 */
+	Element getElement(Point position);
+
 	/**
 	 * Determines if all Spots of the field are occupied.
+	 * 
 	 * @return True if all Spots are occupied, else false.
 	 */
 	boolean isFilled();
-	
+
 	/**
 	 * Returns the length of one edge of the (quare) field.
+	 * 
 	 * @return
 	 */
 	int getEdgeLength();
-	
+
 	/**
 	 * Get the game state
+	 * 
 	 * @return state
 	 */
 	State getState();
-	
+
 	/**
 	 * Set the game state
-	 * @param newState 
+	 * 
+	 * @param newState
 	 */
 	void setState(State newState);
 
@@ -67,49 +83,67 @@ public interface IField {
 	 * @return A String, not null.
 	 */
 	String getPlayer1Name();
-	
+
 	/**
 	 * Returns the name of player2.
 	 *
 	 * @return A String, not null.
 	 */
 	String getPlayer2Name();
-	
+
 	/**
 	 * Returns the points of the first player.
 	 *
 	 * @return Amount of points, 0 or more.
 	 */
 	int getPlayer1Points();
-	
+
 	/**
 	 * Returns the points of the second player.
 	 *
 	 * @return Amount of points, 0 or more.
 	 */
 	int getPlayer2Points();
-	
+
 	/**
 	 * adds a Point to Player 1
-	 * @param A String, not null
+	 * 
+	 * @param A
+	 *            String, not null
 	 */
 	void addAPointPlayer1();
-	
+
 	/**
 	 * adds a Point to Player 2
-	 * @param A String, not null
+	 * 
+	 * @param A
+	 *            String, not null
 	 */
 	void addAPointPlayer2();
-	
+
 	/**
 	 * set player1 name
+	 * 
 	 * @param name
 	 */
 	void setPlayer1Name(String name);
-	
+
 	/**
 	 * set player2 name
+	 * 
 	 * @param name
 	 */
 	void setPlayer2Name(String name);
+	
+	
+	/**
+	 * get actual player
+	 * @return
+	 */
+	Element getActPlayer();
+	
+	/**
+	 * change actual player
+	 */
+	void changeActPlayer();
 }

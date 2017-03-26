@@ -1,5 +1,7 @@
 package de.htwg.se.moerakikemu.model.impl;
 
+import java.awt.Point;
+
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.IPlayer;
 
@@ -8,49 +10,53 @@ import de.htwg.se.moerakikemu.model.IPlayer;
  */
 public class Field implements IField {
 	private static final int MAP_LENGTH = 13;
-	
+
 	private static final int EDGE_LENGTH = 12;
-	
+
 	private int occupiedSpots;
 	private Spot[][] map;
 
 	private State state;
-	
+
 	private IPlayer player1;
 	private IPlayer player2;
-	
+
+	private Element actualPlayer;
+
 	/**
 	 * Constructor
 	 */
 	public Field() {
 		generateMap();
-		
+
 		occupiedSpots = 0;
 
 		player1 = new Player();
 		player2 = new Player();
+
+		actualPlayer = Element.PLAYER1;
 	}
-	
-	private void generateMap(){
+
+	private void generateMap() {
 		map = new Spot[MAP_LENGTH][MAP_LENGTH];
 		generateMapclean();
 		generateMapWall();
 	}
-	
-	private void generateMapclean(){
-		for(int y = 0; y< MAP_LENGTH;y++ ){
-			for(int x = 0; x< MAP_LENGTH;x++ ){
+
+	private void generateMapclean() {
+		for (int y = 0; y < MAP_LENGTH; y++) {
+			for (int x = 0; x < MAP_LENGTH; x++) {
 				map[x][y] = new Spot();
-				
-				if( x % 2 == 1 && y %2 == 0|| x % 2 == 0 && y %2 == 1)
+
+				if (x % 2 == 1 && y % 2 == 0 || x % 2 == 0 && y % 2 == 1)
 					map[x][y].setElement(Element.ISLAND);
-				
-			}	
-		}		
+
+			}
+		}
 	}
-	
-	private void generateMapWall(){
-		for(int i = 0; i< MAP_LENGTH;i++ ){
+
+	private void generateMapWall() {
+		for (int i = 0; i < MAP_LENGTH; i++) {
 			// top row
 			map[i][0].setElement(Element.WALL);
 			// bottom row
@@ -60,44 +66,44 @@ public class Field implements IField {
 			// right side
 			map[12][i].setElement(Element.WALL);
 		}
-		
-		//top left corner
+
+		// top left corner
 		map[1][1].setElement(Element.WALL);
 		map[2][1].setElement(Element.WALL);
 		map[1][2].setElement(Element.WALL);
-		
-		//top right corner
+
+		// top right corner
 		map[10][1].setElement(Element.WALL);
 		map[11][1].setElement(Element.WALL);
 		map[11][2].setElement(Element.WALL);
-		
-		//bottom left corner
+
+		// bottom left corner
 		map[1][10].setElement(Element.WALL);
 		map[1][11].setElement(Element.WALL);
 		map[2][11].setElement(Element.WALL);
-		
-		//bottom right corner
+
+		// bottom right corner
 		map[11][10].setElement(Element.WALL);
 		map[10][11].setElement(Element.WALL);
 		map[11][11].setElement(Element.WALL);
 	}
-	
+
 	@Override
 	public int getEdgeLength() {
 		return EDGE_LENGTH;
 	}
 
 	@Override
-	public boolean getIsOccupied(int x, int y) {
-		return map[x][y].isOccupied();
+	public boolean isOccupied(Point position) {
+		return map[position.x][position.y].isOccupied();
 	}
 
 	@Override
-	public boolean occupy(int x, int y, Element person) {
-		if (map[x][y].isOccupied())
+	public boolean occupy(Point position, Element person) {
+		if (map[position.x][position.y].isOccupied())
 			return false;
 
-		map[x][y].occupy(person);
+		map[position.x][position.y].occupy(person);
 		occupiedSpots++;
 		return true;
 	}
@@ -105,6 +111,14 @@ public class Field implements IField {
 	@Override
 	public Element getElement(int x, int y) {
 		return map[x][y].getElement();
+	}
+
+	@Override
+	public Element getElement(Point position) {
+		if (position == null)
+			return null;
+
+		return getElement(position.x, position.y);
 	}
 
 	@Override
@@ -161,4 +175,18 @@ public class Field implements IField {
 	public void setPlayer2Name(String name) {
 		player2.setName(name);
 	}
+
+	@Override
+	public Element getActPlayer() {
+		return actualPlayer;
+	}
+
+	@Override
+	public void changeActPlayer() {
+		if (actualPlayer.equals(Element.PLAYER1))
+			actualPlayer = Element.PLAYER2;
+		else
+			actualPlayer = Element.PLAYER1;
+	}
+
 }

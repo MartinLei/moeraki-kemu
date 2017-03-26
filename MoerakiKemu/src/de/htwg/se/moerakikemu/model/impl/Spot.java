@@ -39,7 +39,7 @@ public class Spot {
 	 * @return false if free
 	 */
 	public boolean isOccupied() {
-		return occupiedBy != Element.NONE;
+		return occupiedBy == Element.PLAYER1 || occupiedBy == Element.PLAYER2;
 	}
 
 	/**

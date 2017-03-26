@@ -1,32 +1,36 @@
 package de.htwg.se.moerakikemu.model.impl;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import de.htwg.se.moerakikemu.model.impl.Spot;
 
 public class SpotTest {
 	Spot spot;
 
 	@Before
-	public void setUp(){
+	public void setUp() {
 		spot = new Spot();
 	}
-	
+
 	@Test
-	public void test_isOccupied_firstOccupation_returnsNotEmptyString(){
-		assertTrue(spot.occupy( Element.PLAYER1));
+	public void test_isOccupied() {
+		spot.setElement(Element.PLAYER1);
 		assertTrue(spot.isOccupied());
-		assertEquals(Element.PLAYER1, spot.getElement());
-	}
-	
-	@Test
-	public void test_isOccupied_alreadyOccupied_returnsFalse() {
-		assertTrue(spot.occupy( Element.PLAYER1));
+		spot.setElement(Element.PLAYER2);
 		assertTrue(spot.isOccupied());
 		
+		spot.setElement(Element.WALL);
+		assertFalse(spot.isOccupied());
+	}
+
+	@Test
+	public void test_isOccupied_alreadyOccupied_returnsFalse() {
+		assertTrue(spot.occupy(Element.PLAYER1));
+		assertTrue(spot.isOccupied());
+
 		assertFalse(spot.occupy(Element.PLAYER2));
 		assertEquals(Element.PLAYER1, spot.getElement());
 	}

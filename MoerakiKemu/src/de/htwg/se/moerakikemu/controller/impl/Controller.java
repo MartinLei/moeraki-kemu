@@ -82,7 +82,7 @@ public class Controller extends Observable implements IController {
 		
 
 		Element actPerson = getActualPerson();
-		gameField.occupy(x, y, actPerson);
+	//	gameField.occupy(x, y, actPerson);
 		helper = new ControllerHelper(x, y, getEdgeLength() - 1);
 		helper.testSquare();
 		testListOfSquares();
@@ -296,10 +296,9 @@ public class Controller extends Observable implements IController {
 		if (!rule.isStartDotPosCorrect(position))
 			return false;
 
-		occupy(position.x, position.y);
+		gameField.occupy(position, Element.STARTDOT);
 		gameField.setState(State.TURN_PLAYER1);
 		
-
 		notifyObservers();
 		return true;
 	}
@@ -307,9 +306,11 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public boolean setDot(Point position) {
-		if (position == null)
+		if (position == null || gameField.isOccupied(position))
 			return false;
 
+		
+		gameField.occupy(position, Element.STARTDOT);
 		if (occupy(position.x, position.y) != 0)
 			return false;
 
