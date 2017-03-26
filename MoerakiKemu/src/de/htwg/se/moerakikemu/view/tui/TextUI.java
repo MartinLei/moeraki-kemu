@@ -7,12 +7,15 @@ import org.apache.logging.log4j.core.Logger;
 
 import com.google.inject.Inject;
 
+
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.Spot;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
+import de.htwg.se.moerakikemu.util.rule.Rule;
+import de.htwg.se.moerakikemu.util.rule.RuleTest;
 
 /**
  * Text User Interface
@@ -48,7 +51,7 @@ public class TextUI implements IObserver {
 		return sb.toString();
 	}
 
-	private String getCollumNumber(){
+	private String getCollumNumber() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("   ");
 		for (int i = 0; i < MAP_LENGTH; i++) {
@@ -57,8 +60,9 @@ public class TextUI implements IObserver {
 		}
 		return sb.toString();
 	}
+
 	private String getFormatNumber(int number) {
-		if ( number == 0 || number == 12)
+		if (number == 0 || number == 12)
 			return "   ";
 		else if (number < 10)
 			return " " + number + " ";
@@ -121,12 +125,10 @@ public class TextUI implements IObserver {
 	}
 
 	private void setStone(Point position) {
-		if (position == null) {
+		if (position == null || !Rule.isPositionPossibleInput(position)) {
 			LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
 			return;
-		}
-
-		if (controller.getState().equals(State.SET_START_DOT)) {
+		} else if (controller.getState().equals(State.SET_START_DOT)) {
 			if (!controller.setStartDot(position)) {
 				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
 			}
@@ -137,23 +139,22 @@ public class TextUI implements IObserver {
 		}
 	}
 
+
+
 	private Point getPosition(String coordinate) {
 		String[] parts = coordinate.split("-");
 		int x = Integer.parseInt(parts[0]) - 1;
 		int y = Integer.parseInt(parts[1]) - 1;
-
-		if (x >= 0 && x <= 11 && y >= 0 && y <= 11)
-			return new Point(x, y);
-
-		return null;
+		
+		return new Point(x, y);
 	}
 
 	@Override
 	public void update(Event e) {
 		State state = controller.getState();
-		
+
 		printMap();
-		
+
 		if (state.equals(State.EXIT_GAME)) {
 			LOGGER.info("Exit MoerakiKemu");
 			LOGGER.info("Have a nice day :)");
