@@ -41,7 +41,7 @@ public class MainPanel extends JPanel {
 			int[] coordinates = getButtonCoordinates(pressedButton);
 			Element occupiedPerson = myController.getFieldElement(coordinates[0] - 1, coordinates[1] - 1);
 			if (occupiedPerson.equals(Element.NONE)) {
-				Element actualPerson = myController.getActualPerson();
+				Element actualPerson = getActualPerson();
 				setSpotColor(pressedButton,actualPerson);
 
 				Point mousePosition = new Point(coordinates[0] - 1, coordinates[1] - 1);
@@ -54,6 +54,19 @@ public class MainPanel extends JPanel {
 		}
 	};
 
+	
+	public Element getActualPerson() {
+		State sate = myController.getState();
+		if (sate.equals(State.TURN_PLAYER1))
+			return Element.PLAYER1;
+		else if (sate.equals(State.TURN_PLAYER2))
+			return Element.PLAYER2;
+		else if (sate.equals(State.SET_START_DOT))
+			return Element.STARTDOT;
+
+		return null;
+	}
+	
 	public MainPanel(IController controller, final int fieldLength) {
 		super();
 		this.myController = controller;
@@ -90,7 +103,7 @@ public class MainPanel extends JPanel {
 	}
 
 	public void updateField() {
-		int fieldLength = myController.getEdgeLength();
+		int fieldLength = 13;
 		for (int i = 0; i < fieldLength; i++) {
 			for (int j = 0; j < fieldLength; j++) {
 				setSpotColor(field[i][j], myController.getFieldElement(i, j));

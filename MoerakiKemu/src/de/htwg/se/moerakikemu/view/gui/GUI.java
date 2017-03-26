@@ -29,7 +29,7 @@ public class GUI extends JFrame implements IObserver {
 		this.myController = newController;
 		myController.addObserver(this);
 
-		this.myMainPanel = new MainPanel(myController, myController.getEdgeLength());
+		this.myMainPanel = new MainPanel(myController, 13);
 		this.myMessagePanel = new MessagePanel(myController);
 
 		this.setJMenuBar(new MainMenu(myController));

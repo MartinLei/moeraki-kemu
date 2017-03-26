@@ -21,12 +21,6 @@ public interface IController extends IObservable {
 	 */
 	Element getFieldElement(int x, int y);
 
-	/**
-	 * Returns the length of one edge of the game field.
-	 *
-	 * @return Number > 0.
-	 */
-	int getEdgeLength();
 
 	/**
 	 * quit the game and set the sate to exit game
@@ -115,12 +109,6 @@ public interface IController extends IObservable {
 	 * @return false if the position is already occupied
 	 */
 	boolean setDot(Point position);
-
-	/**
-	 * Get the actual Person
-	 * @return person
-	 */
-	Element getActualPerson();
 
 	/**
 	 * Save game to db

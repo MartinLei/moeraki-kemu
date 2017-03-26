@@ -183,10 +183,13 @@ public class Field implements IField {
 
 	@Override
 	public void changeActPlayer() {
-		if (actualPlayer.equals(Element.PLAYER1))
+		if (actualPlayer.equals(Element.PLAYER1)){
 			actualPlayer = Element.PLAYER2;
-		else
+			setState(State.TURN_PLAYER2);
+		}else{
 			actualPlayer = Element.PLAYER1;
+			setState(State.TURN_PLAYER1);
+		}
 	}
 
 }
