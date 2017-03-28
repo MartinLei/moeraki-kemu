@@ -149,6 +149,13 @@ public interface IField {
 	 * @return player point element
 	 */
 	Element getCurrentPlayerPointElement();
+	
+	/**
+	 * get the player half point element of the current player
+	 * 
+	 * @return player half point element
+	 */
+	Element getCurrentPlayerHalfPointElement();
 
 	/**
 	 * change actual player

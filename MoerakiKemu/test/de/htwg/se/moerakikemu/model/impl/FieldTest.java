@@ -119,6 +119,15 @@ public class FieldTest {
 	}
 
 	@Test
+	public void test_getCurrentPlayerHalfPointElement() {
+		assertEquals(Element.HALF_POINT_PLAYER1, field.getCurrentPlayerHalfPointElement());
+		field.changeActPlayer();
+		assertEquals(Element.HALF_POINT_PLAYER2, field.getCurrentPlayerHalfPointElement());
+
+	}
+
+
+	@Test
 	public void test_getNextPlayer() {
 		assertEquals(Element.PLAYER2, field.getNextPlayer());
 		field.changeActPlayer();

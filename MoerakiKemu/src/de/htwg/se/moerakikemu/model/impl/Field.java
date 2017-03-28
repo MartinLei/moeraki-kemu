@@ -211,4 +211,12 @@ public class Field implements IField {
 			return Element.POINT_PLAYER2;
 	}
 
+	@Override
+	public Element getCurrentPlayerHalfPointElement() {
+		Element currentPlayer = getCurrentPlayer();
+		if(currentPlayer.equals(Element.PLAYER1))
+			return Element.HALF_POINT_PLAYER1;
+		else 
+			return Element.HALF_POINT_PLAYER2;
+	}
 }

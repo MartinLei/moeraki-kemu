@@ -72,21 +72,54 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void test_isOccupiedIsland() {
-		// Set 4 Stone Player1 middle, 3Sonte Player2 left wall
+	public void test_isOccupiedIsland_1() {
+		// Set 4 Stone Player1 middle, 3 Stone Player2 left wall
 		assertTrue(controller.setDot(new Point(4, 4)));
 		assertTrue(controller.setDot(new Point(1, 5)));
 		assertTrue(controller.setDot(new Point(3, 5)));
-		assertTrue(controller.setDot(new Point(2, 6)));
-		assertTrue(controller.setDot(new Point(4, 6)));
 		assertTrue(controller.setDot(new Point(1, 7)));
+		assertTrue(controller.setDot(new Point(4, 6)));
+		assertTrue(controller.setDot(new Point(2, 6)));
 		assertTrue(controller.setDot(new Point(5, 5)));
 
-		// test left player1
+		// test left player2 half point
+		assertEquals(Element.HALF_POINT_PLAYER2, controller.getFieldElement(1, 6));
+
+		// player1 win
 		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
-		// test left player2
-		System.out.println(controller.getFieldElement(1, 6));
-		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(1, 6));
+		assertEquals(State.WON, controller.getState());
+	}
+
+	@Test
+	public void test_isOccupiedIsland_2() {
+		// Set 3 Stone Player1 middle, 1 Stone Player2 to the island
+		assertTrue(controller.setDot(new Point(4, 4)));
+		assertTrue(controller.setDot(new Point(1, 5)));
+		assertTrue(controller.setDot(new Point(2, 6)));
+		assertTrue(controller.setDot(new Point(1, 7)));
+		assertTrue(controller.setDot(new Point(4, 6)));
+		assertTrue(controller.setDot(new Point(3, 5)));
+		assertTrue(controller.setDot(new Point(5, 5)));
+
+		assertEquals(Element.ISLAND, controller.getFieldElement(1, 6));
+
+		// player1 point
+		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
+	}
+
+	@Test
+	public void test_isOccupiedIsland_3() {
+		// Set 2 Stone Player1 middle, 2 Stone Player2 to the island
+		assertTrue(controller.setDot(new Point(1,5)));
+		assertTrue(controller.setDot(new Point(4, 4)));
+		assertTrue(controller.setDot(new Point(2, 6)));
+		assertTrue(controller.setDot(new Point(1, 7)));
+		assertTrue(controller.setDot(new Point(4, 6)));
+		assertTrue(controller.setDot(new Point(3, 5)));
+		assertTrue(controller.setDot(new Point(5, 5)));
+
+		assertEquals(Element.ISLAND, controller.getFieldElement(1, 6));
+		assertEquals(Element.ISLAND, controller.getFieldElement(4, 5));
 	}
 
 	// @Test

@@ -4,7 +4,7 @@ package de.htwg.se.moerakikemu.model.impl;
  * Enum for the state of a spot
  */
 public enum Element {
-	NONE, WALL, ISLAND,PLAYER1, PLAYER2, POINT_PLAYER1, POINT_PLAYER2, STARTDOT;
+	NONE, WALL, ISLAND,PLAYER1, PLAYER2, POINT_PLAYER1, POINT_PLAYER2, HALF_POINT_PLAYER1, HALF_POINT_PLAYER2, STARTDOT;
 	
 	
 	@Override
@@ -23,6 +23,10 @@ public enum Element {
 		case POINT_PLAYER1:
 			return "A";
 		case POINT_PLAYER2:
+			return "B";
+		case HALF_POINT_PLAYER1:
+			return "A";
+		case HALF_POINT_PLAYER2:
 			return "B";
 		case STARTDOT:
 			return "#";

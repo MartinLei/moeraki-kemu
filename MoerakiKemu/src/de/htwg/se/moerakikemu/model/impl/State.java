@@ -16,6 +16,7 @@ public enum State {
 	GAME_FINISHED,		// No one win the game
 
 	EXIT_GAME			// Exit the game
+, WON
 	;
 	
 }

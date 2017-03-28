@@ -141,45 +141,48 @@ public class Controller extends Observable implements IController {
 
 	private void analyzeField(Point position) {
 
-		actIslands(position);
+		State newState = actIslands(position);
 
+		if (newState != null) {
+			gameField.setState(newState);
+			notifyObservers();
+			return;
+			
+		}
 		if (!isGameFinish())
 			changePlayer();
 	}
 
-	private void actIslands(Point position) {
-		Element newIslandElement = getNewIslandElement(position, rule.getShiftleft());
-		Point islandPosition = new Point(position.x - 1, position.y);
-		
-		
-		if (newIslandElement.equals(Element.NONE))
-			return;
-		gameField.occupy(islandPosition, newIslandElement);
+	private State actIslands(Point position) {
 
+		Point islandPosition = new Point(position.x - 1, position.y);
+		State state = actIslandCell(position, islandPosition, rule.getShiftleft());
+		return state;
 	}
 
-	private Element getNewIslandElement(Point position, List<Point> shiftTemplate) {
+	private State actIslandCell(Point position, Point islandPosition, List<Point> shiftTemplate) {
 		List<Point> testCells = rule.getShiftedPositions(shiftTemplate, position);
 		int occupiedCurrentPlayer = gameField.getOccupiedCount(testCells, gameField.getCurrentPlayer());
 		int occupiedNextPlayer = gameField.getOccupiedCount(testCells, gameField.getNextPlayer());
 
+		State state = null;
+		Element newIslandElement = null;
 		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
-			// boarder point
-			return gameField.getCurrentPlayerPointElement();
+			// boarder half point
+			newIslandElement = gameField.getCurrentPlayerHalfPointElement();
 		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
 			// normal point
-			return gameField.getCurrentPlayerPointElement();
+			newIslandElement = gameField.getCurrentPlayerPointElement();
 		} else if (occupiedCurrentPlayer == 4 && occupiedNextPlayer == 0) {
-			// normal point and winn game
-			if (gameField.getCurrentPlayer().equals(Element.PLAYER1))
-				gameField.setState(State.PLAYER1_WON);
-			else
-				gameField.setState(State.PLAYER2_WON);
-
-			return gameField.getCurrentPlayerPointElement();
+			// normal point and win game
+			newIslandElement = gameField.getCurrentPlayerPointElement();
+			state = State.WON;
 		}
 
-		return Element.NONE;
+		if (newIslandElement != null)
+			gameField.occupy(islandPosition, newIslandElement);
+
+		return state;
 	}
 
 	private boolean isGameFinish() {
