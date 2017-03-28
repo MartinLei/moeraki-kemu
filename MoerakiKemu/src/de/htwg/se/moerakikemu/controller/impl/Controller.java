@@ -170,15 +170,18 @@ public class Controller extends Observable implements IController {
 		State state = null;
 		Element newIslandElement = null;
 
-		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
+		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
+			if (occupiedStartDot == 1) {
+				// normal point with startdot
+				newIslandElement = gameField.getCurrentPlayerPointElement();
+			} else {
+				// boarder half point
+				newIslandElement = gameField.getCurrentPlayerHalfPointElement();
+			}
+		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
 			// normal point
 			newIslandElement = gameField.getCurrentPlayerPointElement();
-		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0 && occupiedStartDot == 1) {
-			// normal point with startdot
-			newIslandElement = gameField.getCurrentPlayerPointElement();
-		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
-			// boarder half point
-			newIslandElement = gameField.getCurrentPlayerHalfPointElement();
+
 		} else if (occupiedCurrentPlayer == 4 && occupiedNextPlayer == 0) {
 			// normal point and win game
 			newIslandElement = gameField.getCurrentPlayerPointElement();
