@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import de.htwg.se.moerakikemu.controller.impl.Rule;
 import de.htwg.se.moerakikemu.model.IField;
+import de.htwg.se.moerakikemu.model.impl.Cell;
 import de.htwg.se.moerakikemu.model.impl.Field;
 
 public class RuleTest {
@@ -48,8 +49,9 @@ public class RuleTest {
 		resultShiftExpectet.add(new Point(5, 5));// right
 		resultShiftExpectet.add(new Point(3, 5));// left
 	
-		
-		List<Point> resultShift = rule.getShiftedPositions(rule.getShiftleft(), position);
+		List<Cell> cells = rule.getTestCells();
+		List<Point> shiftLeft = cells.get(0).getPlayerPosition();
+		List<Point> resultShift = rule.getShiftedPositions(shiftLeft, position);
 		
 		assertTrue(resultShift.containsAll(resultShiftExpectet));
 		assertTrue(resultShiftExpectet.containsAll(resultShift));
@@ -62,7 +64,9 @@ public class RuleTest {
 		List<Point> resultShiftExpectet = new ArrayList<>();
 		resultShiftExpectet.add(new Point(1, 5));// right
 		
-		List<Point> resultShift = rule.getShiftedPositions(rule.getShiftleft(), position);
+		List<Cell> cells = rule.getTestCells();
+		List<Point> shiftLeft = cells.get(0).getPlayerPosition();
+		List<Point> resultShift = rule.getShiftedPositions(shiftLeft, position);
 		
 		assertTrue(resultShift.containsAll(resultShiftExpectet));
 		assertTrue(resultShiftExpectet.containsAll(resultShift));

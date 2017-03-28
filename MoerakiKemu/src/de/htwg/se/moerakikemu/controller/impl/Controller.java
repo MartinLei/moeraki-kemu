@@ -1,18 +1,16 @@
 package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.rules.RunRules;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.IField;
-import de.htwg.se.moerakikemu.model.impl.Field;
+import de.htwg.se.moerakikemu.model.impl.Cell;
 import de.htwg.se.moerakikemu.model.impl.Element;
+import de.htwg.se.moerakikemu.model.impl.Field;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 import de.htwg.se.moerakikemu.util.observer.Observable;
@@ -147,40 +145,51 @@ public class Controller extends Observable implements IController {
 			gameField.setState(newState);
 			notifyObservers();
 			return;
-			
+
 		}
 		if (!isGameFinish())
 			changePlayer();
 	}
 
 	private State actIslands(Point position) {
+		for (Cell cell : rule.getTestCells()) {
+			State state = actIslandCell(position, cell.getIslandPosition(), cell.getPlayerPosition());
+			if (state != null)
+				return state;
+		}
 
-		Point islandPosition = new Point(position.x - 1, position.y);
-		State state = actIslandCell(position, islandPosition, rule.getShiftleft());
-		return state;
+		return null;
 	}
 
-	private State actIslandCell(Point position, Point islandPosition, List<Point> shiftTemplate) {
+	private State actIslandCell(Point position, Point islandTemplatePosition, List<Point> shiftTemplate) {
 		List<Point> testCells = rule.getShiftedPositions(shiftTemplate, position);
 		int occupiedCurrentPlayer = gameField.getOccupiedCount(testCells, gameField.getCurrentPlayer());
 		int occupiedNextPlayer = gameField.getOccupiedCount(testCells, gameField.getNextPlayer());
+		int occupiedStartDot = gameField.getOccupiedCount(testCells, Element.STARTDOT);
 
 		State state = null;
 		Element newIslandElement = null;
-		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
-			// boarder half point
-			newIslandElement = gameField.getCurrentPlayerHalfPointElement();
-		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
+
+		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
 			// normal point
 			newIslandElement = gameField.getCurrentPlayerPointElement();
+		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0 && occupiedStartDot == 1) {
+			// normal point with startdot
+			newIslandElement = gameField.getCurrentPlayerPointElement();
+		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
+			// boarder half point
+			newIslandElement = gameField.getCurrentPlayerHalfPointElement();
 		} else if (occupiedCurrentPlayer == 4 && occupiedNextPlayer == 0) {
 			// normal point and win game
 			newIslandElement = gameField.getCurrentPlayerPointElement();
 			state = State.WON;
 		}
 
-		if (newIslandElement != null)
+		if (newIslandElement != null) {
+			Point islandPosition = new Point(islandTemplatePosition.x + position.x,
+					islandTemplatePosition.y + position.y);
 			gameField.occupy(islandPosition, newIslandElement);
+		}
 
 		return state;
 	}

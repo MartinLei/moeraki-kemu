@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.htwg.se.moerakikemu.model.IField;
+import de.htwg.se.moerakikemu.model.impl.Cell;
 import de.htwg.se.moerakikemu.model.impl.Element;
 
 public final class Rule {
 
 	private static final List<Point> allowedStartPosition = new ArrayList<>();
-	private final  List<Point> shiftLeft = new ArrayList<>();
 
-
+	private static final List<Cell> testCells = new ArrayList<>();
 
 	public Rule() {
 		initAllowedStartPosition();
-		initOccupiedIsland();
+		initTestCell();
 	}
 
 	private void initAllowedStartPosition() {
@@ -32,15 +32,38 @@ public final class Rule {
 
 	}
 
-	private void initOccupiedIsland() {
+	private void initTestCell() {
+		List<Point> shiftLeft = new ArrayList<>();
 		shiftLeft.add(new Point(-1, 1));// top
 		shiftLeft.add(new Point(-1, -1));// bottom
 		shiftLeft.add(new Point(0, 0));// right
 		shiftLeft.add(new Point(-2, 0));// left
-	}
-	
-	public List<Point> getShiftleft() {
-		return shiftLeft;
+		Point shiftLeftMiddel = new Point(-1, 0); // middle
+		testCells.add(new Cell(shiftLeft, shiftLeftMiddel));
+
+		List<Point> shiftRight = new ArrayList<>();
+		shiftRight.add(new Point(1, -1));// top
+		shiftRight.add(new Point(-1, 1));// bottom
+		shiftRight.add(new Point(+2, 0));// right
+		shiftRight.add(new Point(0, 0));// left
+		Point shiftRightMiddel = new Point(1, 0); // middle
+		testCells.add(new Cell(shiftRight, shiftRightMiddel));
+
+		List<Point> shiftUp = new ArrayList<>();
+		shiftUp.add(new Point(0, 0));// top
+		shiftUp.add(new Point(0, 2));// bottom
+		shiftUp.add(new Point(1, 1));// right
+		shiftUp.add(new Point(-1, 1));// left
+		Point shiftUpMiddel = new Point(0, 1); // middle
+		testCells.add(new Cell(shiftUp, shiftUpMiddel));
+
+		List<Point> shiftDown = new ArrayList<>();
+		shiftDown.add(new Point(0, 2));// top
+		shiftDown.add(new Point(0, 0));// bottom
+		shiftDown.add(new Point(1, -1));// right
+		shiftDown.add(new Point(-1, -1));// left
+		Point shiftDownMiddel = new Point(0, -1); // middle
+		testCells.add(new Cell(shiftDown, shiftDownMiddel));
 	}
 
 	public boolean isStartDotPosCorrect(Point position) {
@@ -71,7 +94,9 @@ public final class Rule {
 		return number % 2 == 0;
 	}
 
-
+	public List<Cell> getTestCells(){
+		return testCells;
+	}
 	public List<Point> getShiftedPositions(List<Point> shiftTemplate, Point position) {
 		List<Point> shifted = new ArrayList<>();
 		for (Point shift : shiftTemplate) {
