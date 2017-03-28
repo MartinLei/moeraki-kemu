@@ -72,11 +72,11 @@ public interface IController extends IObservable {
 	String getPlayer1Name();
 
 	/**
-	 * Give the points of player1
-	 * 
-	 * @return points
+	 * give the point of player1 or player2
+	 * @param player player1 or player2
+	 * @return points of given player
 	 */
-	int getPlayer1Point();
+	int getPlayerPoint(Element player);
 
 	/**
 	 * Give the name of player2
@@ -84,13 +84,6 @@ public interface IController extends IObservable {
 	 * @return name
 	 */
 	String getPlayer2Name();
-
-	/**
-	 * Give the points of player2
-	 * 
-	 * @return points
-	 */
-	int getPlayer2Point();
 
 	/**
 	 * tell if the position is a possible position for a player

@@ -91,18 +91,13 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public int getPlayer1Point() {
-		return gameField.getPlayer1Points();
+	public int getPlayerPoint(Element player) {
+		return gameField.getPoints(player);
 	}
 
 	@Override
 	public String getPlayer2Name() {
 		return gameField.getPlayer2Name();
-	}
-
-	@Override
-	public int getPlayer2Point() {
-		return gameField.getPlayer2Points();
 	}
 
 	@Override
@@ -228,5 +223,7 @@ public class Controller extends Observable implements IController {
 		gameField = loadField; // deep copy ?
 		return true;
 	}
+
+
 
 }

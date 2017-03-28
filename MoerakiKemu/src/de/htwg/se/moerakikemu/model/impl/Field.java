@@ -105,7 +105,7 @@ public class Field implements IField {
 		map[position.x][position.y].occupy(person);
 		return true;
 	}
-	
+
 	@Override
 	public int getOccupiedCount(List<Point> cells, Element player) {
 		int count = 0;
@@ -117,7 +117,6 @@ public class Field implements IField {
 		return count;
 	}
 
-
 	@Override
 	public Element getElement(Point position) {
 		if (position == null)
@@ -125,8 +124,6 @@ public class Field implements IField {
 
 		return map[position.x][position.y].getElement();
 	}
-
-
 
 	@Override
 	public State getState() {
@@ -146,26 +143,6 @@ public class Field implements IField {
 	@Override
 	public String getPlayer2Name() {
 		return player2.getName();
-	}
-
-	@Override
-	public int getPlayer1Points() {
-		return player1.getPoints();
-	}
-
-	@Override
-	public int getPlayer2Points() {
-		return player2.getPoints();
-	}
-
-	@Override
-	public void addAPointPlayer1() {
-		player1.addPoints(1);
-	}
-
-	@Override
-	public void addAPointPlayer2() {
-		player2.addPoints(1);
 	}
 
 	@Override
@@ -193,10 +170,10 @@ public class Field implements IField {
 
 	@Override
 	public void changeActPlayer() {
-		if (actualPlayer.equals(Element.PLAYER1)){
+		if (actualPlayer.equals(Element.PLAYER1)) {
 			actualPlayer = Element.PLAYER2;
 			setState(State.TURN_PLAYER2);
-		}else{
+		} else {
 			actualPlayer = Element.PLAYER1;
 			setState(State.TURN_PLAYER1);
 		}
@@ -205,18 +182,57 @@ public class Field implements IField {
 	@Override
 	public Element getCurrentPlayerPointElement() {
 		Element currentPlayer = getCurrentPlayer();
-		if(currentPlayer.equals(Element.PLAYER1))
+		if (currentPlayer.equals(Element.PLAYER1))
 			return Element.POINT_PLAYER1;
-		else 
+		else
 			return Element.POINT_PLAYER2;
 	}
 
 	@Override
 	public Element getCurrentPlayerHalfPointElement() {
 		Element currentPlayer = getCurrentPlayer();
-		if(currentPlayer.equals(Element.PLAYER1))
+		if (currentPlayer.equals(Element.PLAYER1))
 			return Element.HALF_POINT_PLAYER1;
-		else 
+		else
 			return Element.HALF_POINT_PLAYER2;
+	}
+
+	@Override
+	public int getPoints(Element player) {
+		if (!player.equals(Element.PLAYER1) && !player.equals(Element.PLAYER2))
+			return 0;
+
+		Element halfPoint = getPlayerHalfPointElement(player);
+		Element normalPoint = getPlayerPointElement(player);
+		int count = 0;
+		for (int y = 0; y < MAP_LENGTH; y++) {
+			for (int x = 0; x < MAP_LENGTH; x++) {
+				Element mapElement = map[x][y].getElement();
+
+				if (mapElement.equals(halfPoint))
+					count = count + 1;
+				else if (mapElement.equals(normalPoint))
+					count = count + 2;
+			}
+		}
+		return count;
+	}
+
+	private Element getPlayerPointElement(Element player) {
+		if (player.equals(Element.PLAYER1))
+			return Element.POINT_PLAYER1;
+		else if (player.equals(Element.PLAYER2))
+			return Element.POINT_PLAYER2;
+
+		return null;
+	}
+
+	private Element getPlayerHalfPointElement(Element player) {
+		if (player.equals(Element.PLAYER1))
+			return Element.HALF_POINT_PLAYER1;
+		else if (player.equals(Element.PLAYER2))
+			return Element.HALF_POINT_PLAYER2;
+
+		return null;
 	}
 }

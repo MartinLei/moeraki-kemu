@@ -85,8 +85,11 @@ public class TextUI implements IObserver {
 
 	private String getPunkte(){
 		StringBuilder sb = new StringBuilder();
-		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayer1Name() +" :"+ controller.getPlayer1Point() + " Punkte\n");
-		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayer2Name() +" :"+ controller.getPlayer2Point() + " Punkte\n");
+		
+		int player1Points = controller.getPlayerPoint(Element.PLAYER1);
+		int player2Points = controller.getPlayerPoint(Element.PLAYER2);
+		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayer1Name() +" :"+ player1Points + " Punkte\n");
+		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayer2Name() +" :"+ player2Points + " Punkte\n");
 		return sb.toString();
 	}
 	

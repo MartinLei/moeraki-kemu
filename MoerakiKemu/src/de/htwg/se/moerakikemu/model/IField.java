@@ -86,36 +86,6 @@ public interface IField {
 	String getPlayer2Name();
 
 	/**
-	 * Returns the points of the first player.
-	 *
-	 * @return Amount of points, 0 or more.
-	 */
-	int getPlayer1Points();
-
-	/**
-	 * Returns the points of the second player.
-	 *
-	 * @return Amount of points, 0 or more.
-	 */
-	int getPlayer2Points();
-
-	/**
-	 * adds a Point to Player 1
-	 * 
-	 * @param A
-	 *            String, not null
-	 */
-	void addAPointPlayer1();
-
-	/**
-	 * adds a Point to Player 2
-	 * 
-	 * @param A
-	 *            String, not null
-	 */
-	void addAPointPlayer2();
-
-	/**
 	 * set player1 name
 	 * 
 	 * @param name
@@ -161,5 +131,12 @@ public interface IField {
 	 * change actual player
 	 */
 	void changeActPlayer();
+
+	/**
+	 * get point of Player
+	 * @param player1 or player1
+	 * @return points
+	 */
+	int getPoints(Element player);
 
 }

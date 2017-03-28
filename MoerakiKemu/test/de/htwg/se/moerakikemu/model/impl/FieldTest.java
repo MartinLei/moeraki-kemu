@@ -133,4 +133,22 @@ public class FieldTest {
 		field.changeActPlayer();
 		assertEquals(Element.PLAYER1, field.getNextPlayer());
 	}
+	
+	@Test
+	public void test_getPoints(){
+		assertEquals(0, field.getPoints(Element.NONE));
+		
+		assertTrue(field.occupy(new Point(4, 1), Element.POINT_PLAYER1));
+		assertTrue(field.occupy(new Point(9, 10), Element.POINT_PLAYER1));
+		
+		assertEquals(4, field.getPoints(Element.PLAYER1));
+		assertEquals(0, field.getPoints(Element.PLAYER2));
+		
+		assertTrue(field.occupy(new Point(3, 2), Element.HALF_POINT_PLAYER2));
+		assertTrue(field.occupy(new Point(3, 10), Element.HALF_POINT_PLAYER2));
+		
+		assertEquals(4, field.getPoints(Element.PLAYER1));
+		assertEquals(2, field.getPoints(Element.PLAYER2));
+		
+	}
 }
