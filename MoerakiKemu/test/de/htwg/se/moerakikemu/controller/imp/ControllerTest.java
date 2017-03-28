@@ -75,7 +75,7 @@ public class ControllerTest {
 	public void test_isOccupiedIsland_1() {
 		controller.setStartDot(STARTDOT);
 		assertEquals(State.TURN_PLAYER1, controller.getState());
-		
+
 		// Set 4 Stone Player1 middle, 3 Stone Player2 left wall
 		assertTrue(controller.setDot(new Point(4, 4)));
 		assertTrue(controller.setDot(new Point(1, 5)));
@@ -85,7 +85,7 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(2, 6)));
 		// test left player2 half point
 		assertEquals(Element.HALF_POINT_PLAYER2, controller.getFieldElement(1, 6));
-		
+
 		assertTrue(controller.setDot(new Point(5, 5)));
 		// player1 win
 		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
@@ -96,7 +96,7 @@ public class ControllerTest {
 	public void test_isOccupiedIsland_2() {
 		controller.setStartDot(STARTDOT);
 		assertEquals(State.TURN_PLAYER1, controller.getState());
-		
+
 		// Set 3 Stone Player1 middle, 1 Stone Player2 to the island
 		assertTrue(controller.setDot(new Point(4, 4)));
 		assertTrue(controller.setDot(new Point(1, 5)));
@@ -117,7 +117,7 @@ public class ControllerTest {
 	public void test_isOccupiedIsland_3() {
 		controller.setStartDot(STARTDOT);
 		assertEquals(State.TURN_PLAYER1, controller.getState());
-		
+
 		// Set 2 Stone Player1 middle, 2 Stone Player2 to the island
 		assertTrue(controller.setDot(new Point(1, 5)));
 		assertTrue(controller.setDot(new Point(4, 4)));
@@ -136,7 +136,7 @@ public class ControllerTest {
 	public void test_isOccupiedIsland_4() {
 		controller.setStartDot(STARTDOT);
 		assertEquals(State.TURN_PLAYER1, controller.getState());
-		
+
 		// Set 3 Stone Player1 around StartDot, 2 Stone Player2 left upper
 		// corner
 		assertTrue(controller.setDot(new Point(5, 5)));
@@ -144,8 +144,52 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(7, 5)));
 		assertTrue(controller.setDot(new Point(3, 1)));
 		assertTrue(controller.setDot(new Point(6, 4)));
-		
+
 		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(6, 5));
 		assertEquals(State.WON, controller.getState());
+	}
+
+	@Test
+	public void test_isOccupiedIsland_5() {
+		controller.setStartDot(STARTDOT);
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+
+		// Set 3 Stone Player1 upper wall, set 3 Stone Player2 right wall
+		// corner
+		assertTrue(controller.setDot(new Point(3, 1)));
+		assertTrue(controller.setDot(new Point(11, 3)));
+		assertTrue(controller.setDot(new Point(4, 2)));
+		assertTrue(controller.setDot(new Point(10, 4)));
+		assertTrue(controller.setDot(new Point(5, 1)));
+
+		assertEquals(Element.HALF_POINT_PLAYER1, controller.getFieldElement(4, 1));
+
+		assertTrue(controller.setDot(new Point(11, 5)));
+
+		assertEquals(Element.HALF_POINT_PLAYER2, controller.getFieldElement(11, 4));
+	}
+	
+	
+	@Test
+	public void test_isOccupiedIsland_6() {
+		controller.setStartDot(STARTDOT);
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+
+		// Set 3 Stone Player1 middle, 1 Stone Player2 on the island
+		// Set 1 Stone Player1 middle, 3 Stone Player2 on the island
+		assertTrue(controller.setDot(new Point(3, 7)));
+		assertTrue(controller.setDot(new Point(7, 3)));
+		assertTrue(controller.setDot(new Point(2, 8)));
+		assertTrue(controller.setDot(new Point(8, 2)));
+		assertTrue(controller.setDot(new Point(4, 8)));
+	System.out.println("kkk");
+		assertTrue(controller.setDot(new Point(3, 9)));
+	
+
+		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(3, 8));
+		
+		assertTrue(controller.setDot(new Point(8, 4)));
+		assertTrue(controller.setDot(new Point(9, 3)));
+		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(8, 3));
 	}
 }

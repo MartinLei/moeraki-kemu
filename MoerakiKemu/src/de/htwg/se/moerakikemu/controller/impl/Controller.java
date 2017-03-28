@@ -1,6 +1,7 @@
 package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.inject.Inject;
@@ -147,50 +148,76 @@ public class Controller extends Observable implements IController {
 	}
 
 	private State actIslands(Point position) {
-		for (Cell cell : rule.getTestCells()) {
-			State state = actIslandCell(position, cell.getIslandPosition(), cell.getPlayerPosition());
-			if (state != null)
-				return state;
+		List<Point> testCells = rule.getShiftedPositions(rule.getTemplateCells(), position);
+		List<Point> testIslands = rule.getShiftedPositionsIsland(rule.getTemplateIslands(), position);
+		List<Element> elementList = new ArrayList<>();
+
+		for (Point cell : testCells) {
+			Element element = gameField.getElement(cell);
+			elementList.add(element);
 		}
 
+		for(int i = 0; i<4 ;i++){
+			Point islandPosition = testIslands.get(i);
+			List<Integer> cellNummer = rule.getCells().get(i);
+			State state = actIslandCell(elementList, cellNummer, islandPosition);
+			
+			if(state != null)
+				return state;
+		}
+		
+		
 		return null;
 	}
 
-	private State actIslandCell(Point position, Point islandTemplatePosition, List<Point> shiftTemplate) {
-		List<Point> testCells = rule.getShiftedPositions(shiftTemplate, position);
-		int occupiedCurrentPlayer = gameField.getOccupiedCount(testCells, gameField.getCurrentPlayer());
-		int occupiedNextPlayer = gameField.getOccupiedCount(testCells, gameField.getNextPlayer());
-		int occupiedStartDot = gameField.getOccupiedCount(testCells, Element.STARTDOT);
-		int occupiedWall = gameField.getOccupiedCount(testCells, Element.WALL);
-//		System.out.println(
-//				occupiedCurrentPlayer + " " + occupiedNextPlayer + " " + occupiedStartDot + " " + occupiedWall);
-		State state = null;
+	private State actIslandCell(List<Element> elementList,List<Integer> cellNummer, Point islandPosition) {
+		int countPlayer1 = 0;
+		int countPlayer2 = 0;
+		int countStartDot = 0;
+		int countWall = 0;
+
+		for (Integer nummer : cellNummer) {
+			Element element = elementList.get(nummer.intValue());
+			if(element == null)
+				continue;
+			
+			if (element.equals(Element.PLAYER1))
+				countPlayer1++;
+			else if (element.equals(Element.PLAYER2))
+				countPlayer2++;
+			else if (element.equals(Element.STARTDOT))
+				countStartDot++;
+			else if (element.equals(Element.WALL))
+				countWall++;
+		}
+
 		Element newIslandElement = null;
-
-		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0 && occupiedStartDot == 1) {
-			// normal point with startdot
-			newIslandElement = gameField.getCurrentPlayerPointElement();
-			state = State.WON;
-		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0 && occupiedWall == 1) {
-			// boarder half point
-			newIslandElement = gameField.getCurrentPlayerHalfPointElement();
-		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
-			// normal point
-			newIslandElement = gameField.getCurrentPlayerPointElement();
-
-		} else if (occupiedCurrentPlayer == 4 && occupiedNextPlayer == 0) {
-			// normal point and win game
-			newIslandElement = gameField.getCurrentPlayerPointElement();
-			state = State.WON;
+		State  newState = null;
+		if (countPlayer1 == 3 && countPlayer2 == 0 && countStartDot == 0 && countWall == 1) {
+			newIslandElement = Element.HALF_POINT_PLAYER1;
+		} else if (countPlayer1 == 0 && countPlayer2 == 3 && countStartDot == 0 && countWall == 1) {
+			newIslandElement = Element.HALF_POINT_PLAYER2;
+		} else if (countPlayer1 == 3 && countPlayer2 == 0 && countStartDot == 1 && countWall == 0) {
+			newIslandElement = Element.POINT_PLAYER1;
+		} else if (countPlayer1 == 0 && countPlayer2 == 3 && countStartDot == 1 && countWall == 0) {
+			newIslandElement = Element.POINT_PLAYER2;
+		} else if (countPlayer1 == 3 && countPlayer2 == 1 && countStartDot == 0 && countWall == 0) {
+			newIslandElement = Element.POINT_PLAYER1;
+		} else if (countPlayer1 == 1 && countPlayer2 == 3 && countStartDot == 0 && countWall == 0) {
+			newIslandElement = Element.POINT_PLAYER2;
+		}else if (countPlayer1 == 4 && countPlayer2 == 0 && countStartDot == 0 && countWall == 0) {
+			newIslandElement = Element.POINT_PLAYER1;
+			newState = State.PLAYER1_WON;
+		} else if (countPlayer1 == 0 && countPlayer2 == 4 && countStartDot == 0 && countWall == 0) {
+			newIslandElement = Element.POINT_PLAYER2;
+			newState = State.PLAYER2_WON;
 		}
-
-		if (newIslandElement != null) {
-			Point islandPosition = new Point(islandTemplatePosition.x + position.x,
-					islandTemplatePosition.y + position.y);
-			gameField.occupy(islandPosition, newIslandElement);
-		}
-
-		return state;
+		
+		
+		if(newIslandElement != null)
+		gameField.occupy(islandPosition, newIslandElement);
+		
+		return newState;
 	}
 
 	private boolean isGameFinish() {
@@ -223,7 +250,5 @@ public class Controller extends Observable implements IController {
 		gameField = loadField; // deep copy ?
 		return true;
 	}
-
-
 
 }

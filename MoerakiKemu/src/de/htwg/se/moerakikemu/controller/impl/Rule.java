@@ -2,21 +2,27 @@ package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Cell;
-import de.htwg.se.moerakikemu.model.impl.Element;
 
 public final class Rule {
 
-	private static final List<Point> allowedStartPosition = new ArrayList<>();
-
-	private static final List<Cell> testCells = new ArrayList<>();
+	private final List<Point> allowedStartPosition;
+	private final List<Point> templateCells;
+	private final List<Point> templateIslands;
+	private final List<List<Integer>> cells;
 
 	public Rule() {
+		allowedStartPosition = new ArrayList<>();
+		templateCells = new ArrayList<>();
+		templateIslands = new ArrayList<>();
+		cells = new ArrayList<>();
+
 		initAllowedStartPosition();
-		initTestCell();
+		initTemplateCell();
 	}
 
 	private void initAllowedStartPosition() {
@@ -32,38 +38,63 @@ public final class Rule {
 
 	}
 
-	private void initTestCell() {
-		List<Point> shiftLeft = new ArrayList<>();
-		shiftLeft.add(new Point(-1, 1));// top
-		shiftLeft.add(new Point(-1, -1));// bottom
-		shiftLeft.add(new Point(0, 0));// right
-		shiftLeft.add(new Point(-2, 0));// left
-		Point shiftLeftMiddel = new Point(-1, 0); // middle
-		testCells.add(new Cell(shiftLeft, shiftLeftMiddel));
+	private void initTemplateCell() {
 
-		List<Point> shiftRight = new ArrayList<>();
-		shiftRight.add(new Point(1, -1));// top
-		shiftRight.add(new Point(-1, 1));// bottom
-		shiftRight.add(new Point(+2, 0));// right
-		shiftRight.add(new Point(0, 0));// left
-		Point shiftRightMiddel = new Point(1, 0); // middle
-		testCells.add(new Cell(shiftRight, shiftRightMiddel));
+		templateCells.add(new Point(0, -2));
+		templateCells.add(new Point(-1, -1));
+		templateCells.add(new Point(1, -1));
+		templateCells.add(new Point(-2, 0));
+		templateCells.add(new Point(0, 0));
+		templateCells.add(new Point(2, 0));
+		templateCells.add(new Point(1, -1));
+		templateCells.add(new Point(1, 1));
+		templateCells.add(new Point(2, 0));
 
-		List<Point> shiftUp = new ArrayList<>();
-		shiftUp.add(new Point(0, 0));// top
-		shiftUp.add(new Point(0, 2));// bottom
-		shiftUp.add(new Point(1, 1));// right
-		shiftUp.add(new Point(-1, 1));// left
-		Point shiftUpMiddel = new Point(0, 1); // middle
-		testCells.add(new Cell(shiftUp, shiftUpMiddel));
+		templateIslands.add(new Point(-1, 0));
+		templateIslands.add(new Point(0, -1));
+		templateIslands.add(new Point(1, 0));
+		templateIslands.add(new Point(0, 1));
 
-		List<Point> shiftDown = new ArrayList<>();
-		shiftDown.add(new Point(0, 2));// top
-		shiftDown.add(new Point(0, 0));// bottom
-		shiftDown.add(new Point(1, -1));// right
-		shiftDown.add(new Point(-1, -1));// left
-		Point shiftDownMiddel = new Point(0, -1); // middle
-		testCells.add(new Cell(shiftDown, shiftDownMiddel));
+		List<Integer> leftCell = new ArrayList<>();
+		leftCell.add(3);
+		leftCell.add(1);
+		leftCell.add(4);
+		leftCell.add(6);
+		cells.add(leftCell);
+
+		List<Integer> rightCell = new ArrayList<>();
+		rightCell.add(4);
+		rightCell.add(2);
+		rightCell.add(5);
+		rightCell.add(7);
+		cells.add(rightCell);
+
+		List<Integer> upCell = new ArrayList<>();
+		upCell.add(1);
+		upCell.add(0);
+		upCell.add(2);
+		upCell.add(4);
+		cells.add(upCell);
+
+		List<Integer> bottomCell = new ArrayList<>();
+		bottomCell.add(6);
+		bottomCell.add(4);
+		bottomCell.add(7);
+		bottomCell.add(8);
+		cells.add(bottomCell);
+
+	}
+
+	public List<List<Integer>> getCells() {
+		return cells;
+	}
+
+	public List<Point> getTemplateIslands() {
+		return templateIslands;
+	}
+
+	public List<Point> getTemplateCells() {
+		return templateCells;
 	}
 
 	public boolean isStartDotPosCorrect(Point position) {
@@ -90,12 +121,18 @@ public final class Rule {
 		return true;
 	}
 
-	private static boolean evenNumber(int number) {
-		return number % 2 == 0;
+	public boolean isPositionPossibleIsland(Point position) {
+		if (position.x < 0 || position.x > 12 || position.y < 0 || position.y > 12)
+			return false;
+
+		if (evenNumber(position.x) && evenNumber(position.y) || !evenNumber(position.x) && !evenNumber(position.y))
+			return false;
+
+		return true;
 	}
 
-	public List<Cell> getTestCells() {
-		return testCells;
+	private static boolean evenNumber(int number) {
+		return number % 2 == 0;
 	}
 
 	public List<Point> getShiftedPositions(List<Point> shiftTemplate, Point position) {
@@ -105,6 +142,19 @@ public final class Rule {
 
 			if (isPositionPossibleInput(newPosition))
 				shifted.add(newPosition);
+			else
+				shifted.add(null);
+		}
+		return shifted;
+	}
+
+	public List<Point> getShiftedPositionsIsland(List<Point> shiftTemplate, Point position) {
+		List<Point> shifted = new ArrayList<>();
+		for (Point shift : shiftTemplate) {
+			Point newPosition = new Point(position.x + shift.x, position.y + shift.y);
+
+			shifted.add(newPosition);
+
 		}
 		return shifted;
 	}

@@ -39,10 +39,10 @@ public class RuleTest {
 		assertFalse(rule.isPositionPossibleInput(new Point(4, 5)));
 		assertTrue(rule.isPositionPossibleInput(new Point(4, 4)));
 		assertTrue(rule.isPositionPossibleInput(new Point(5, 5)));
-		
+
 		assertTrue(rule.isPositionPossibleInput(new Point(1, 11)));
 		assertTrue(rule.isPositionPossibleInput(new Point(11, 1)));
-		
+
 		assertFalse(rule.isPositionPossibleInput(new Point(5, 13)));
 		assertFalse(rule.isPositionPossibleInput(new Point(13, 5)));
 		assertFalse(rule.isPositionPossibleInput(new Point(0, 13)));
@@ -53,36 +53,40 @@ public class RuleTest {
 
 	@Test
 	public void test_getShiftedPositions() {
-		Point position = new Point (5,5);
+		Point position = new Point(5, 5);
 		List<Point> resultShiftExpectet = new ArrayList<>();
-		resultShiftExpectet.add(new Point(4, 6));// top
-		resultShiftExpectet.add(new Point(4, 4));// bottom
-		resultShiftExpectet.add(new Point(5, 5));// right
-		resultShiftExpectet.add(new Point(3, 5));// left
-	
-		List<Cell> cells = rule.getTestCells();
-		List<Point> shiftLeft = cells.get(0).getPlayerPosition();
-		List<Point> resultShift = rule.getShiftedPositions(shiftLeft, position);
-		
+		resultShiftExpectet.add(new Point(5, 3));
+		resultShiftExpectet.add(new Point(4, 4));
+		resultShiftExpectet.add(new Point(6, 4));
+		resultShiftExpectet.add(new Point(3, 5));
+		resultShiftExpectet.add(new Point(5, 5));
+		resultShiftExpectet.add(new Point(7, 5));
+		resultShiftExpectet.add(new Point(6, 4));
+		resultShiftExpectet.add(new Point(6, 6));
+		resultShiftExpectet.add(new Point(7, 5));
+
+		List<Point> resultShift = rule.getShiftedPositions(rule.getTemplateCells(), position);
 		assertTrue(resultShift.containsAll(resultShiftExpectet));
 		assertTrue(resultShiftExpectet.containsAll(resultShift));
-		
+
 	}
-	
+
 	@Test
 	public void test_getShiftedPositions_Wall() {
-		Point position = new Point (1,5);
+		Point position = new Point(1, 5);
 		List<Point> resultShiftExpectet = new ArrayList<>();
-		resultShiftExpectet.add(new Point(1, 5));// right
-		resultShiftExpectet.add(new Point(0, 4));// up
-		resultShiftExpectet.add(new Point(0, 6));// down
-		
-		List<Cell> cells = rule.getTestCells();
-		List<Point> shiftLeft = cells.get(0).getPlayerPosition();
-		List<Point> resultShift = rule.getShiftedPositions(shiftLeft, position);
-		
+		resultShiftExpectet.add(new Point(1, 3));
+		resultShiftExpectet.add(new Point(0,4));
+		resultShiftExpectet.add(new Point(2, 4));
+		resultShiftExpectet.add(null);
+		resultShiftExpectet.add(new Point(1, 5));
+		resultShiftExpectet.add(new Point(3, 5));
+		resultShiftExpectet.add(new Point(2,4));
+		resultShiftExpectet.add(new Point(2, 6));
+		resultShiftExpectet.add(new Point(3, 5));
+
+		List<Point> resultShift = rule.getShiftedPositions(rule.getTemplateCells(), position);
 		assertTrue(resultShift.containsAll(resultShiftExpectet));
 		assertTrue(resultShiftExpectet.containsAll(resultShift));
-		
 	}
 }
