@@ -81,7 +81,7 @@ public final class Rule {
 	 * @return if the position is possible to set a dot
 	 */
 	public boolean isPositionPossibleInput(Point position) {
-		if (position.x < 0 || position.x > 13 || position.y < 0 || position.y > 13)
+		if (position.x < 0 || position.x > 12 || position.y < 0 || position.y > 12)
 			return false;
 
 		if (!evenNumber(position.x) && evenNumber(position.y) || evenNumber(position.x) && !evenNumber(position.y))
@@ -94,9 +94,10 @@ public final class Rule {
 		return number % 2 == 0;
 	}
 
-	public List<Cell> getTestCells(){
+	public List<Cell> getTestCells() {
 		return testCells;
 	}
+
 	public List<Point> getShiftedPositions(List<Point> shiftTemplate, Point position) {
 		List<Point> shifted = new ArrayList<>();
 		for (Point shift : shiftTemplate) {
