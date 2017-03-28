@@ -73,7 +73,7 @@ public class ControllerTest {
 
 	@Test
 	public void test_isOccupiedIsland() {
-		// Set 4 Stone Player1 middel, 3Sonte Player2 left wall
+		// Set 4 Stone Player1 middle, 3Sonte Player2 left wall
 		assertTrue(controller.setDot(new Point(4, 4)));
 		assertTrue(controller.setDot(new Point(1, 5)));
 		assertTrue(controller.setDot(new Point(3, 5)));
@@ -82,8 +82,11 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(1, 7)));
 		assertTrue(controller.setDot(new Point(5, 5)));
 
-		// test left
+		// test left player1
 		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
+		// test left player2
+		System.out.println(controller.getFieldElement(1, 6));
+		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(1, 6));
 	}
 
 	// @Test

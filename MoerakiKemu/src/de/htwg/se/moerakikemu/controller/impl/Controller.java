@@ -59,7 +59,7 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public Element getFieldElement(int x, int y) {
-		return gameField.getElement(new Point (x, y));
+		return gameField.getElement(new Point(x, y));
 	}
 
 	@Override
@@ -111,6 +111,7 @@ public class Controller extends Observable implements IController {
 	public boolean isPositionPossibleInput(Point position) {
 		return rule.isPositionPossibleInput(position);
 	}
+
 	@Override
 	public boolean setStartDot(Point position) {
 		if (position == null)
@@ -131,10 +132,10 @@ public class Controller extends Observable implements IController {
 		if (position == null || gameField.isOccupied(position))
 			return false;
 
-		gameField.occupy(position, gameField.getActPlayer());
+		gameField.occupy(position, gameField.getCurrentPlayer());
 
 		analyzeField(position);
-		
+
 		return true;
 	}
 
@@ -147,33 +148,47 @@ public class Controller extends Observable implements IController {
 	}
 
 	private void actIslands(Point position) {
+		Element newIslandElement = getNewIslandElement(position, rule.getShiftleft());
+		Point islandPosition = new Point(position.x - 1, position.y);
 		
-		if(isOccupiedIsland( position, rule.getShiftleft())){
-			Point newPos = new Point(position.x-1, position.y);
-			gameField.occupy(newPos, Element.POINT_PLAYER1);				
-		}
+		
+		if (newIslandElement.equals(Element.NONE))
+			return;
+		gameField.occupy(islandPosition, newIslandElement);
+
 	}
 
-	private boolean isOccupiedIsland(Point position, List<Point> shiftTemplate){
+	private Element getNewIslandElement(Point position, List<Point> shiftTemplate) {
 		List<Point> testCells = rule.getShiftedPositions(shiftTemplate, position);
-		int occupied = gameField.getOccupiedCount(testCells, gameField.getActPlayer());
-		
-		if (occupied == 4)
-			return true;
+		int occupiedCurrentPlayer = gameField.getOccupiedCount(testCells, gameField.getCurrentPlayer());
+		int occupiedNextPlayer = gameField.getOccupiedCount(testCells, gameField.getNextPlayer());
 
-		return false;
+		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
+			// boarder point
+			return gameField.getCurrentPlayerPointElement();
+		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
+			// normal point
+			return gameField.getCurrentPlayerPointElement();
+		} else if (occupiedCurrentPlayer == 4 && occupiedNextPlayer == 0) {
+			// normal point and winn game
+			if (gameField.getCurrentPlayer().equals(Element.PLAYER1))
+				gameField.setState(State.PLAYER1_WON);
+			else
+				gameField.setState(State.PLAYER2_WON);
+
+			return gameField.getCurrentPlayerPointElement();
+		}
+
+		return Element.NONE;
 	}
-	
-	
-	
-	
+
 	private boolean isGameFinish() {
-//		if (gameField.isFilled()) {
-//			gameField.setState(State.GAME_FINISHED);
-//			notifyObservers();
-//			return true;
-//		}
-		
+		// if (gameField.isFilled()) {
+		// gameField.setState(State.GAME_FINISHED);
+		// notifyObservers();
+		// return true;
+		// }
+
 		return false;
 	}
 

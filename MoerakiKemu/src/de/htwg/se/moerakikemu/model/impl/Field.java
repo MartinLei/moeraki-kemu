@@ -179,8 +179,16 @@ public class Field implements IField {
 	}
 
 	@Override
-	public Element getActPlayer() {
+	public Element getCurrentPlayer() {
 		return actualPlayer;
+	}
+
+	@Override
+	public Element getNextPlayer() {
+		if (actualPlayer.equals(Element.PLAYER1))
+			return Element.PLAYER2;
+		else
+			return Element.PLAYER1;
 	}
 
 	@Override
@@ -192,6 +200,15 @@ public class Field implements IField {
 			actualPlayer = Element.PLAYER1;
 			setState(State.TURN_PLAYER1);
 		}
+	}
+
+	@Override
+	public Element getCurrentPlayerPointElement() {
+		Element currentPlayer = getCurrentPlayer();
+		if(currentPlayer.equals(Element.PLAYER1))
+			return Element.POINT_PLAYER1;
+		else 
+			return Element.POINT_PLAYER2;
 	}
 
 }

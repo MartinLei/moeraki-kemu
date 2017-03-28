@@ -25,12 +25,15 @@ public interface IField {
 
 	/**
 	 * get the count of how many cells occupied given player
-	 * @param cells to test
-	 * @param player witch search of
+	 * 
+	 * @param cells
+	 *            to test
+	 * @param player
+	 *            witch search of
 	 * @return amount of given player on the cells
 	 */
 	int getOccupiedCount(List<Point> cells, Element player);
-	
+
 	/**
 	 * Determines if the Spot with the given coordinates is currently occupied.
 	 * 
@@ -125,16 +128,31 @@ public interface IField {
 	 * @param name
 	 */
 	void setPlayer2Name(String name);
-	
-	
+
 	/**
-	 * get actual player
+	 * get current player
+	 * 
 	 * @return player element
 	 */
-	Element getActPlayer();
-	
+	Element getCurrentPlayer();
+
+	/**
+	 * get next player
+	 * 
+	 * @return player element
+	 */
+	Element getNextPlayer();
+
+	/**
+	 * get the player point element of the current player
+	 * 
+	 * @return player point element
+	 */
+	Element getCurrentPlayerPointElement();
+
 	/**
 	 * change actual player
 	 */
 	void changeActPlayer();
+
 }
