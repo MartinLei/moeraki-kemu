@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.util.rule;
+package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public final class Rule {
 	 * @param position
 	 * @return if the position is possible to set a dot
 	 */
-	public static boolean isPositionPossibleInput(Point position) {
+	public boolean isPositionPossibleInput(Point position) {
 		if (position.x <= 0 || position.x >= 13 && position.y <= 0 || position.y >= 13)
 			return false;
 

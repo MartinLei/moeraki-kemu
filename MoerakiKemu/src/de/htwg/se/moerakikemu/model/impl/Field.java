@@ -3,9 +3,9 @@ package de.htwg.se.moerakikemu.model.impl;
 import java.awt.Point;
 import java.util.List;
 
+import de.htwg.se.moerakikemu.controller.impl.Rule;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.IPlayer;
-import de.htwg.se.moerakikemu.util.rule.Rule;
 
 /**
  * The implementation of field

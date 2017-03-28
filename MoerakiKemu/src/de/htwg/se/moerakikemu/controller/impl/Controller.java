@@ -10,7 +10,6 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.util.rule.Rule;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
 import de.htwg.se.moerakikemu.model.impl.Element;
@@ -108,6 +107,10 @@ public class Controller extends Observable implements IController {
 		return gameField.getPlayer2Points();
 	}
 
+	@Override
+	public boolean isPositionPossibleInput(Point position) {
+		return rule.isPositionPossibleInput(position);
+	}
 	@Override
 	public boolean setStartDot(Point position) {
 		if (position == null)

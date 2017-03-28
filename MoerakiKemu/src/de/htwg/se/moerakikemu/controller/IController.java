@@ -93,6 +93,14 @@ public interface IController extends IObservable {
 	int getPlayer2Point();
 
 	/**
+	 * tell if the position is a possible position for a player
+	 * 
+	 * @param position
+	 * @return if the position is possible to set a dot
+	 */
+	boolean isPositionPossibleInput(Point position);
+	
+	/**
 	 * Set the start stone on the given position After setting the stone, it
 	 * change the state to the first player
 	 * 

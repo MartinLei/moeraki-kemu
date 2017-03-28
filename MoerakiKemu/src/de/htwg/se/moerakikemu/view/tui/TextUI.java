@@ -9,13 +9,13 @@ import com.google.inject.Inject;
 
 
 import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.controller.imp.RuleTest;
+import de.htwg.se.moerakikemu.controller.impl.Rule;
 import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.Spot;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
-import de.htwg.se.moerakikemu.util.rule.Rule;
-import de.htwg.se.moerakikemu.util.rule.RuleTest;
 
 /**
  * Text User Interface
@@ -126,7 +126,7 @@ public class TextUI implements IObserver {
 	}
 
 	private void setStone(Point position) {
-		if (position == null || !Rule.isPositionPossibleInput(position)) {
+		if (position == null || !controller.isPositionPossibleInput(position)) {
 			LOGGER.info("Hier kannst du dein Stein nicht setzen");
 			return;
 		} else if (controller.getState().equals(State.SET_START_DOT)) {
