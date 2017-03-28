@@ -27,9 +27,9 @@ public class RuleTest {
 
 	@Test
 	public void test_isCorrectPosition() {
-		assertFalse(rule.isPositionPossibleInput(new Point(0, 0)));
-		assertFalse(rule.isPositionPossibleInput(new Point(0, 14)));
-		assertFalse(rule.isPositionPossibleInput(new Point(14, 0)));
+		assertFalse(rule.isPositionPossibleInput(new Point(-1, -1)));
+		assertFalse(rule.isPositionPossibleInput(new Point(-1, 14)));
+		assertFalse(rule.isPositionPossibleInput(new Point(14, -1)));
 		assertFalse(rule.isPositionPossibleInput(new Point(14, 14)));
 		assertFalse(rule.isPositionPossibleInput(new Point(5, 14)));
 		assertFalse(rule.isPositionPossibleInput(new Point(14, 5)));
@@ -38,6 +38,12 @@ public class RuleTest {
 		assertFalse(rule.isPositionPossibleInput(new Point(4, 5)));
 		assertTrue(rule.isPositionPossibleInput(new Point(4, 4)));
 		assertTrue(rule.isPositionPossibleInput(new Point(5, 5)));
+		
+		assertTrue(rule.isPositionPossibleInput(new Point(1, 11)));
+		assertTrue(rule.isPositionPossibleInput(new Point(11, 1)));
+		
+		assertFalse(rule.isPositionPossibleInput(new Point(0, 13)));
+		assertFalse(rule.isPositionPossibleInput(new Point(13, 0)));
 	}
 
 	@Test
@@ -63,6 +69,8 @@ public class RuleTest {
 		Point position = new Point (1,5);
 		List<Point> resultShiftExpectet = new ArrayList<>();
 		resultShiftExpectet.add(new Point(1, 5));// right
+		resultShiftExpectet.add(new Point(0, 4));// up
+		resultShiftExpectet.add(new Point(0, 6));// down
 		
 		List<Cell> cells = rule.getTestCells();
 		List<Point> shiftLeft = cells.get(0).getPlayerPosition();

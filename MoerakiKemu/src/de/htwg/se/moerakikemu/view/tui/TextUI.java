@@ -7,7 +7,6 @@ import org.apache.logging.log4j.core.Logger;
 
 import com.google.inject.Inject;
 
-
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.controller.imp.RuleTest;
 import de.htwg.se.moerakikemu.controller.impl.Rule;
@@ -34,8 +33,9 @@ public class TextUI implements IObserver {
 	private static final int MAP_LENGTH = 13;
 
 	private void printMap() {
-		String mapString = "\n" + getMap();
-		LOGGER.info(mapString);
+		String output = "\n" + getMap() +"\n"+ getPunkte();
+		LOGGER.info(output);
+
 		LOGGER.info(controller.getState());
 	}
 
@@ -51,7 +51,7 @@ public class TextUI implements IObserver {
 		}
 		return sb.toString();
 	}
-
+	
 	private String getCollumNumber() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("   ");
@@ -83,6 +83,13 @@ public class TextUI implements IObserver {
 		return sb.toString();
 	}
 
+	private String getPunkte(){
+		StringBuilder sb = new StringBuilder();
+		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayer1Name() +" :"+ controller.getPlayer1Point() + " Punkte\n");
+		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayer2Name() +" :"+ controller.getPlayer2Point() + " Punkte\n");
+		return sb.toString();
+	}
+	
 	/**
 	 * Print the into
 	 */
@@ -140,13 +147,11 @@ public class TextUI implements IObserver {
 		}
 	}
 
-
-
 	private Point getPosition(String coordinate) {
 		String[] parts = coordinate.split("-");
-		int x = Integer.parseInt(parts[0]) ;
-		int y = Integer.parseInt(parts[1]) ;
-		
+		int x = Integer.parseInt(parts[0]);
+		int y = Integer.parseInt(parts[1]);
+
 		return new Point(x, y);
 	}
 

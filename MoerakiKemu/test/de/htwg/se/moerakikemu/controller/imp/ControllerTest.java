@@ -110,6 +110,7 @@ public class ControllerTest {
 
 		// player1 point
 		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
 	}
 
 	@Test
@@ -128,6 +129,7 @@ public class ControllerTest {
 
 		assertEquals(Element.ISLAND, controller.getFieldElement(1, 6));
 		assertEquals(Element.ISLAND, controller.getFieldElement(4, 5));
+		assertEquals(State.TURN_PLAYER2, controller.getState());
 	}
 
 	@Test
@@ -144,5 +146,6 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(6, 4)));
 		
 		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(6, 5));
+		assertEquals(State.WON, controller.getState());
 	}
 }

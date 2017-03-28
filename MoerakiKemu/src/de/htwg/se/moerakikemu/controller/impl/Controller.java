@@ -166,18 +166,19 @@ public class Controller extends Observable implements IController {
 		int occupiedCurrentPlayer = gameField.getOccupiedCount(testCells, gameField.getCurrentPlayer());
 		int occupiedNextPlayer = gameField.getOccupiedCount(testCells, gameField.getNextPlayer());
 		int occupiedStartDot = gameField.getOccupiedCount(testCells, Element.STARTDOT);
-
+		int occupiedWall = gameField.getOccupiedCount(testCells, Element.WALL);
+//		System.out.println(
+//				occupiedCurrentPlayer + " " + occupiedNextPlayer + " " + occupiedStartDot + " " + occupiedWall);
 		State state = null;
 		Element newIslandElement = null;
 
-		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0) {
-			if (occupiedStartDot == 1) {
-				// normal point with startdot
-				newIslandElement = gameField.getCurrentPlayerPointElement();
-			} else {
-				// boarder half point
-				newIslandElement = gameField.getCurrentPlayerHalfPointElement();
-			}
+		if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0 && occupiedStartDot == 1) {
+			// normal point with startdot
+			newIslandElement = gameField.getCurrentPlayerPointElement();
+			state = State.WON;
+		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 0 && occupiedWall == 1) {
+			// boarder half point
+			newIslandElement = gameField.getCurrentPlayerHalfPointElement();
 		} else if (occupiedCurrentPlayer == 3 && occupiedNextPlayer == 1) {
 			// normal point
 			newIslandElement = gameField.getCurrentPlayerPointElement();

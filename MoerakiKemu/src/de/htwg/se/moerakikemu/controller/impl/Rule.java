@@ -81,7 +81,7 @@ public final class Rule {
 	 * @return if the position is possible to set a dot
 	 */
 	public boolean isPositionPossibleInput(Point position) {
-		if (position.x <= 0 || position.x >= 13 && position.y <= 0 || position.y >= 13)
+		if (position.x < 0 || position.x > 13 || position.y < 0 || position.y > 13)
 			return false;
 
 		if (!evenNumber(position.x) && evenNumber(position.y) || evenNumber(position.x) && !evenNumber(position.y))
