@@ -45,25 +45,6 @@ public interface IController extends IObservable {
 	 */
 	void newGameQuickStart();
 	
-
-	/**
-	 * Set the name of player1 After setting, it change the sate to set the name
-	 * of player2
-	 * 
-	 * @param name
-	 *            of player1
-	 */
-	void setPlayer1Name(String name);
-
-	/**
-	 * Set the name of player2 After setting, it change the sate to set the
-	 * start dot
-	 * 
-	 * @param name
-	 *            of player2
-	 */
-	void setPlayer2Name(String name);
-
 	/**
 	 * Give the name of player1
 	 * 

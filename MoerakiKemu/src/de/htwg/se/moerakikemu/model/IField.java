@@ -79,20 +79,6 @@ public interface IField {
 	String getPlayer2Name();
 
 	/**
-	 * set player1 name
-	 * 
-	 * @param name
-	 */
-	void setPlayer1Name(String name);
-
-	/**
-	 * set player2 name
-	 * 
-	 * @param name
-	 */
-	void setPlayer2Name(String name);
-
-	/**
 	 * get current player
 	 * 
 	 * @return player element

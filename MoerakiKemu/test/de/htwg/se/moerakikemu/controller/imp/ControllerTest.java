@@ -27,12 +27,6 @@ public class ControllerTest {
 	@Before
 	public void setUp() {
 		controller = new Controller(fieldDAO);
-
-		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
-		controller.setPlayer1Name(PLAYER1NAME);
-		assertEquals(State.GET_SECOND_PLAYER_NAME, controller.getState());
-		controller.setPlayer2Name(PLAYER2NAME);
-		assertEquals(State.SET_START_DOT, controller.getState());
 	}
 
 	@Test
@@ -41,11 +35,7 @@ public class ControllerTest {
 		assertEquals(State.TURN_PLAYER1, controller.getState());
 
 		controller.newGame();
-
-		assertEquals(State.GET_FIRST_PLAYER_NAME, controller.getState());
-		controller.setPlayer1Name(PLAYER1NAME);
-		assertEquals(State.GET_SECOND_PLAYER_NAME, controller.getState());
-		controller.setPlayer2Name(PLAYER2NAME);
+		
 		assertEquals(State.SET_START_DOT, controller.getState());
 	}
 

@@ -112,12 +112,6 @@ public class TextUI implements IObserver {
 			controller.quitGame();
 		} else if (inputLine.matches("h")) {
 			printHelp();
-		} else if (controller.getState().equals(State.GET_FIRST_PLAYER_NAME)) {
-			// TODO input check
-			controller.setPlayer1Name(inputLine);
-		} else if (controller.getState().equals(State.GET_SECOND_PLAYER_NAME)) {
-			// TODO input check
-			controller.setPlayer2Name(inputLine);
 		} else if (inputLine.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])")) {
 			Point position = getPosition(inputLine);
 

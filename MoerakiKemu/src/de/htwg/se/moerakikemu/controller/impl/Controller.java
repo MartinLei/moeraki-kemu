@@ -30,13 +30,11 @@ public class Controller extends Observable implements IController {
 		this.fieldDAO = fieldDAO;
 
 		gameField = new Field();
-		gameField.setState(State.GET_FIRST_PLAYER_NAME);
 	}
 
 	@Override
 	public void newGame() {
 		gameField = new Field();
-		gameField.setState(State.GET_FIRST_PLAYER_NAME);
 
 		notifyObservers();
 	}
@@ -45,12 +43,6 @@ public class Controller extends Observable implements IController {
 	public void newGameQuickStart() {
 		gameField = new Field();
 
-		String player1Name = "Andrew";
-		String player2Name = "Walter";
-		gameField.setPlayer1Name(player1Name);
-		gameField.setPlayer2Name(player2Name);
-
-		gameField.setState(State.SET_START_DOT);
 		Point starDotPosisiton = new Point(6, 6);
 		setStartDot(starDotPosisiton);
 	}
@@ -68,20 +60,6 @@ public class Controller extends Observable implements IController {
 	@Override
 	public void quitGame() {
 		gameField.setState(State.EXIT_GAME);
-		notifyObservers();
-	}
-
-	@Override
-	public void setPlayer1Name(String name) {
-		gameField.setPlayer1Name(name);
-		gameField.setState(State.GET_SECOND_PLAYER_NAME);
-		notifyObservers();
-	}
-
-	@Override
-	public void setPlayer2Name(String name) {
-		gameField.setPlayer2Name(name);
-		gameField.setState(State.SET_START_DOT);
 		notifyObservers();
 	}
 

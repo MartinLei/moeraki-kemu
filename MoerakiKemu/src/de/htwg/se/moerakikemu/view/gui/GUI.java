@@ -68,20 +68,6 @@ public class GUI extends JFrame implements IObserver {
 			this.setVisible(false);
 			this.dispose();
 			return;
-		} else if (state.equals(State.GET_FIRST_PLAYER_NAME)) {
-			String player1Name = JOptionPane.showInputDialog("Name fuer Spieler 1 eigeben:", "Andrew");
-			if (player1Name == null)
-				player1Name = "Andrew";
-
-			myController.setPlayer1Name(player1Name);
-			myMessagePanel.printMessage("Spieler1 heist: " + player1Name);
-		} else if (state.equals(State.GET_SECOND_PLAYER_NAME)) {
-			String player2Name = JOptionPane.showInputDialog("Name fuer Spieler 2 eigeben:", "Walter");
-			if (player2Name == null)
-				player2Name = "Walter";
-
-			myController.setPlayer2Name(player2Name);
-			myMessagePanel.printMessage("Spieler2 heist: " + player2Name);
 		} else if (state.equals(State.SET_START_DOT)) {
 			myMessagePanel.printMessage("Setzt nun den StartStein");
 		} else if (state.equals(State.TURN_PLAYER1)) {

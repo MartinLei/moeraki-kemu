@@ -3,9 +3,7 @@ package de.htwg.se.moerakikemu.model.impl;
 import java.awt.Point;
 import java.util.List;
 
-import de.htwg.se.moerakikemu.controller.impl.Rule;
 import de.htwg.se.moerakikemu.model.IField;
-import de.htwg.se.moerakikemu.model.IPlayer;
 
 /**
  * The implementation of field
@@ -29,6 +27,7 @@ public class Field implements IField {
 		generateMap();
 
 		actualPlayer = Element.PLAYER1;
+		state = State.SET_START_DOT;
 	}
 
 	private void generateMap() {
@@ -133,16 +132,6 @@ public class Field implements IField {
 	@Override
 	public String getPlayer2Name() {
 		return player2Name;
-	}
-
-	@Override
-	public void setPlayer1Name(String name) {
-		player1Name = name;
-	}
-
-	@Override
-	public void setPlayer2Name(String name) {
-		player2Name = name;
 	}
 
 	@Override
