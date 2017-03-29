@@ -33,7 +33,7 @@ public class TextUI implements IObserver {
 	private static final int MAP_LENGTH = 13;
 
 	private void printMap() {
-		String output = "\n" + getMap() +"\n"+ getPunkte();
+		String output = "\n" + getMap() + "\n" + getPunkte();
 		LOGGER.info(output);
 
 		LOGGER.info(controller.getState());
@@ -51,7 +51,7 @@ public class TextUI implements IObserver {
 		}
 		return sb.toString();
 	}
-	
+
 	private String getCollumNumber() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("   ");
@@ -83,16 +83,16 @@ public class TextUI implements IObserver {
 		return sb.toString();
 	}
 
-	private String getPunkte(){
+	private String getPunkte() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		int player1Points = controller.getPlayerPoint(Element.PLAYER1);
 		int player2Points = controller.getPlayerPoint(Element.PLAYER2);
-		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayer1Name() +" :"+ player1Points + " Punkte\n");
-		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayer2Name() +" :"+ player2Points + " Punkte\n");
+		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayer1Name() + " :" + player1Points + " Punkte\n");
+		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayer2Name() + " :" + player2Points + " Punkte\n");
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Print the into
 	 */
@@ -136,16 +136,18 @@ public class TextUI implements IObserver {
 	}
 
 	private void setStone(Point position) {
-		if (position == null || !controller.isPositionPossibleInput(position)) {
+		if (position == null) {
 			LOGGER.info("Hier kannst du dein Stein nicht setzen");
 			return;
-		} else if (controller.getState().equals(State.SET_START_DOT)) {
+		}
+		
+		if (controller.getState().equals(State.SET_START_DOT)) {
 			if (!controller.setStartDot(position)) {
 				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
 			}
 		} else {
 			if (!controller.setDot(position)) {
-				LOGGER.info("Die Zelle ist schon besetzt :(");
+				LOGGER.info("Das geht nicht :(");
 			}
 		}
 	}

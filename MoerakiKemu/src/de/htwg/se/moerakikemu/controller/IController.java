@@ -91,7 +91,7 @@ public interface IController extends IObservable {
 	 * @param position
 	 * @return if the position is possible to set a dot
 	 */
-	boolean isPositionPossibleInput(Point position);
+	//boolean isPositionPossibleInput(Point position);
 	
 	/**
 	 * Set the start stone on the given position After setting the stone, it

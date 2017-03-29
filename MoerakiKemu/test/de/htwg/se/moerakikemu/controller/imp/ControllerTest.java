@@ -70,6 +70,16 @@ public class ControllerTest {
 		assertTrue(controller.setStartDot(STARTDOT));
 		assertEquals(State.TURN_PLAYER1, controller.getState());
 	}
+	
+	@Test
+	public void test_setDot(){
+		controller.setStartDot(STARTDOT);
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+		
+		assertFalse(controller.setDot(null));
+		assertFalse(controller.setDot(new Point(0,0)));
+		assertFalse(controller.setDot(STARTDOT));
+	}
 
 	@Test
 	public void test_isOccupiedIsland_1() {

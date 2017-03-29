@@ -102,11 +102,6 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public boolean isPositionPossibleInput(Point position) {
-		return rule.isPositionPossibleInput(position);
-	}
-
-	@Override
 	public boolean setStartDot(Point position) {
 		if (position == null)
 			return false;
@@ -123,10 +118,14 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public boolean setDot(Point position) {
-		if (position == null || gameField.isOccupied(position))
+		if (position == null)
 			return false;
 
-		gameField.occupy(position, gameField.getCurrentPlayer());
+		if (!rule.isPositionPossibleInput(position))
+			return false;
+
+		if (!gameField.occupy(position, gameField.getCurrentPlayer()))
+			return false;
 
 		analyzeField(position);
 
@@ -157,20 +156,19 @@ public class Controller extends Observable implements IController {
 			elementList.add(element);
 		}
 
-		for(int i = 0; i<4 ;i++){
+		for (int i = 0; i < 4; i++) {
 			Point islandPosition = testIslands.get(i);
 			List<Integer> cellNummer = rule.getCells().get(i);
 			State state = actIslandCell(elementList, cellNummer, islandPosition);
-			
-			if(state != null)
+
+			if (state != null)
 				return state;
 		}
-		
-		
+
 		return null;
 	}
 
-	private State actIslandCell(List<Element> elementList,List<Integer> cellNummer, Point islandPosition) {
+	private State actIslandCell(List<Element> elementList, List<Integer> cellNummer, Point islandPosition) {
 		int countPlayer1 = 0;
 		int countPlayer2 = 0;
 		int countStartDot = 0;
@@ -178,9 +176,9 @@ public class Controller extends Observable implements IController {
 
 		for (Integer nummer : cellNummer) {
 			Element element = elementList.get(nummer.intValue());
-			if(element == null)
+			if (element == null)
 				continue;
-			
+
 			if (element.equals(Element.PLAYER1))
 				countPlayer1++;
 			else if (element.equals(Element.PLAYER2))
@@ -192,7 +190,7 @@ public class Controller extends Observable implements IController {
 		}
 
 		Element newIslandElement = null;
-		State  newState = null;
+		State newState = null;
 		if (countPlayer1 == 3 && countPlayer2 == 0 && countStartDot == 0 && countWall == 1) {
 			newIslandElement = Element.HALF_POINT_PLAYER1;
 		} else if (countPlayer1 == 0 && countPlayer2 == 3 && countStartDot == 0 && countWall == 1) {
@@ -207,18 +205,17 @@ public class Controller extends Observable implements IController {
 			newIslandElement = Element.POINT_PLAYER1;
 		} else if (countPlayer1 == 1 && countPlayer2 == 3 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER2;
-		}else if (countPlayer1 == 4 && countPlayer2 == 0 && countStartDot == 0 && countWall == 0) {
+		} else if (countPlayer1 == 4 && countPlayer2 == 0 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER1;
 			newState = State.WON;
 		} else if (countPlayer1 == 0 && countPlayer2 == 4 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER2;
 			newState = State.WON;
 		}
-		
-		
-		if(newIslandElement != null)
-		gameField.occupy(islandPosition, newIslandElement);
-		
+
+		if (newIslandElement != null)
+			gameField.occupy(islandPosition, newIslandElement);
+
 		return newState;
 	}
 
@@ -253,9 +250,9 @@ public class Controller extends Observable implements IController {
 		return true;
 	}
 
-	//REMOVE
+	// REMOVE
 	@Override
-	public String getFieldAsString(){
+	public String getFieldAsString() {
 		return gameField.getFieldAsString();
 	}
 }
