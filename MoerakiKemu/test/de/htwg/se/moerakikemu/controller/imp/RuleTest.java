@@ -61,14 +61,13 @@ public class RuleTest {
 		resultShiftExpectet.add(new Point(3, 5));
 		resultShiftExpectet.add(new Point(5, 5));
 		resultShiftExpectet.add(new Point(7, 5));
-		resultShiftExpectet.add(new Point(6, 4));
+		resultShiftExpectet.add(new Point(4, 6));
 		resultShiftExpectet.add(new Point(6, 6));
-		resultShiftExpectet.add(new Point(7, 5));
+		resultShiftExpectet.add(new Point(5, 7));
 
 		List<Point> resultShift = rule.getShiftedPositions(rule.getTemplateCells(), position);
 		assertTrue(resultShift.containsAll(resultShiftExpectet));
 		assertTrue(resultShiftExpectet.containsAll(resultShift));
-
 	}
 
 	@Test
@@ -81,9 +80,9 @@ public class RuleTest {
 		resultShiftExpectet.add(null);
 		resultShiftExpectet.add(new Point(1, 5));
 		resultShiftExpectet.add(new Point(3, 5));
-		resultShiftExpectet.add(new Point(2,4));
+		resultShiftExpectet.add(new Point(0,6));
 		resultShiftExpectet.add(new Point(2, 6));
-		resultShiftExpectet.add(new Point(3, 5));
+		resultShiftExpectet.add(new Point(1, 7));
 
 		List<Point> resultShift = rule.getShiftedPositions(rule.getTemplateCells(), position);
 		assertTrue(resultShift.containsAll(resultShiftExpectet));
