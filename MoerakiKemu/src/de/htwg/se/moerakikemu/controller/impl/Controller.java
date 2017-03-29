@@ -149,7 +149,7 @@ public class Controller extends Observable implements IController {
 
 	private State actIslands(Point position) {
 		List<Point> testCells = rule.getShiftedPositions(rule.getTemplateCells(), position);
-		List<Point> testIslands = rule.getShiftedPositionsIsland(rule.getTemplateIslands(), position);
+		List<Point> testIslands = rule.getShiftedPositions(rule.getTemplateIslands(), position);
 		List<Element> elementList = new ArrayList<>();
 
 		for (Point cell : testCells) {
