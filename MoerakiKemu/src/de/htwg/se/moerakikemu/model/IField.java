@@ -51,13 +51,6 @@ public interface IField {
 	Element getElement(Point position);
 
 	/**
-	 * Returns the length of one edge of the (quare) field.
-	 * 
-	 * @return
-	 */
-	int getEdgeLength();
-
-	/**
 	 * Get the game state
 	 * 
 	 * @return state

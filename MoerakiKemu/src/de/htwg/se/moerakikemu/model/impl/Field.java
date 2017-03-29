@@ -13,8 +13,6 @@ import de.htwg.se.moerakikemu.model.IPlayer;
 public class Field implements IField {
 	private static final int MAP_LENGTH = 13;
 
-	private static final int EDGE_LENGTH = 12;
-
 	private Spot[][] map;
 
 	private State state;
@@ -82,11 +80,6 @@ public class Field implements IField {
 		map[11][10].setElement(Element.WALL);
 		map[10][11].setElement(Element.WALL);
 		map[11][11].setElement(Element.WALL);
-	}
-
-	@Override
-	public int getEdgeLength() {
-		return EDGE_LENGTH;
 	}
 
 	@Override
