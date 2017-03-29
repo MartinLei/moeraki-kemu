@@ -1,6 +1,7 @@
 package de.htwg.se.moerakikemu.controller.imp;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.awt.Point;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import org.junit.Test;
 
 import de.htwg.se.moerakikemu.controller.impl.Rule;
 import de.htwg.se.moerakikemu.model.IField;
-import de.htwg.se.moerakikemu.model.impl.Cell;
 import de.htwg.se.moerakikemu.model.impl.Field;
 
 public class RuleTest {

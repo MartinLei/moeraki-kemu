@@ -16,16 +16,14 @@ public class FieldTest {
 
 	IField errorField;
 	IField field;
-	Player player1;
-	Player player2;
+
 
 	private static final int MAP_LENGTH = 13;
 
 	@Before
 	public void setUp() {
 		field = new Field();
-		player1 = new Player();
-		player2 = new Player();
+
 	}
 
 	@Test

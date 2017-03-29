@@ -19,8 +19,8 @@ public class Field implements IField {
 
 	private State state;
 
-	private IPlayer player1;
-	private IPlayer player2;
+	private String player1Name = "Player1";
+	private String player2Name = "Player2";
 
 	private Element actualPlayer;
 
@@ -29,9 +29,6 @@ public class Field implements IField {
 	 */
 	public Field() {
 		generateMap();
-
-		player1 = new Player();
-		player2 = new Player();
 
 		actualPlayer = Element.PLAYER1;
 	}
@@ -137,22 +134,22 @@ public class Field implements IField {
 
 	@Override
 	public String getPlayer1Name() {
-		return player1.getName();
+		return player1Name;
 	}
 
 	@Override
 	public String getPlayer2Name() {
-		return player2.getName();
+		return player2Name;
 	}
 
 	@Override
 	public void setPlayer1Name(String name) {
-		player1.setName(name);
+		player1Name = name;
 	}
 
 	@Override
 	public void setPlayer2Name(String name) {
-		player2.setName(name);
+		player2Name = name;
 	}
 
 	@Override
@@ -240,7 +237,7 @@ public class Field implements IField {
 	public String getFieldAsString() {
 		return getMap();
 	}
-	
+
 	private String getMap() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getCollumNumber());
@@ -253,7 +250,7 @@ public class Field implements IField {
 		}
 		return sb.toString();
 	}
-	
+
 	private String getCollumNumber() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("   ");
@@ -284,5 +281,5 @@ public class Field implements IField {
 
 		return sb.toString();
 	}
-	
+
 }
