@@ -232,4 +232,16 @@ public class Controller extends Observable implements IController {
 	public String getFieldAsString() {
 		return gameField.getFieldAsString();
 	}
+
+	@Override
+	public String getCurrentPlayerName() {
+		Element player = gameField.getCurrentPlayer();
+
+		if (player.equals(Element.PLAYER1))
+			return gameField.getPlayer1Name();
+		else if (player.equals(Element.PLAYER2))
+			return gameField.getPlayer1Name();
+		
+		return null;
+	}
 }

@@ -163,10 +163,6 @@ public class TextUI implements IObserver {
 		if (state.equals(State.EXIT_GAME)) {
 			LOGGER.info("Exit MoerakiKemu");
 			LOGGER.info("Have a nice day :)");
-		} else if (state.equals(State.GET_FIRST_PLAYER_NAME)) {
-			LOGGER.info("Spieler1 bitte gebe dein Name ein:: ");
-		} else if (state.equals(State.GET_SECOND_PLAYER_NAME)) {
-			LOGGER.info("Spieler2 bitte gebe dein Name ein:: ");
 		} else if (state.equals(State.SET_START_DOT)) {
 			LOGGER.info("Setzt nun den StartStein:: ");
 		} else if (state.equals(State.TURN_PLAYER1)) {
@@ -175,12 +171,9 @@ public class TextUI implements IObserver {
 		} else if (state.equals(State.TURN_PLAYER2)) {
 			String player2Name = controller.getPlayer2Name();
 			LOGGER.info(player2Name + " du bist dran:: ");
-		} else if (state.equals(State.PLAYER1_WON)) {
-			String playerName = controller.getPlayer1Name();
-			LOGGER.info("Der Gewinnder ist Spieler1 aka ->" + playerName);
-		} else if (state.equals(State.PLAYER2_WON)) {
-			String playerName = controller.getPlayer2Name();
-			LOGGER.info("Der Gewinnder ist Spieler1 aka ->" + playerName);
+		} else if (state.equals(State.WON)) {
+			String playerName = controller.getCurrentPlayerName();
+			LOGGER.info("Der Gewinner ist " + playerName);
 		} else if (state.equals(State.GAME_FINISHED)) {
 			LOGGER.info("Ende keiner hat gewonnen");
 		}

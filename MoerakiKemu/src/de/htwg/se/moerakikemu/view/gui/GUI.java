@@ -76,13 +76,9 @@ public class GUI extends JFrame implements IObserver {
 		} else if (state.equals(State.TURN_PLAYER2)) {
 			String player2Name = myController.getPlayer2Name();
 			myMessagePanel.printMessage(player2Name + " du bist dran");
-		} else if (state.equals(State.PLAYER1_WON)) {
-			String playerName = myController.getPlayer1Name();
-			myMessagePanel.printMessage("Der Gewinnder ist Spieler1 aka ->" + playerName);
-			this.printWinnerPopup(playerName);
-		} else if (state.equals(State.PLAYER2_WON)) {
-			String playerName = myController.getPlayer2Name();
-			myMessagePanel.printMessage("Der Gewinnder ist Spieler1 aka ->" + playerName);
+		} else if (state.equals(State.WON)) {
+			String playerName = myController.getCurrentPlayerName();
+			myMessagePanel.printMessage("Der Gewinner ist " + playerName);
 			this.printWinnerPopup(playerName);
 		} else if (state.equals(State.GAME_FINISHED)) {
 			myMessagePanel.printMessage("Ende keiner hat gewonnen");

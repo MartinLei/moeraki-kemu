@@ -19,8 +19,6 @@ import de.htwg.se.moerakikemu.persistence.db4o.FieldDb4oDAO;
 public class ControllerTest {
 	IController controller;
 
-	private final String PLAYER1NAME = "Andrew";
-	private final String PLAYER2NAME = "Walter";
 	private final static Point STARTDOT = new Point(6, 6);
 	private final IFieldDAO fieldDAO = new FieldDb4oDAO();
 

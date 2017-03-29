@@ -92,6 +92,7 @@ public interface IController extends IObservable {
 	 */
 	boolean setDot(Point position);
 
+	String getCurrentPlayerName();
 	
 	/**
 	 * remove
