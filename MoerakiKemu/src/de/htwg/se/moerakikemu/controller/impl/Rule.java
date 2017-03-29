@@ -2,11 +2,7 @@ package de.htwg.se.moerakikemu.controller.impl;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import de.htwg.se.moerakikemu.model.impl.Cell;
 
 public final class Rule {
 
