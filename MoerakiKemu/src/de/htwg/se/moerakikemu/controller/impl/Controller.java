@@ -199,18 +199,20 @@ public class Controller extends Observable implements IController {
 			newIslandElement = Element.HALF_POINT_PLAYER2;
 		} else if (countPlayer1 == 3 && countPlayer2 == 0 && countStartDot == 1 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER1;
+			newState = State.WON;
 		} else if (countPlayer1 == 0 && countPlayer2 == 3 && countStartDot == 1 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER2;
+			newState = State.WON;
 		} else if (countPlayer1 == 3 && countPlayer2 == 1 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER1;
 		} else if (countPlayer1 == 1 && countPlayer2 == 3 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER2;
 		}else if (countPlayer1 == 4 && countPlayer2 == 0 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER1;
-			newState = State.PLAYER1_WON;
+			newState = State.WON;
 		} else if (countPlayer1 == 0 && countPlayer2 == 4 && countStartDot == 0 && countWall == 0) {
 			newIslandElement = Element.POINT_PLAYER2;
-			newState = State.PLAYER2_WON;
+			newState = State.WON;
 		}
 		
 		
@@ -251,4 +253,9 @@ public class Controller extends Observable implements IController {
 		return true;
 	}
 
+	//REMOVE
+	@Override
+	public String getFieldAsString(){
+		return gameField.getFieldAsString();
+	}
 }

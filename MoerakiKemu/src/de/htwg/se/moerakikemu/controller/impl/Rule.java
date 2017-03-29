@@ -40,20 +40,20 @@ public final class Rule {
 
 	private void initTemplateCell() {
 
-		templateCells.add(new Point(0, -2));
-		templateCells.add(new Point(-1, -1));
-		templateCells.add(new Point(1, -1));
-		templateCells.add(new Point(-2, 0));
-		templateCells.add(new Point(0, 0));
-		templateCells.add(new Point(2, 0));
-		templateCells.add(new Point(1, -1));
-		templateCells.add(new Point(1, 1));
-		templateCells.add(new Point(2, 0));
+		templateCells.add(new Point(0, -2)); // 0
+		templateCells.add(new Point(-1, -1)); // 1
+		templateCells.add(new Point(1, -1)); // 2
+		templateCells.add(new Point(-2, 0)); // 3
+		templateCells.add(new Point(0, 0)); // 4
+		templateCells.add(new Point(2, 0)); // 5
+		templateCells.add(new Point(-1, 1)); // 6
+		templateCells.add(new Point(1, 1)); // 7
+		templateCells.add(new Point(0, 2)); // 8
 
-		templateIslands.add(new Point(-1, 0));
-		templateIslands.add(new Point(0, -1));
-		templateIslands.add(new Point(1, 0));
-		templateIslands.add(new Point(0, 1));
+		templateIslands.add(new Point(-1, 0)); // left
+		templateIslands.add(new Point(0, -1)); // up
+		templateIslands.add(new Point(1, 0)); // right
+		templateIslands.add(new Point(0, 1)); // down
 
 		List<Integer> leftCell = new ArrayList<>();
 		leftCell.add(3);
@@ -62,19 +62,19 @@ public final class Rule {
 		leftCell.add(6);
 		cells.add(leftCell);
 
-		List<Integer> rightCell = new ArrayList<>();
-		rightCell.add(4);
-		rightCell.add(2);
-		rightCell.add(5);
-		rightCell.add(7);
-		cells.add(rightCell);
-
 		List<Integer> upCell = new ArrayList<>();
 		upCell.add(1);
 		upCell.add(0);
 		upCell.add(2);
 		upCell.add(4);
 		cells.add(upCell);
+
+		List<Integer> rightCell = new ArrayList<>();
+		rightCell.add(4);
+		rightCell.add(2);
+		rightCell.add(5);
+		rightCell.add(7);
+		cells.add(rightCell);
 
 		List<Integer> bottomCell = new ArrayList<>();
 		bottomCell.add(6);

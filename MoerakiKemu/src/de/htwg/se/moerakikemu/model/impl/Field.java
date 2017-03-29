@@ -94,7 +94,7 @@ public class Field implements IField {
 
 	@Override
 	public boolean isOccupied(Point position) {
-		return map[position.x][position.y].isOccupied();
+		return map[position.x][position.y].isOccupiedByPlayer();
 	}
 
 	@Override
@@ -235,4 +235,54 @@ public class Field implements IField {
 
 		return null;
 	}
+
+	@Override
+	public String getFieldAsString() {
+		return getMap();
+	}
+	
+	private String getMap() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(getCollumNumber());
+		sb.append("\n");
+		for (int y = 0; y < MAP_LENGTH; y++) {
+			String line = getMapLine(y);
+			sb.append(getFormatNumber(y));
+			sb.append(line);
+			sb.append("\n");
+		}
+		return sb.toString();
+	}
+	
+	private String getCollumNumber() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("   ");
+		for (int i = 0; i < MAP_LENGTH; i++) {
+			String number = getFormatNumber(i);
+			sb.append(number);
+		}
+		return sb.toString();
+	}
+
+	private String getFormatNumber(int number) {
+		if (number == 0 || number == 12)
+			return "   ";
+		else if (number < 10)
+			return " " + number + " ";
+		return "" + number + " ";
+	}
+
+	private String getMapLine(int y) {
+		StringBuilder sb = new StringBuilder();
+
+		for (int i = 0; i < MAP_LENGTH; i++) {
+			Element element = getElement(new Point(i, y));
+			sb.append(" ");
+			sb.append(element.toString());
+			sb.append(" ");
+		}
+
+		return sb.toString();
+	}
+	
 }

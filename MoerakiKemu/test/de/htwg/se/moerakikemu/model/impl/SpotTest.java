@@ -18,18 +18,18 @@ public class SpotTest {
 	@Test
 	public void test_isOccupied() {
 		spot.setElement(Element.PLAYER1);
-		assertTrue(spot.isOccupied());
+		assertTrue(spot.isOccupiedByPlayer());
 		spot.setElement(Element.PLAYER2);
-		assertTrue(spot.isOccupied());
+		assertTrue(spot.isOccupiedByPlayer());
 		
 		spot.setElement(Element.WALL);
-		assertFalse(spot.isOccupied());
+		assertFalse(spot.isOccupiedByPlayer());
 	}
 
 	@Test
 	public void test_isOccupied_alreadyOccupied_returnsFalse() {
 		assertTrue(spot.occupy(Element.PLAYER1));
-		assertTrue(spot.isOccupied());
+		assertTrue(spot.isOccupiedByPlayer());
 
 		assertFalse(spot.occupy(Element.PLAYER2));
 		assertEquals(Element.PLAYER1, spot.getElement());

@@ -139,4 +139,9 @@ public interface IField {
 	 */
 	int getPoints(Element player);
 
+	/**
+	 * remove
+	 * @return
+	 */
+	String getFieldAsString();
 }

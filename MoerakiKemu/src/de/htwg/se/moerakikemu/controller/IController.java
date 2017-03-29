@@ -111,6 +111,12 @@ public interface IController extends IObservable {
 	 */
 	boolean setDot(Point position);
 
+	
+	/**
+	 * remove
+	 */
+	 String getFieldAsString();
+	
 	/**
 	 * Save game to db
 	 */

@@ -26,7 +26,7 @@ public class Spot {
 	 * @return true if the cell is not occupied
 	 */
 	public boolean occupy(final Element person) {
-		if (isOccupied())
+		if (isOccupiedByPlayer())
 			return false;
 
 		occupiedBy = person;
@@ -38,8 +38,9 @@ public class Spot {
 	 * 
 	 * @return false if free
 	 */
-	public boolean isOccupied() {
+	public boolean isOccupiedByPlayer() {
 		return occupiedBy == Element.PLAYER1 || occupiedBy == Element.PLAYER2;
+	//	return occupiedBy != Element.NONE;
 	}
 
 	/**
