@@ -112,10 +112,6 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(8, 4)));
 
 		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(8, 3));
-
-		assertTrue(controller.setDot(new Point(5, 5)));
-		// player1 win
-		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
 		assertEquals(State.WON, controller.getState());
 	}
 
