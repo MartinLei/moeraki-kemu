@@ -1,6 +1,7 @@
 package de.htwg.se.moerakikemu.model.impl;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.htwg.se.moerakikemu.model.IField;
@@ -216,52 +217,16 @@ public class Field implements IField {
 	}
 
 	@Override
-	public String getFieldAsString() {
-		return getMap();
-	}
+	public List<Element> getField() {
+		List<Element> mapElement = new ArrayList<>();
 
-	private String getMap() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getCollumNumber());
-		sb.append("\n");
 		for (int y = 0; y < MAP_LENGTH; y++) {
-			String line = getMapLine(y);
-			sb.append(getFormatNumber(y));
-			sb.append(line);
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
-
-	private String getCollumNumber() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("   ");
-		for (int i = 0; i < MAP_LENGTH; i++) {
-			String number = getFormatNumber(i);
-			sb.append(number);
-		}
-		return sb.toString();
-	}
-
-	private String getFormatNumber(int number) {
-		if (number == 0 || number == 12)
-			return "   ";
-		else if (number < 10)
-			return " " + number + " ";
-		return "" + number + " ";
-	}
-
-	private String getMapLine(int y) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < MAP_LENGTH; i++) {
-			Element element = getElement(new Point(i, y));
-			sb.append(" ");
-			sb.append(element.toString());
-			sb.append(" ");
+			for (int x = 0; x < MAP_LENGTH; x++) {
+				Element element = map[x][y].getElement();
+				mapElement.add(element);
+			}
 		}
 
-		return sb.toString();
+		return mapElement;
 	}
-
 }

@@ -1,9 +1,15 @@
 package de.htwg.se.moerakikemu.view.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 import com.google.inject.Inject;
 
@@ -16,74 +22,84 @@ import de.htwg.se.moerakikemu.util.observer.IObserver;
  * Graphic Interface for the game
  */
 public class GUI extends JFrame implements IObserver {
-	private static final long serialVersionUID = 2078463309153663728L;
+	private transient IController controller;
+	
+	private static final String GAME_TITLE = "Moeraki Kemu"; 
 
-	private transient IController myController;
+	private static final int DEFAULT_Y = 580;
+	private static final int DEFAULT_X = 720;
 
-	private MainPanel myMainPanel;
-	private MessagePanel myMessagePanel;
-
+	private PitchPanel pitchPanel;
+	private Container pane;
+	
 	@Inject
-	public GUI(IController newController) {
-		super("Moeraki Kemu");
-		this.myController = newController;
-		myController.addObserver(this);
+	public GUI(final IController controller) {
+		this.controller = controller;
+		controller.addObserver(this);
 
-		this.myMainPanel = new MainPanel(myController, 13);
-		this.myMessagePanel = new MessagePanel(myController);
+		this.setTitle(GAME_TITLE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(DEFAULT_X, DEFAULT_Y);
+		this.setJMenuBar(new MenuBar(controller));
+		pane = getContentPane();
+		pane.setLayout(new BorderLayout());
 
-		this.setJMenuBar(new MainMenu(myController));
+		constructArimaaPane(controller);
 
-		this.setLayout(new BorderLayout());
-		this.add(myMainPanel, BorderLayout.CENTER);
-		this.add(myMessagePanel, BorderLayout.EAST);
-
-		this.setSize(1024, 768);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
+		// Closing window handler
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent we) {
+				controller.quitGame();
+			}
+		});
 	}
 
-	/**
-	 * redraw the window
-	 */
-	public void drawCurrentState() {
-		myMainPanel.updateField();
-		myMessagePanel.updateView();
+	private void constructArimaaPane(IController controller) {
+		JPanel centerPanel = new JPanel();
+		pane.add(centerPanel, BorderLayout.CENTER);
+
+		JPanel leftPanel = new JPanel(new GridLayout(1, 0));
+
+		leftPanel.setPreferredSize(new Dimension(550, 550));
+		centerPanel.add(leftPanel);
+
+		pitchPanel = new PitchPanel(controller);
+		leftPanel.add(pitchPanel);
+
+//		JPanel rightPanel = new JPanel();
+//		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+//		centerPanel.add(rightPanel);
+//
+//		infoPanel = new InfoPanel(controller);
+//		rightPanel.add(infoPanel);
+//
+//		moveStatusPanel = new MoveHistoryPanel(controller);
+//		rightPanel.add(moveStatusPanel);
+//
+//		buttonPanel = new ButtonPanel(controller);
+//		rightPanel.add(buttonPanel);
+//
+//		statusPanel = new StatusPanel();
+//		pane.add(statusPanel, BorderLayout.SOUTH);
+
+		setVisible(true);
 		repaint();
-	}
 
-	private void printWinnerPopup(String name) {
-		String display = "Der Gewinner ist: " + name + "!!!";
-		JOptionPane.showMessageDialog(null, display);
 	}
 
 	@Override
 	public void update(Event e) {
-		State state = myController.getState();
+		//statusPanel.setText(controller.getGameStatus(), controller.getStatusText());
 
-		drawCurrentState();
-
+		State state = controller.getState();
 		if (state.equals(State.EXIT_GAME)) {
 			this.setVisible(false);
 			this.dispose();
 			return;
-		} else if (state.equals(State.SET_START_DOT)) {
-			myMessagePanel.printMessage("Setzt nun den StartStein");
-		} else if (state.equals(State.TURN_PLAYER1)) {
-			String player1Name = myController.getPlayer1Name();
-			myMessagePanel.printMessage(player1Name + " du bist dran");
-		} else if (state.equals(State.TURN_PLAYER2)) {
-			String player2Name = myController.getPlayer2Name();
-			myMessagePanel.printMessage(player2Name + " du bist dran");
-		} else if (state.equals(State.WON)) {
-			String playerName = myController.getCurrentPlayerName();
-			myMessagePanel.printMessage("Der Gewinner ist " + playerName);
-			this.printWinnerPopup(playerName);
-		} else if (state.equals(State.GAME_FINISHED)) {
-			myMessagePanel.printMessage("Ende keiner hat gewonnen");
 		}
 
+		repaint();
 	}
 
 }

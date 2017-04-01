@@ -1,6 +1,7 @@
 package de.htwg.se.moerakikemu.controller;
 
 import java.awt.Point;
+import java.util.List;
 
 import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
@@ -92,12 +93,23 @@ public interface IController extends IObservable {
 	 */
 	boolean setDot(Point position);
 
+	/**
+	 * get current player element
+	 * @return
+	 */
+	Element getCurrentPlayer();
+	
+	/**
+	 * Name of current player
+	 * @return name
+	 */
 	String getCurrentPlayerName();
 	
 	/**
-	 * remove
+	 * get Field as List
+	 * @return field 
 	 */
-	 String getFieldAsString();
+	List<Element> getField();
 	
 	/**
 	 * Save game to db

@@ -119,9 +119,9 @@ public interface IField {
 	int getPoints(Element player);
 
 	/**
-	 * remove
-	 * @return
+	 * get Field as List
+	 * @return field 
 	 */
-	String getFieldAsString();
+	List<Element> getField();
 	
 }

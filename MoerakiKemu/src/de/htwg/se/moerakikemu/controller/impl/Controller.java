@@ -227,10 +227,14 @@ public class Controller extends Observable implements IController {
 		return true;
 	}
 
-	// REMOVE
 	@Override
-	public String getFieldAsString() {
-		return gameField.getFieldAsString();
+	public List<Element> getField(){
+		return gameField.getField();
+	}
+	
+	@Override
+	public Element getCurrentPlayer() {
+		return gameField.getCurrentPlayer();
 	}
 
 	@Override
