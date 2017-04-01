@@ -18,13 +18,13 @@ import org.apache.logging.log4j.Logger;
 import de.htwg.se.moerakikemu.controller.IController;
 
 public class MenuBar extends JMenuBar {
-	IController controller;
+	private transient IController controller;
 
-	JMenu fileMenu;
-	JMenuItem newMenuItem, quitMenuItem;
+	private JMenu fileMenu;
+	private JMenuItem newMenuItem, quitMenuItem;
 
-	JMenu infoMenu;
-	JMenuItem helpMenuItem;
+	private JMenu infoMenu;
+	private JMenuItem helpMenuItem;
 
 	public MenuBar(IController controller) {
 		this.controller = controller;

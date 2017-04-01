@@ -9,39 +9,36 @@ import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
 
-
 public class InfoPanel extends JPanel implements IObserver {
-	IController controller;
+	private transient IController controller;
 
-	JLabel lPlayer1;
-	JLabel lPlayer2;
-	
-	JLabel lInfo;
+	private JLabel lPlayer1;
+	private JLabel lPlayer2;
+	private JLabel lInfo;
 
 	public InfoPanel(IController controller) {
 		this.controller = controller;
 		controller.addObserver(this);
 
-		lPlayer1= new JLabel();
+		lPlayer1 = new JLabel();
 		this.add(lPlayer1);
-		lPlayer2= new JLabel();
+		lPlayer2 = new JLabel();
 		this.add(lPlayer2);
 		lInfo = new JLabel();
 		this.add(lInfo);
-	
+
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 	}
 
 	private void updateInfoPanel() {
 		lPlayer1.setText(getPlayerText(Element.PLAYER1));
 		lPlayer2.setText(getPlayerText(Element.PLAYER2));
-		lInfo.setText("Info:: " +controller.getState().toString());
+		lInfo.setText("Info:: " + controller.getState().toString());
 	}
 
 	private String getPlayerText(Element player) {
 		return controller.getPlayerName(player) + ": " + controller.getPlayerPoint(player);
 	}
-
 
 	@Override
 	public void update(Event e) {

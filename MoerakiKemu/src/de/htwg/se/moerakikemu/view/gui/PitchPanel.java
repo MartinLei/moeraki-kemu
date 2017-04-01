@@ -30,14 +30,11 @@ import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
 
 public class PitchPanel extends JPanel implements IObserver {
-	private static final Logger LOGGER = LogManager.getLogger(PitchPanel.class.getName());
-
-	IController controller;
-
-	BufferedImage pitchImage;
-	Point pitchSizePoint = new Point(520, 520);
-	Point figureSize = new Point(40, 40);
-	Point offsetPitch = new Point(15, 15);
+	private transient IController controller;
+	
+	private static final Point PITZ_SIZE = new Point(520, 520);
+	private static final Point CELL_SIZE = new Point(40, 40);
+	private static final Point OFFSET_PTICH = new Point(15, 15);
 
 	public PitchPanel(IController controller) {
 		this.controller = controller;
@@ -77,18 +74,18 @@ public class PitchPanel extends JPanel implements IObserver {
 		if (!isPosInPitch(mouse))
 			return null;
 
-		double px = mouse.getX() - offsetPitch.getX();
-		double py = mouse.getY() - offsetPitch.getY();
+		double px = mouse.getX() - OFFSET_PTICH.getX();
+		double py = mouse.getY() - OFFSET_PTICH.getY();
 
-		px = px / figureSize.getX();
-		py = py / figureSize.getY();
+		px = px / CELL_SIZE.getX();
+		py = py / CELL_SIZE.getY();
 
 		return new Point((int) px, (int) py);
 	}
 
 	private boolean isPosInPitch(Point mouse) {
 		Rectangle inPitch = new Rectangle();
-		inPitch.setBounds(offsetPitch.x, offsetPitch.y, pitchSizePoint.x, pitchSizePoint.y);
+		inPitch.setBounds(OFFSET_PTICH.x, OFFSET_PTICH.y, PITZ_SIZE.x, PITZ_SIZE.y);
 
 		if (inPitch.contains(mouse))
 			return true;
@@ -116,12 +113,12 @@ public class PitchPanel extends JPanel implements IObserver {
 		int x = 0;
 		int y = 0;
 		for (Element element : pitch) {
-			int posX = (int) (x * figureSize.x + offsetPitch.getX());
-			int posY = (int) (y * figureSize.y + offsetPitch.getX());
+			int posX = (int) (x * CELL_SIZE.x + OFFSET_PTICH.getX());
+			int posY = (int) (y * CELL_SIZE.y + OFFSET_PTICH.getX());
 
 			Color elementColor = getElementColor(element);
 			g2d.setColor(elementColor);
-			g2d.fill(new Rectangle2D.Double(posX, posY, figureSize.x, figureSize.y));
+			g2d.fill(new Rectangle2D.Double(posX, posY, CELL_SIZE.x, CELL_SIZE.y));
 
 			if (x == 12) {
 				x = 0;
