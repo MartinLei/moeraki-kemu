@@ -126,13 +126,15 @@ public class Field implements IField {
 	}
 
 	@Override
-	public String getPlayer1Name() {
-		return player1Name;
-	}
-
-	@Override
-	public String getPlayer2Name() {
-		return player2Name;
+	public String getPlayerName(Element player) {
+		String playerName = "-";
+		
+		if(player.equals(Element.PLAYER1))
+			playerName = player1Name;
+		else if(player.equals(Element.PLAYER2))
+			playerName = player2Name;
+		
+		return playerName;
 	}
 
 	@Override

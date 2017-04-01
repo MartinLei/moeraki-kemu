@@ -65,18 +65,12 @@ public interface IField {
 	void setState(State newState);
 
 	/**
-	 * Returns the name of player1.
+	 * Returns the name of player
 	 *
 	 * @return A String, not null.
 	 */
-	String getPlayer1Name();
+	String getPlayerName(Element player);
 
-	/**
-	 * Returns the name of player2.
-	 *
-	 * @return A String, not null.
-	 */
-	String getPlayer2Name();
 
 	/**
 	 * get current player

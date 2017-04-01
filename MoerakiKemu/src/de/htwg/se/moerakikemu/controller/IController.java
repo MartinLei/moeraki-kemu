@@ -45,13 +45,7 @@ public interface IController extends IObservable {
 	 * Give the player names and set the start stone for a quick start
 	 */
 	void newGameQuickStart();
-	
-	/**
-	 * Give the name of player1
-	 * 
-	 * @return name
-	 */
-	String getPlayer1Name();
+
 
 	/**
 	 * give the point of player1 or player2
@@ -61,11 +55,11 @@ public interface IController extends IObservable {
 	int getPlayerPoint(Element player);
 
 	/**
-	 * Give the name of player2
+	 * Give the name of player
 	 * 
 	 * @return name
 	 */
-	String getPlayer2Name();
+	String getPlayerName(Element player);
 
 	/**
 	 * tell if the position is a possible position for a player

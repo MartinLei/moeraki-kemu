@@ -64,8 +64,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public String getPlayer1Name() {
-		return gameField.getPlayer1Name();
+	public String getPlayerName(Element player) {
+		return gameField.getPlayerName(player);
 	}
 
 	@Override
@@ -73,10 +73,6 @@ public class Controller extends Observable implements IController {
 		return gameField.getPoints(player);
 	}
 
-	@Override
-	public String getPlayer2Name() {
-		return gameField.getPlayer2Name();
-	}
 
 	@Override
 	public boolean setStartDot(Point position) {
@@ -240,12 +236,6 @@ public class Controller extends Observable implements IController {
 	@Override
 	public String getCurrentPlayerName() {
 		Element player = gameField.getCurrentPlayer();
-
-		if (player.equals(Element.PLAYER1))
-			return gameField.getPlayer1Name();
-		else if (player.equals(Element.PLAYER2))
-			return gameField.getPlayer1Name();
-		
-		return null;
+		return gameField.getPlayerName(player);
 	}
 }

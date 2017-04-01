@@ -88,8 +88,8 @@ public class TextUI implements IObserver {
 
 		int player1Points = controller.getPlayerPoint(Element.PLAYER1);
 		int player2Points = controller.getPlayerPoint(Element.PLAYER2);
-		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayer1Name() + " :" + player1Points + " Punkte\n");
-		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayer2Name() + " :" + player2Points + " Punkte\n");
+		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayerName(Element.PLAYER1) + " :" + player1Points + " Punkte\n");
+		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayerName(Element.PLAYER2) + " :" + player2Points + " Punkte\n");
 		return sb.toString();
 	}
 
@@ -166,10 +166,10 @@ public class TextUI implements IObserver {
 		} else if (state.equals(State.SET_START_DOT)) {
 			LOGGER.info("Setzt nun den StartStein:: ");
 		} else if (state.equals(State.TURN_PLAYER1)) {
-			String player1Name = controller.getPlayer1Name();
+			String player1Name = controller.getPlayerName(Element.PLAYER1);
 			LOGGER.info(player1Name + " du bist dran:: ");
 		} else if (state.equals(State.TURN_PLAYER2)) {
-			String player2Name = controller.getPlayer2Name();
+			String player2Name = controller.getPlayerName(Element.PLAYER2);
 			LOGGER.info(player2Name + " du bist dran:: ");
 		} else if (state.equals(State.WON)) {
 			String playerName = controller.getCurrentPlayerName();

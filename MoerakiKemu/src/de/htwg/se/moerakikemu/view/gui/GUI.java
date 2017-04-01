@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import com.google.inject.Inject;
@@ -27,8 +28,10 @@ public class GUI extends JFrame implements IObserver {
 	private static final String GAME_TITLE = "Moeraki Kemu"; 
 
 	private static final int DEFAULT_Y = 580;
-	private static final int DEFAULT_X = 720;
+	private static final int DEFAULT_X = 800;
 
+	private InfoPanel infoPanel;
+	
 	private PitchPanel pitchPanel;
 	private Container pane;
 	
@@ -67,21 +70,12 @@ public class GUI extends JFrame implements IObserver {
 		pitchPanel = new PitchPanel(controller);
 		leftPanel.add(pitchPanel);
 
-//		JPanel rightPanel = new JPanel();
-//		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-//		centerPanel.add(rightPanel);
-//
-//		infoPanel = new InfoPanel(controller);
-//		rightPanel.add(infoPanel);
-//
-//		moveStatusPanel = new MoveHistoryPanel(controller);
-//		rightPanel.add(moveStatusPanel);
-//
-//		buttonPanel = new ButtonPanel(controller);
-//		rightPanel.add(buttonPanel);
-//
-//		statusPanel = new StatusPanel();
-//		pane.add(statusPanel, BorderLayout.SOUTH);
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+		centerPanel.add(rightPanel);
+
+		infoPanel = new InfoPanel(controller);
+		rightPanel.add(infoPanel);
 
 		setVisible(true);
 		repaint();
@@ -90,13 +84,17 @@ public class GUI extends JFrame implements IObserver {
 
 	@Override
 	public void update(Event e) {
-		//statusPanel.setText(controller.getGameStatus(), controller.getStatusText());
 
 		State state = controller.getState();
 		if (state.equals(State.EXIT_GAME)) {
 			this.setVisible(false);
 			this.dispose();
 			return;
+		} else if (state.equals(State.WON)) {
+			String playerName = controller.getCurrentPlayerName();
+			JOptionPane.showMessageDialog(this, "Der Gewinner ist " + playerName);
+		} else if (state.equals(State.GAME_FINISHED)) {
+			JOptionPane.showMessageDialog(this, "Ende keiner hat gewonnen");
 		}
 
 		repaint();

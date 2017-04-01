@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.Element;
+import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
 
@@ -37,7 +38,6 @@ public class PitchPanel extends JPanel implements IObserver {
 	Point pitchSizePoint = new Point(520, 520);
 	Point figureSize = new Point(40, 40);
 	Point offsetPitch = new Point(15, 15);
-
 
 	public PitchPanel(IController controller) {
 		this.controller = controller;
@@ -60,27 +60,31 @@ public class PitchPanel extends JPanel implements IObserver {
 	}
 
 	private void mouseReleasedHandler(Point mouse) {
-		 Point position = getCell(mouse);
-		
-		 if (position != null) {
-			 controller.setDot(position);
-		 }
-		
+		Point position = getCell(mouse);
+
+		if (position != null) {
+			State state = controller.getState();
+			if (state.equals(State.SET_START_DOT))
+				controller.setStartDot(position);
+			else if (state.equals(State.TURN_PLAYER1) || state.equals(State.TURN_PLAYER2))
+				controller.setDot(position);
+		}
+
 		this.repaint();
 	}
 
-	 private Point getCell(Point mouse) {
-	 if (!isPosInPitch(mouse))
-	 return null;
-	
-	 double px = mouse.getX() - offsetPitch.getX();
-	 double py = mouse.getY() - offsetPitch.getY();
-	
-	 px = px / figureSize.getX();
-	 py = py / figureSize.getY();
-	 
-	 return new Point((int) px, (int) py);
-	 }
+	private Point getCell(Point mouse) {
+		if (!isPosInPitch(mouse))
+			return null;
+
+		double px = mouse.getX() - offsetPitch.getX();
+		double py = mouse.getY() - offsetPitch.getY();
+
+		px = px / figureSize.getX();
+		py = py / figureSize.getY();
+
+		return new Point((int) px, (int) py);
+	}
 
 	private boolean isPosInPitch(Point mouse) {
 		Rectangle inPitch = new Rectangle();
@@ -102,13 +106,9 @@ public class PitchPanel extends JPanel implements IObserver {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.fillRect(0, 0, getSize().width, getSize().height);
 
-	
 		drawPitch(g2d);
 
-	
 	}
-
-
 
 	private void drawPitch(Graphics2D g2d) {
 		List<Element> pitch = controller.getField();
@@ -170,7 +170,6 @@ public class PitchPanel extends JPanel implements IObserver {
 
 		return color;
 	}
-
 
 	@Override
 	public void update(Event e) {
