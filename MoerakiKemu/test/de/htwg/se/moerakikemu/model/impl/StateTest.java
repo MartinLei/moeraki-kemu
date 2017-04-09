@@ -11,7 +11,6 @@ public class StateTest {
 	private static final String TURN_PLAYER1 = "Player1 sie sind dran";
 	private static final String TURN_PLAYER2 = "Player2 sie sind dran";
 	private static final String WON = "Spiel beendet";
-	private static final String GAME_FINISHED = "Spiel unentschieden beendet";
 	private static final String EXIT_GAME = "Adios";
 	
 	@Before
@@ -25,9 +24,7 @@ public class StateTest {
 		assertEquals(TURN_PLAYER1, State.TURN_PLAYER1.toString());
 		assertEquals(TURN_PLAYER2, State.TURN_PLAYER2.toString());
 		assertEquals(WON, State.WON.toString());
-		assertEquals(GAME_FINISHED, State.GAME_FINISHED.toString());
 		assertEquals(EXIT_GAME, State.EXIT_GAME.toString());
-
 	}
 	
 }

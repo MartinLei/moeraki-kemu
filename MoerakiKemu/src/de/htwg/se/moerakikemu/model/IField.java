@@ -120,4 +120,9 @@ public interface IField {
 	 */
 	List<Element> getField();
 
+	/**
+	 * tells if the field has no free dots to set a player
+	 * @return is field full
+	 */
+	boolean isFull();
 }

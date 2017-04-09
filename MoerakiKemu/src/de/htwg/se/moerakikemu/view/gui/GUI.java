@@ -84,20 +84,19 @@ public class GUI extends JFrame implements IObserver {
 
 	@Override
 	public void update(Event e) {
-
+		repaint();
+		
 		State state = controller.getState();
 		if (state.equals(State.EXIT_GAME)) {
 			this.setVisible(false);
 			this.dispose();
 			return;
 		} else if (state.equals(State.WON)) {
-			String playerName = controller.getCurrentPlayerName();
-			JOptionPane.showMessageDialog(this, "Der Gewinner ist " + playerName);
-		} else if (state.equals(State.GAME_FINISHED)) {
-			JOptionPane.showMessageDialog(this, "Ende keiner hat gewonnen");
+			String playerName = controller.getPlayerNameWithMostPoints();
+			JOptionPane.showMessageDialog(this, "Gewonnen hat " + playerName);
 		}
 
-		repaint();
+	
 	}
 
 }

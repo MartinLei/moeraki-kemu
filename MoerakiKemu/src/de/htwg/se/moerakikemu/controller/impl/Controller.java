@@ -100,6 +100,8 @@ public class Controller extends Observable implements IController {
 		}
 		if (!isGameFinish())
 			changePlayer();
+		
+		notifyObservers();
 	}
 
 	private State actIslands(Point position) {
@@ -176,18 +178,16 @@ public class Controller extends Observable implements IController {
 	}
 
 	private boolean isGameFinish() {
-		// if (gameField.isFilled()) {
-		// gameField.setState(State.GAME_FINISHED);
-		// notifyObservers();
-		// return true;
-		// }
+	   if (gameField.isFull()) {
+		 gameField.setState(State.WON);
+		 return true;
+	   }
 
 		return false;
 	}
 
 	private void changePlayer() {
 		gameField.changeActPlayer();
-		notifyObservers();
 	}
 
 
@@ -213,15 +213,18 @@ public class Controller extends Observable implements IController {
 		return gameField.getField();
 	}
 	
-	@Override
-	public Element getCurrentPlayer() {
-		return gameField.getCurrentPlayer();
-	}
 
 	@Override
-	public String getCurrentPlayerName() {
-		Element player = gameField.getCurrentPlayer();
-		return gameField.getPlayerName(player);
+	public String getPlayerNameWithMostPoints() {
+		int player1Point = gameField.getPoints(Element.PLAYER1);
+		int player2Point = gameField.getPoints(Element.PLAYER2);
+		
+		if(player1Point == player2Point)
+			return "-";
+		else if(player1Point > player2Point)
+			return gameField.getPlayerName(Element.PLAYER1);
+		else 
+			return gameField.getPlayerName(Element.PLAYER2);
 	}
 	
 	

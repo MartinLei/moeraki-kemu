@@ -21,6 +21,9 @@ public class Field implements IField {
 
 	private Element actualPlayer;
 
+	private static final int FREE_SPOTS = 56;
+	private int occupiedSpots;
+
 	/**
 	 * Constructor
 	 */
@@ -29,6 +32,7 @@ public class Field implements IField {
 
 		actualPlayer = Element.PLAYER1;
 		state = State.SET_START_DOT;
+		occupiedSpots = 0;
 	}
 
 	private void generateMap() {
@@ -93,6 +97,10 @@ public class Field implements IField {
 			return false;
 
 		map[position.x][position.y].occupy(person);
+		
+		if(person.equals(Element.PLAYER1) || person.equals(Element.PLAYER2))
+		occupiedSpots++;
+		
 		return true;
 	}
 
@@ -128,11 +136,11 @@ public class Field implements IField {
 	@Override
 	public String getPlayerName(Element player) {
 
-		if(player.equals(Element.PLAYER1))
+		if (player.equals(Element.PLAYER1))
 			return PLAYER1NAME;
-		else if(player.equals(Element.PLAYER2))
+		else if (player.equals(Element.PLAYER2))
 			return PLAYWE2NAME;
-		
+
 		return null;
 	}
 
@@ -202,17 +210,22 @@ public class Field implements IField {
 	private Element getPlayerPointElement(Element player) {
 		if (player.equals(Element.PLAYER1))
 			return Element.POINT_PLAYER1;
-		else 
+		else
 			return Element.POINT_PLAYER2;
 	}
 
 	private Element getPlayerHalfPointElement(Element player) {
 		if (player.equals(Element.PLAYER1))
 			return Element.HALF_POINT_PLAYER1;
-		else 
+		else
 			return Element.HALF_POINT_PLAYER2;
 	}
 
+	@Override
+	public boolean isFull() {
+		return occupiedSpots >= FREE_SPOTS;
+	}
+	
 	@Override
 	public List<Element> getField() {
 		List<Element> mapElement = new ArrayList<>();
@@ -225,4 +238,6 @@ public class Field implements IField {
 		}
 		return mapElement;
 	}
+
+
 }

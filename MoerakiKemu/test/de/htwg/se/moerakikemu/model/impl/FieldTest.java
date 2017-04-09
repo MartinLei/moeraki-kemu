@@ -159,4 +159,79 @@ public class FieldTest {
 	}
 	
 
+	@Test
+	public void test_isFull(){
+		assertFalse(field.isFull());
+		
+		field.occupy(new Point(3, 1), Element.PLAYER1);
+		field.occupy(new Point(5, 1), Element.PLAYER1);
+		field.occupy(new Point(7, 1), Element.PLAYER1);
+		field.occupy(new Point(9, 1), Element.PLAYER1);
+		
+		field.occupy(new Point(2, 2), Element.PLAYER1);
+		field.occupy(new Point(4, 2), Element.PLAYER1);
+		field.occupy(new Point(6, 2), Element.PLAYER1);
+		field.occupy(new Point(8, 2), Element.PLAYER1);
+		field.occupy(new Point(10, 2), Element.PLAYER1);
+		
+		field.occupy(new Point(1, 3), Element.PLAYER1);
+		field.occupy(new Point(3, 3), Element.PLAYER1);
+		field.occupy(new Point(5, 3), Element.PLAYER1);
+		field.occupy(new Point(7, 3), Element.PLAYER1);
+		field.occupy(new Point(9, 3), Element.PLAYER1);
+		field.occupy(new Point(11, 3), Element.PLAYER1);
+		
+		field.occupy(new Point(2, 4), Element.PLAYER1);
+		field.occupy(new Point(4, 4), Element.PLAYER1);
+		field.occupy(new Point(6, 4), Element.PLAYER1);
+		field.occupy(new Point(8, 4), Element.PLAYER1);
+		field.occupy(new Point(10, 4), Element.PLAYER1);
+		
+		field.occupy(new Point(1, 5), Element.PLAYER1);
+		field.occupy(new Point(3, 5), Element.PLAYER1);
+		field.occupy(new Point(5, 5), Element.PLAYER1);
+		field.occupy(new Point(7, 5), Element.PLAYER1);
+		field.occupy(new Point(9, 5), Element.PLAYER1);
+		field.occupy(new Point(11, 5), Element.PLAYER1);
+		
+		field.occupy(new Point(2, 6), Element.PLAYER1);
+		field.occupy(new Point(4, 6), Element.PLAYER1);
+		field.occupy(new Point(6, 6), Element.PLAYER1); //SD
+		field.occupy(new Point(8, 6), Element.PLAYER1);
+		field.occupy(new Point(10, 6), Element.PLAYER1); 
+		
+		field.occupy(new Point(1, 7), Element.PLAYER1);
+		field.occupy(new Point(3, 7), Element.PLAYER1);
+		field.occupy(new Point(5, 7), Element.PLAYER1);
+		field.occupy(new Point(7, 7), Element.PLAYER1);
+		field.occupy(new Point(9, 7), Element.PLAYER1);
+		field.occupy(new Point(11, 7), Element.PLAYER1);
+		
+		field.occupy(new Point(2, 8), Element.PLAYER1);
+		field.occupy(new Point(4, 8), Element.PLAYER1);
+		field.occupy(new Point(6, 8), Element.PLAYER1);
+		field.occupy(new Point(8, 8), Element.PLAYER1);
+		field.occupy(new Point(10, 8), Element.PLAYER1);
+		
+		field.occupy(new Point(1, 9), Element.PLAYER1);
+		field.occupy(new Point(3, 9), Element.PLAYER1);
+		field.occupy(new Point(5, 9), Element.PLAYER1);
+		field.occupy(new Point(7, 9), Element.PLAYER1);
+		field.occupy(new Point(9, 9), Element.PLAYER1);
+		field.occupy(new Point(11, 9), Element.PLAYER1);
+		
+		field.occupy(new Point(2, 10), Element.PLAYER1);
+		field.occupy(new Point(4, 10), Element.PLAYER1);
+		field.occupy(new Point(6, 10), Element.PLAYER1);
+		field.occupy(new Point(8, 10), Element.PLAYER1);
+		field.occupy(new Point(10, 10), Element.PLAYER1);
+
+		assertFalse(field.isFull());
+		field.occupy(new Point(3, 11), Element.PLAYER1);
+		field.occupy(new Point(5, 11), Element.PLAYER1);
+		assertFalse(field.isFull());
+		field.occupy(new Point(7, 11), Element.PLAYER1);
+		field.occupy(new Point(9, 11), Element.PLAYER1);
+		assertTrue(field.isFull());
+	}
 }

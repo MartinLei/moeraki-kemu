@@ -1,5 +1,7 @@
 package de.htwg.se.moerakikemu.view.gui;
 
+import java.awt.Color;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,7 +34,9 @@ public class InfoPanel extends JPanel implements IObserver {
 
 	private void updateInfoPanel() {
 		lPlayer1.setText(getPlayerText(Element.PLAYER1));
+		lPlayer1.setForeground (Color.blue);
 		lPlayer2.setText(getPlayerText(Element.PLAYER2));
+		lPlayer2.setForeground (Color.red);
 		lInfo.setText("Info:: " + controller.getState().toString());
 	}
 

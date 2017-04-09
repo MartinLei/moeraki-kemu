@@ -169,10 +169,8 @@ public class TextUI implements IObserver {
 			String player2Name = controller.getPlayerName(Element.PLAYER2);
 			LOGGER.info(player2Name + " du bist dran:: ");
 		} else if (state.equals(State.WON)) {
-			String playerName = controller.getCurrentPlayerName();
-			LOGGER.info("Der Gewinner ist " + playerName);
-		} else if (state.equals(State.GAME_FINISHED)) {
-			LOGGER.info("Ende keiner hat gewonnen");
-		}
+			String playerName = controller.getPlayerNameWithMostPoints();
+			LOGGER.info("Gewonnen hat " + playerName);
+		} 
 	}
 }

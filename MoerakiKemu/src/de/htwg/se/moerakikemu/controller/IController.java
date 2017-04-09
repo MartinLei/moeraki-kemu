@@ -86,18 +86,12 @@ public interface IController extends IObservable {
 	 * @return false if the position is already occupied
 	 */
 	boolean setDot(Point position);
-
-	/**
-	 * get current player element
-	 * @return
-	 */
-	Element getCurrentPlayer();
 	
 	/**
-	 * Name of current player
+	 * Name of current player with the most points
 	 * @return name
 	 */
-	String getCurrentPlayerName();
+	String getPlayerNameWithMostPoints();
 	
 	/**
 	 * get Field as List

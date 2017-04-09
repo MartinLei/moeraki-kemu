@@ -8,10 +8,7 @@ public enum State {
 	SET_START_DOT,
 	TURN_PLAYER1,
 	TURN_PLAYER2,		
-
 	WON,
-	GAME_FINISHED,		// No one win the game
-
 	EXIT_GAME			// Exit the game
 
 	;
@@ -27,8 +24,6 @@ public enum State {
 			return "Player2 sie sind dran";
 		case WON:
 			return "Spiel beendet";
-		case GAME_FINISHED:
-			return "Spiel unentschieden beendet";
 		case EXIT_GAME:
 			return "Adios";
 		default:

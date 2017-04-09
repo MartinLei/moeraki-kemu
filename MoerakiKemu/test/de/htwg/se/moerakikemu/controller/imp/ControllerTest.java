@@ -23,7 +23,7 @@ public class ControllerTest {
 	private final IFieldDAO fieldDAO = new FieldDb4oDAO();
 
 	private static final String PLAYER1NAME = "Player1";
-	private static final String PLAYWE2NAME = "Player2";
+	private static final String PLAYER2NAME = "Player2";
 	
 	@Before
 	public void setUp() {
@@ -228,7 +228,6 @@ public class ControllerTest {
 		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(8, 3));
 	}
 	
-	
 	@Test
 	public void test_quitGame(){
 		assertEquals(State.SET_START_DOT, controller.getState());
@@ -245,16 +244,138 @@ public class ControllerTest {
 	public void test_getPlayerPoint(){
 		assertEquals(0, controller.getPlayerPoint(Element.PLAYER1));
 	}
-	
+		
 	@Test
-	public void test_getCurrentPlayer(){
+	public void test_getPlayerNameWithMostPoints_PLAYER1(){
 		controller.setStartDot(STARTDOT);
-		assertEquals(Element.PLAYER1, controller.getCurrentPlayer());
+		assertEquals("-", controller.getPlayerNameWithMostPoints());
+		
+		controller.setStartDot(STARTDOT);
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+
+		// Set 4 Stone Player1 middle, 3 Stone Player2 left wall
+		assertTrue(controller.setDot(new Point(4, 4)));
+		assertTrue(controller.setDot(new Point(1, 5)));
+		assertTrue(controller.setDot(new Point(3, 5)));
+		assertTrue(controller.setDot(new Point(1, 7)));
+		assertTrue(controller.setDot(new Point(4, 6)));
+		assertTrue(controller.setDot(new Point(2, 6)));
+
+		// test left player2 half point
+		assertEquals(Element.HALF_POINT_PLAYER2, controller.getFieldElement(1, 6));
+
+		assertTrue(controller.setDot(new Point(5, 5)));
+		// player1 win
+		assertEquals(Element.POINT_PLAYER1, controller.getFieldElement(4, 5));
+		assertEquals(State.WON, controller.getState());
+		assertEquals(PLAYER1NAME, controller.getPlayerNameWithMostPoints());
 	}
 	
 	@Test
-	public void test_getCurrentPlayerName(){
+	public void test_getPlayerNameWithMostPoints_PLAYER2(){
 		controller.setStartDot(STARTDOT);
-		assertEquals(PLAYER1NAME, controller.getCurrentPlayerName());
+		assertEquals("-", controller.getPlayerNameWithMostPoints());
+		
+		controller.setStartDot(STARTDOT);
+		assertEquals(State.TURN_PLAYER1, controller.getState());
+
+		// Set 3 Stone Player2 around StartDot down, 3 Stone Player1 left upper
+		// corner
+		assertTrue(controller.setDot(new Point(3, 3)));
+		assertTrue(controller.setDot(new Point(5, 7)));
+		assertTrue(controller.setDot(new Point(4, 4)));
+		assertTrue(controller.setDot(new Point(6, 8)));
+		assertTrue(controller.setDot(new Point(2, 4)));
+		assertTrue(controller.setDot(new Point(7, 7)));
+
+		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(6, 7));
+		assertEquals(State.WON, controller.getState());
+
+		assertEquals(PLAYER2NAME, controller.getPlayerNameWithMostPoints());
+	}
+	
+	@Test
+	public void test_isGameFinish(){
+		controller.setStartDot(STARTDOT);
+		
+		controller.setDot(new Point(3, 1));
+		controller.setDot(new Point(5, 1));
+		controller.setDot(new Point(7, 1));
+		controller.setDot(new Point(9, 1));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(2, 2));
+		controller.setDot(new Point(4, 2));
+		controller.setDot(new Point(6, 2));
+		controller.setDot(new Point(8, 2));
+		controller.setDot(new Point(10, 2));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(1, 3));
+		controller.setDot(new Point(3, 3));
+		controller.setDot(new Point(5, 3));
+		controller.setDot(new Point(7, 3));
+		controller.setDot(new Point(9, 3));
+		controller.setDot(new Point(11, 3));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(2, 4));
+		controller.setDot(new Point(4, 4));
+		controller.setDot(new Point(6, 4));
+		controller.setDot(new Point(8, 4));
+		controller.setDot(new Point(10, 4));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(1, 5));
+		controller.setDot(new Point(3, 5));
+		controller.setDot(new Point(5, 5));
+		controller.setDot(new Point(7, 5));
+		controller.setDot(new Point(9, 5));
+		controller.setDot(new Point(11, 5));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(2, 6));
+		controller.setDot(new Point(4, 6));
+		controller.setDot(new Point(8, 6));
+		controller.setDot(new Point(10, 6));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(1, 7));
+		controller.setDot(new Point(3, 7));
+		controller.setDot(new Point(5, 7));
+		controller.setDot(new Point(7, 7));
+		controller.setDot(new Point(9, 7));
+		controller.setDot(new Point(11, 7));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(2, 8));
+		controller.setDot(new Point(4, 8));
+		controller.setDot(new Point(6, 8));
+		controller.setDot(new Point(8, 8));
+		controller.setDot(new Point(10, 8));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(1, 9));
+		controller.setDot(new Point(3, 9));
+		controller.setDot(new Point(5, 9));
+		controller.setDot(new Point(7, 9));
+		controller.setDot(new Point(9, 9));
+		controller.setDot(new Point(11, 9));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(2, 10));
+		controller.setDot(new Point(4, 10));
+		controller.setDot(new Point(6, 10));
+		controller.setDot(new Point(8, 10));
+		controller.setDot(new Point(10, 10));
+		assertFalse(controller.getState().equals(State.WON));
+		
+		controller.setDot(new Point(3, 11));
+		controller.setDot(new Point(5, 11));
+		controller.setDot(new Point(7, 11));
+		controller.setDot(new Point(9, 11));
+		assertEquals(State.WON,controller.getState());
+		assertEquals(15, controller.getPlayerPoint(Element.PLAYER1));
+		assertEquals(15, controller.getPlayerPoint(Element.PLAYER2));
 	}
 }
