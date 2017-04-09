@@ -71,7 +71,6 @@ public interface IField {
 	 */
 	String getPlayerName(Element player);
 
-
 	/**
 	 * get current player
 	 * 
@@ -92,7 +91,7 @@ public interface IField {
 	 * @return player point element
 	 */
 	Element getCurrentPlayerPointElement();
-	
+
 	/**
 	 * get the player half point element of the current player
 	 * 
@@ -107,15 +106,18 @@ public interface IField {
 
 	/**
 	 * get point of Player
-	 * @param player1 or player1
+	 * 
+	 * @param player1
+	 *            or player1
 	 * @return points
 	 */
 	int getPoints(Element player);
 
 	/**
 	 * get Field as List
-	 * @return field 
+	 * 
+	 * @return field
 	 */
 	List<Element> getField();
-	
+
 }

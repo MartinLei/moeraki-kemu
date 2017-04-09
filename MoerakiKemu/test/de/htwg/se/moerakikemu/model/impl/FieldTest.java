@@ -12,14 +12,16 @@ import org.junit.Test;
 import de.htwg.se.moerakikemu.model.IField;
 
 public class FieldTest {
-	private static final int EDGE_LENGTH = 12;
 
 	IField errorField;
 	IField field;
 
-
 	private static final int MAP_LENGTH = 13;
 
+	private String player1Name = "Player1";
+	private String player2Name = "Player2";
+	
+	
 	@Before
 	public void setUp() {
 		field = new Field();
@@ -147,6 +149,14 @@ public class FieldTest {
 		
 		assertEquals(4, field.getPoints(Element.PLAYER1));
 		assertEquals(2, field.getPoints(Element.PLAYER2));
-		
 	}
+	
+	@Test
+	public void test_getPlayerName(){
+		assertEquals(null, field.getPlayerName(Element.NONE));
+		assertEquals(player1Name, field.getPlayerName(Element.PLAYER1));
+		assertEquals(player2Name, field.getPlayerName(Element.PLAYER2));
+	}
+	
+
 }

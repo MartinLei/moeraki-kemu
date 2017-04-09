@@ -22,6 +22,9 @@ public class ControllerTest {
 	private final static Point STARTDOT = new Point(6, 6);
 	private final IFieldDAO fieldDAO = new FieldDb4oDAO();
 
+	private static final String PLAYER1NAME = "Player1";
+	private static final String PLAYWE2NAME = "Player2";
+	
 	@Before
 	public void setUp() {
 		controller = new Controller(fieldDAO);
@@ -223,5 +226,35 @@ public class ControllerTest {
 		assertTrue(controller.setDot(new Point(8, 4)));
 		assertTrue(controller.setDot(new Point(9, 3)));
 		assertEquals(Element.POINT_PLAYER2, controller.getFieldElement(8, 3));
+	}
+	
+	
+	@Test
+	public void test_quitGame(){
+		assertEquals(State.SET_START_DOT, controller.getState());
+		controller.quitGame();
+		assertEquals(State.EXIT_GAME, controller.getState());
+	}
+	
+	@Test
+	public void test_getPlayerName(){
+		assertEquals(PLAYER1NAME, controller.getPlayerName(Element.PLAYER1));
+	}
+	
+	@Test
+	public void test_getPlayerPoint(){
+		assertEquals(0, controller.getPlayerPoint(Element.PLAYER1));
+	}
+	
+	@Test
+	public void test_getCurrentPlayer(){
+		controller.setStartDot(STARTDOT);
+		assertEquals(Element.PLAYER1, controller.getCurrentPlayer());
+	}
+	
+	@Test
+	public void test_getCurrentPlayerName(){
+		controller.setStartDot(STARTDOT);
+		assertEquals(PLAYER1NAME, controller.getCurrentPlayerName());
 	}
 }

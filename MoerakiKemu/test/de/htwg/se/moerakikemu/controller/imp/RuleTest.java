@@ -42,6 +42,8 @@ public class RuleTest {
 		assertFalse(rule.isPositionPossibleInput(new Point(0, 5)));
 		assertFalse(rule.isPositionPossibleInput(new Point(5, 0)));
 		
+		assertFalse(rule.isPositionPossibleInput(new Point(1, 1)));
+		
 		assertFalse(rule.isPositionPossibleInput(new Point(5, 4)));
 		assertFalse(rule.isPositionPossibleInput(new Point(4, 5)));
 		assertTrue(rule.isPositionPossibleInput(new Point(4, 4)));

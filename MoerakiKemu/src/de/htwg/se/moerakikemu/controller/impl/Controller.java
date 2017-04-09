@@ -58,23 +58,6 @@ public class Controller extends Observable implements IController {
 	}
 
 	@Override
-	public void quitGame() {
-		gameField.setState(State.EXIT_GAME);
-		notifyObservers();
-	}
-
-	@Override
-	public String getPlayerName(Element player) {
-		return gameField.getPlayerName(player);
-	}
-
-	@Override
-	public int getPlayerPoint(Element player) {
-		return gameField.getPoints(player);
-	}
-
-
-	@Override
 	public boolean setStartDot(Point position) {
 		if (position == null)
 			return false;
@@ -207,6 +190,41 @@ public class Controller extends Observable implements IController {
 		notifyObservers();
 	}
 
+
+	@Override
+	public void quitGame() {
+		gameField.setState(State.EXIT_GAME);
+		notifyObservers();
+	}
+
+	@Override
+	public String getPlayerName(Element player) {
+		return gameField.getPlayerName(player);
+	}
+
+	@Override
+	public int getPlayerPoint(Element player) {
+		return gameField.getPoints(player);
+	}
+	
+	
+	@Override
+	public List<Element> getField(){
+		return gameField.getField();
+	}
+	
+	@Override
+	public Element getCurrentPlayer() {
+		return gameField.getCurrentPlayer();
+	}
+
+	@Override
+	public String getCurrentPlayerName() {
+		Element player = gameField.getCurrentPlayer();
+		return gameField.getPlayerName(player);
+	}
+	
+	
 	@Override
 	public void saveToDB() {
 		fieldDAO.saveField(gameField);
@@ -223,19 +241,4 @@ public class Controller extends Observable implements IController {
 		return true;
 	}
 
-	@Override
-	public List<Element> getField(){
-		return gameField.getField();
-	}
-	
-	@Override
-	public Element getCurrentPlayer() {
-		return gameField.getCurrentPlayer();
-	}
-
-	@Override
-	public String getCurrentPlayerName() {
-		Element player = gameField.getCurrentPlayer();
-		return gameField.getPlayerName(player);
-	}
 }

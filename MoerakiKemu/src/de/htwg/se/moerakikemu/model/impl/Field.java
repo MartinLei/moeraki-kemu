@@ -16,8 +16,8 @@ public class Field implements IField {
 
 	private State state;
 
-	private String player1Name = "Player1";
-	private String player2Name = "Player2";
+	private static final String PLAYER1NAME = "Player1";
+	private static final String PLAYWE2NAME = "Player2";
 
 	private Element actualPlayer;
 
@@ -127,14 +127,13 @@ public class Field implements IField {
 
 	@Override
 	public String getPlayerName(Element player) {
-		String playerName = "-";
-		
+
 		if(player.equals(Element.PLAYER1))
-			playerName = player1Name;
+			return PLAYER1NAME;
 		else if(player.equals(Element.PLAYER2))
-			playerName = player2Name;
+			return PLAYWE2NAME;
 		
-		return playerName;
+		return null;
 	}
 
 	@Override
@@ -203,19 +202,15 @@ public class Field implements IField {
 	private Element getPlayerPointElement(Element player) {
 		if (player.equals(Element.PLAYER1))
 			return Element.POINT_PLAYER1;
-		else if (player.equals(Element.PLAYER2))
+		else 
 			return Element.POINT_PLAYER2;
-
-		return null;
 	}
 
 	private Element getPlayerHalfPointElement(Element player) {
 		if (player.equals(Element.PLAYER1))
 			return Element.HALF_POINT_PLAYER1;
-		else if (player.equals(Element.PLAYER2))
+		else 
 			return Element.HALF_POINT_PLAYER2;
-
-		return null;
 	}
 
 	@Override
@@ -228,7 +223,6 @@ public class Field implements IField {
 				mapElement.add(element);
 			}
 		}
-
 		return mapElement;
 	}
 }
