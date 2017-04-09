@@ -96,10 +96,12 @@ public class Field implements IField {
 		if (isOccupied(position))
 			return false;
 
+	
+
+		if (person.equals(Element.PLAYER1) || person.equals(Element.PLAYER2))
+			occupiedSpots++;
+
 		map[position.x][position.y].occupy(person);
-		
-		if(person.equals(Element.PLAYER1) || person.equals(Element.PLAYER2))
-		occupiedSpots++;
 		
 		return true;
 	}
@@ -225,7 +227,7 @@ public class Field implements IField {
 	public boolean isFull() {
 		return occupiedSpots >= FREE_SPOTS;
 	}
-	
+
 	@Override
 	public List<Element> getField() {
 		List<Element> mapElement = new ArrayList<>();
@@ -238,6 +240,5 @@ public class Field implements IField {
 		}
 		return mapElement;
 	}
-
 
 }
