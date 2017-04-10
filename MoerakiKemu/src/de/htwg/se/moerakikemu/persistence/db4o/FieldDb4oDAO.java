@@ -88,7 +88,7 @@ public class FieldDb4oDAO implements IFieldDAO {
 			ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bos.toByteArray()));
 			obj = in.readObject();
 		} catch (Exception e) {
-			LOGGER.error(e.getMessage());
+			LOGGER.error(e);
 		}
 		return obj;
 	}
