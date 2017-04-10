@@ -27,7 +27,7 @@ public class GUI extends JFrame implements IObserver {
 	
 	private static final String GAME_TITLE = "Moeraki Kemu"; 
 
-	private static final int DEFAULT_Y = 580;
+	private static final int DEFAULT_Y = 590;
 	private static final int DEFAULT_X = 800;
 
 	private InfoPanel infoPanel;

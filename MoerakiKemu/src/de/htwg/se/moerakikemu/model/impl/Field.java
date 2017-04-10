@@ -1,6 +1,7 @@
 package de.htwg.se.moerakikemu.model.impl;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import de.htwg.se.moerakikemu.model.IField;
 /**
  * The implementation of field
  */
-public class Field implements IField {
+public class Field implements IField , Serializable{
 	private static final int MAP_LENGTH = 13;
 
 	private Spot[][] map;

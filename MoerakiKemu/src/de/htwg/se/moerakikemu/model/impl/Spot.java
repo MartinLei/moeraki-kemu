@@ -1,9 +1,11 @@
 package de.htwg.se.moerakikemu.model.impl;
 
+import java.io.Serializable;
+
 /**
  * The Spot contains which player occupied it
  */
-public class Spot {
+public class Spot implements Serializable{
 
 	private Element occupiedBy;
 

@@ -9,9 +9,7 @@ public enum State {
 	TURN_PLAYER1,
 	TURN_PLAYER2,		
 	WON,
-	EXIT_GAME			// Exit the game
-
-	;
+	EXIT_GAME;
 	
 	@Override
 	public String toString() {
