@@ -235,12 +235,13 @@ public class Controller extends Observable implements IController {
 
 	@Override
 	public boolean loadDB() {
-		IField loadField = fieldDAO.getField();
+		IField loadField = fieldDAO.loadField();
 
 		if (loadField == null)
 			return false;
 
 		gameField = loadField; // deep copy ?
+		notifyObservers();
 		return true;
 	}
 

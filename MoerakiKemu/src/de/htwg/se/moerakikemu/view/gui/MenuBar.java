@@ -21,7 +21,10 @@ public class MenuBar extends JMenuBar {
 	private transient IController controller;
 
 	private JMenu fileMenu;
-	private JMenuItem newMenuItem, quitMenuItem;
+	private JMenuItem newMenuItem;
+	private JMenuItem quitMenuItem;
+	private JMenuItem saveMenuItem;
+	private JMenuItem loadMenuItem;
 
 	private JMenu infoMenu;
 	private JMenuItem helpMenuItem;
@@ -55,6 +58,28 @@ public class MenuBar extends JMenuBar {
 		newMenuItem.setMnemonic(KeyEvent.VK_N);
 		newMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_DOWN_MASK));
 		fileMenu.add(newMenuItem);
+		
+		saveMenuItem = new JMenuItem("save game");
+		saveMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.saveToDB();
+			}
+		});
+		saveMenuItem.setMnemonic(KeyEvent.VK_S);
+		saveMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_DOWN_MASK));
+		fileMenu.add(saveMenuItem);
+		
+		loadMenuItem = new JMenuItem("load game");
+		loadMenuItem.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				controller.loadDB();
+			}
+		});
+		loadMenuItem.setMnemonic(KeyEvent.VK_L);
+		loadMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_DOWN_MASK));
+		fileMenu.add(loadMenuItem);
 
 		quitMenuItem = new JMenuItem("quit");
 		quitMenuItem.addActionListener(new ActionListener() {

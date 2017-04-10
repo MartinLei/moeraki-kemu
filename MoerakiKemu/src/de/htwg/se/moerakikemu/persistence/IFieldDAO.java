@@ -6,5 +6,5 @@ public interface IFieldDAO {
 	
 	void saveField(IField field);
 	
-	IField getField();
+	IField loadField();
 }
