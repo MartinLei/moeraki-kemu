@@ -15,6 +15,7 @@ apply plugin: "jacoco"
 apply plugin: "base"
 
 dependencies {
+    compile files('lib/db4o-8.0.276.16149-all-java5.jar')
     compile group: 'org.apache.logging.log4j', name: 'log4j-api',  version: '2.2'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.2'
     compile group: 'com.google.inject',        name: 'guice',      version: '3.0'
