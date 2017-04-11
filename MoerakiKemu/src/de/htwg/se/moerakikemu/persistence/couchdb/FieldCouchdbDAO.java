@@ -3,6 +3,8 @@ package de.htwg.se.moerakikemu.persistence.couchdb;
 import java.net.MalformedURLException;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.Logger;
 import org.ektorp.CouchDbConnector;
 import org.ektorp.CouchDbInstance;
 import org.ektorp.http.HttpClient;
@@ -14,9 +16,11 @@ import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.Field;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.persistence.IFieldDAO;
+import de.htwg.se.moerakikemu.persistence.db4o.FieldDb4oDAO;
 
 public class FieldCouchdbDAO implements IFieldDAO {
-
+	private static final Logger LOGGER = (Logger) LogManager.getLogger(FieldCouchdbDAO.class);
+	
 	private CouchDbConnector db = null;
 	private static final String DB_ADRESS = "http://lenny2.in.htwg-konstanz.de:5984"; //"http://localhost:5984";
 	private static final String DB_NAME = "moerakikemu_db";
@@ -27,7 +31,7 @@ public class FieldCouchdbDAO implements IFieldDAO {
 		try {
 			client = new StdHttpClient.Builder().url(DB_ADRESS).build();
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			LOGGER.error(e);
 		}
 		CouchDbInstance dbInstance = new StdCouchDbInstance(client);
 		db = dbInstance.createConnector(DB_NAME, true);
