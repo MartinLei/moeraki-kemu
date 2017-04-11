@@ -18,7 +18,7 @@ import de.htwg.se.moerakikemu.persistence.IFieldDAO;
 public class FieldCouchdbDAO implements IFieldDAO {
 
 	private CouchDbConnector db = null;
-	private static final String DB_ADRESS = "http://lenny2.in.htwg-konstanz.de:5984";
+	private static final String DB_ADRESS = "http://lenny2.in.htwg-konstanz.de:5984"; //"http://localhost:5984";
 	private static final String DB_NAME = "moerakikemu_db";
 	private static final String ID = "field";
 

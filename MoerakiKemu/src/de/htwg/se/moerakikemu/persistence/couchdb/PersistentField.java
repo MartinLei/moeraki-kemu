@@ -23,7 +23,7 @@ public class PersistentField extends CouchDbDocument {
 	@TypeDiscriminator
 	public String id;
 
-	public List<Element> mapElement= new ArrayList<>();
+	public transient List<Element> mapElement= new ArrayList<>();
 	public State state = State.SET_START_DOT;
 	public Element actualPlayer = Element.NONE;
 
