@@ -10,20 +10,14 @@ import de.htwg.se.moerakikemu.model.IField;
 /**
  * The implementation of field
  */
-public class Field implements IField , Serializable{
+public class Field implements IField, Serializable {
 	private static final int MAP_LENGTH = 13;
-
-	private Spot[][] map;
-
-	private State state;
-
 	private static final String PLAYER1NAME = "Player1";
 	private static final String PLAYWE2NAME = "Player2";
 
+	private Spot[][] map;
+	private State state;
 	private Element actualPlayer;
-
-	private static final int FREE_SPOTS = 56;
-	private int occupiedSpots;
 
 	/**
 	 * Constructor
@@ -33,7 +27,26 @@ public class Field implements IField , Serializable{
 
 		actualPlayer = Element.PLAYER1;
 		state = State.SET_START_DOT;
-		occupiedSpots = 0;
+	}
+
+	public Field(List<Element> map, State state, Element actualPlayer) {
+		loadMap(map);
+		this.state = state;
+		this.actualPlayer = actualPlayer;
+	}
+
+	private void loadMap(List<Element> map) {
+		this.map = new Spot[MAP_LENGTH][MAP_LENGTH];
+		int index = 0;
+		for (int y = 0; y < MAP_LENGTH; y++) {
+			for (int x = 0; x < MAP_LENGTH; x++) {
+				Element mapElement = map.get(index);
+				index++;
+
+				this.map[x][y] = new Spot();
+				this.map[x][y].setElement(mapElement);
+			}
+		}
 	}
 
 	private void generateMap() {
@@ -97,13 +110,8 @@ public class Field implements IField , Serializable{
 		if (isOccupied(position))
 			return false;
 
-	
-
-		if (person.equals(Element.PLAYER1) || person.equals(Element.PLAYER2))
-			occupiedSpots++;
-
 		map[position.x][position.y].occupy(person);
-		
+
 		return true;
 	}
 
@@ -226,7 +234,14 @@ public class Field implements IField , Serializable{
 
 	@Override
 	public boolean isFull() {
-		return occupiedSpots >= FREE_SPOTS;
+		for (int y = 0; y < MAP_LENGTH; y++) {
+			for (int x = 0; x < MAP_LENGTH; x++) {
+				Element element = map[x][y].getElement();
+				if (element.equals(Element.NONE))
+					return false;
+			}
+		}
+		return true;
 	}
 
 	@Override

@@ -240,7 +240,7 @@ public class Controller extends Observable implements IController {
 		if (loadField == null)
 			return false;
 
-		gameField = loadField; // deep copy ?
+		gameField = loadField;
 		notifyObservers();
 		return true;
 	}
