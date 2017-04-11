@@ -79,7 +79,7 @@ public class FieldCouchdbDAO implements IFieldDAO {
 	}
 
 	private PersistentField getPersistenField(String id) {
-		PersistentField persistentField = db.find(PersistentField.class, ID);
+		PersistentField persistentField = db.find(PersistentField.class, id);
 
 		if (persistentField == null)
 			return null;

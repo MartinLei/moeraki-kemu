@@ -9,19 +9,10 @@ import java.awt.RenderingHints;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.Element;
@@ -171,13 +162,6 @@ public class PitchPanel extends JPanel implements IObserver {
 	@Override
 	public void update(Event e) {
 		this.repaint();
-
-		// Status state = controller.getGameStatus();
-		// if (gs.equals(GameStatus.FINISH)) {
-		// JOptionPane.showMessageDialog(null, controller.getStatusText(), "Some
-		// one has won the game",
-		// JOptionPane.INFORMATION_MESSAGE);
-		// }
 	}
 
 }

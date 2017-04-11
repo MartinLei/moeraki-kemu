@@ -35,6 +35,10 @@ public class GUI extends JFrame implements IObserver {
 	private PitchPanel pitchPanel;
 	private Container pane;
 	
+	/**
+	 * Constructor
+	 * @param controller
+	 */
 	@Inject
 	public GUI(final IController controller) {
 		this.controller = controller;

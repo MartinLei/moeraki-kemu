@@ -4,6 +4,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Helping class for controller to get static positions
+ *
+ */
 public final class Rule {
 
 	private final List<Point> allowedStartPosition;
@@ -18,32 +22,32 @@ public final class Rule {
 		templateIslands = new ArrayList<>();
 		elementCells = new ArrayList<>();
 		fieldCorner = new ArrayList<>();
-		
+
 		initAllowedStartPosition();
 		initTemplateCell();
 		initFieldCorner();
 	}
 
 	private void initFieldCorner() {
-		//upper left
-		fieldCorner.add(new Point(1,1));
-		fieldCorner.add(new Point(2,1));
-		fieldCorner.add(new Point(1,2));
-		
-		//upper right
-		fieldCorner.add(new Point(10,1));
-		fieldCorner.add(new Point(11,1));
-		fieldCorner.add(new Point(11,2));
-		
-		//bottom left
-		fieldCorner.add(new Point(1,10));
-		fieldCorner.add(new Point(1,11));
-		fieldCorner.add(new Point(2,11));
-		
-		//bottom right
-		fieldCorner.add(new Point(11,10));
-		fieldCorner.add(new Point(11,11));
-		fieldCorner.add(new Point(10,11));
+		// upper left
+		fieldCorner.add(new Point(1, 1));
+		fieldCorner.add(new Point(2, 1));
+		fieldCorner.add(new Point(1, 2));
+
+		// upper right
+		fieldCorner.add(new Point(10, 1));
+		fieldCorner.add(new Point(11, 1));
+		fieldCorner.add(new Point(11, 2));
+
+		// bottom left
+		fieldCorner.add(new Point(1, 10));
+		fieldCorner.add(new Point(1, 11));
+		fieldCorner.add(new Point(2, 11));
+
+		// bottom right
+		fieldCorner.add(new Point(11, 10));
+		fieldCorner.add(new Point(11, 11));
+		fieldCorner.add(new Point(10, 11));
 	}
 
 	private void initAllowedStartPosition() {
@@ -117,6 +121,12 @@ public final class Rule {
 		return templateCells;
 	}
 
+	/**
+	 * is the given position a possible player input for 
+	 * a start dot
+	 * @param position of a stone
+	 * @return true if is possible
+	 */
 	public boolean isStartDotPosCorrect(Point position) {
 		for (Point p : allowedStartPosition)
 			if (p.equals(position))
@@ -124,21 +134,24 @@ public final class Rule {
 
 		return false;
 	}
-	
 
+	/**
+	 * is the given position a possible player input
+	 * @param position of a stone
+	 * @return true if is possible
+	 */
 	public boolean isPositionPossibleInput(Point position) {
-		if(!isPositionPlayerField(position))
+		if (!isPositionPlayerField(position))
 			return false;
-	
-		if(!isPositionFieldRange(position,1,11))
+
+		if (!isPositionFieldRange(position, 1, 11))
 			return false;
-		
-		if(isPositionCorner(position))
+
+		if (isPositionCorner(position))
 			return false;
-		
+
 		return true;
 	}
-
 
 	private boolean isPositionCorner(Point position) {
 		for (Point p : fieldCorner)
@@ -165,16 +178,16 @@ public final class Rule {
 		return number % 2 == 0;
 	}
 
-	private boolean isPositionFieldRange(Point position, int min, int max){
-		return (position.x >= min && position.x <= max && position.y >= min && position.y <= max);
+	private boolean isPositionFieldRange(Point position, int min, int max) {
+		return position.x >= min && position.x <= max && position.y >= min && position.y <= max;
 	}
-	
+
 	public List<Point> getShiftedPositions(List<Point> shiftTemplate, Point position) {
 		List<Point> shifted = new ArrayList<>();
 		for (Point shift : shiftTemplate) {
 			Point newPosition = new Point(position.x + shift.x, position.y + shift.y);
 
-			if (isPositionFieldRange(newPosition,0,12))
+			if (isPositionFieldRange(newPosition, 0, 12))
 				shifted.add(newPosition);
 			else
 				shifted.add(null);

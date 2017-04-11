@@ -60,14 +60,6 @@ public interface IController extends IObservable {
 	 * @return name
 	 */
 	String getPlayerName(Element player);
-
-	/**
-	 * tell if the position is a possible position for a player
-	 * 
-	 * @param position
-	 * @return if the position is possible to set a dot
-	 */
-	//boolean isPositionPossibleInput(Point position);
 	
 	/**
 	 * Set the start stone on the given position After setting the stone, it

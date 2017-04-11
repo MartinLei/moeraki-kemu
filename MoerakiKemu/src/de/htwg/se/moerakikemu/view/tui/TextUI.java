@@ -19,15 +19,18 @@ import de.htwg.se.moerakikemu.util.observer.IObserver;
 public class TextUI implements IObserver {
 
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
-	IController controller;
-
+	private IController controller;
+	private static final int MAP_LENGTH = 13;
+	
+	/**
+	 * Constructor
+	 * @param controller
+	 */
 	@Inject
 	public TextUI(IController controller) {
 		this.controller = controller;
 		controller.addObserver(this);
 	}
-
-	private static final int MAP_LENGTH = 13;
 
 	private void printMap() {
 		String output = "\n" + getMap() + "\n" + getPunkte();
@@ -64,7 +67,7 @@ public class TextUI implements IObserver {
 			return "   ";
 		else if (number < 10)
 			return " " + number + " ";
-		return "" + number + " ";
+		return "" + Integer.toString(number) + " ";
 	}
 
 	private String getMapLine(int y) {

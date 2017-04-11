@@ -11,6 +11,9 @@ import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
 
+/**
+ * Right side of the gui
+ */
 public class InfoPanel extends JPanel implements IObserver {
 	private transient IController controller;
 
@@ -18,6 +21,10 @@ public class InfoPanel extends JPanel implements IObserver {
 	private JLabel lPlayer2;
 	private JLabel lInfo;
 
+	/**
+	 * Constructor
+	 * @param controller
+	 */
 	public InfoPanel(IController controller) {
 		this.controller = controller;
 		controller.addObserver(this);
