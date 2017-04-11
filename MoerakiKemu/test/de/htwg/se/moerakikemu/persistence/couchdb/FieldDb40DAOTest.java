@@ -1,4 +1,4 @@
-package de.htwg.se.moerakikemu.persistence.db4o;
+package de.htwg.se.moerakikemu.persistence.couchdb;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +20,7 @@ public class FieldDb40DAOTest {
 	private IField field;
 	@Before
 	public void setUp() {
-		fieldDAO = new FieldDb4oDAO();
+		fieldDAO = new FieldCouchdbDAO();
 		field = new Field();
 	}
 
