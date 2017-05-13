@@ -1,14 +1,21 @@
-package de.htwg.se.moerakikemu.controller.impl;
+package de.htwg.se.moerakikemu.controller.impl.rule.actor;
 
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import akka.actor.UntypedAbstractActor;
+import de.htwg.se.moerakikemu.controller.impl.rule.msg.MsgGetCells;
+import de.htwg.se.moerakikemu.controller.impl.rule.msg.MsgPossibleInput;
+import de.htwg.se.moerakikemu.controller.impl.rule.msg.MsgShiftedCell;
+import de.htwg.se.moerakikemu.controller.impl.rule.msg.MsgShiftedIsland;
+import de.htwg.se.moerakikemu.controller.impl.rule.msg.MsgStartDotPosCorrect;
+
 /**
  * Helping class for controller to get static positions
  *
  */
-public final class Rule {
+public final class ActorRule extends UntypedAbstractActor {
 
 	private final List<Point> allowedStartPosition;
 	private final List<Point> templateCells;
@@ -16,7 +23,7 @@ public final class Rule {
 	private final List<List<Integer>> elementCells;
 	private final List<Point> fieldCorner;
 
-	public Rule() {
+	public ActorRule() {
 		allowedStartPosition = new ArrayList<>();
 		templateCells = new ArrayList<>();
 		templateIslands = new ArrayList<>();
@@ -122,9 +129,10 @@ public final class Rule {
 	}
 
 	/**
-	 * is the given position a possible player input for 
-	 * a start dot
-	 * @param position of a stone
+	 * is the given position a possible player input for a start dot
+	 * 
+	 * @param position
+	 *            of a stone
 	 * @return true if is possible
 	 */
 	public boolean isStartDotPosCorrect(Point position) {
@@ -137,7 +145,9 @@ public final class Rule {
 
 	/**
 	 * is the given position a possible player input
-	 * @param position of a stone
+	 * 
+	 * @param position
+	 *            of a stone
 	 * @return true if is possible
 	 */
 	public boolean isPositionPossibleInput(Point position) {
@@ -195,4 +205,48 @@ public final class Rule {
 		return shifted;
 	}
 
+	@Override
+	public void onReceive(Object msg) throws Throwable {
+		if (msg instanceof MsgStartDotPosCorrect)
+			receiveMsgStartDotPosCorrect((MsgStartDotPosCorrect) msg);
+		if (msg instanceof MsgPossibleInput)
+			receiveMsgPossibleInput((MsgPossibleInput) msg);
+		if (msg instanceof MsgShiftedCell)
+			receiveMsgShiftedCells((MsgShiftedCell) msg);
+		if (msg instanceof MsgShiftedIsland)
+			receiveMsgShiftedIsland((MsgShiftedIsland) msg);
+		if (msg instanceof MsgGetCells)
+			receiveMsgGetCells((MsgGetCells) msg);
+		else
+			unhandled(msg);
+	}
+
+	private void receiveMsgStartDotPosCorrect(MsgStartDotPosCorrect msg) {
+		Point position = msg.getPosition();
+		boolean result = isStartDotPosCorrect(position);
+		getSender().tell(new MsgStartDotPosCorrect(position, result), getSelf());
+	}
+
+	private void receiveMsgPossibleInput(MsgPossibleInput msg) {
+		Point position = msg.getPosition();
+		boolean result = isPositionPossibleInput(position);
+		getSender().tell(new MsgPossibleInput(position, result), getSelf());
+	}
+
+	private void receiveMsgShiftedCells(MsgShiftedCell msg) {
+		Point position = msg.getPosition();
+		List<Point> result = getShiftedPositions(templateCells, position);
+		getSender().tell(new MsgShiftedCell(position, result), getSelf());
+	}
+
+	private void receiveMsgShiftedIsland(MsgShiftedIsland msg) {
+		Point position = msg.getPosition();
+		List<Point> result = getShiftedPositions(templateIslands, position);
+		getSender().tell(new MsgShiftedIsland(position, result), getSelf());
+	}
+
+	private void receiveMsgGetCells(MsgGetCells msg) {
+		List<List<Integer>> result = getCells();
+		getSender().tell(new MsgGetCells(result), getSelf());
+	}
 }

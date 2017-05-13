@@ -8,6 +8,8 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 import de.htwg.se.moerakikemu.controller.IController;
+import de.htwg.se.moerakikemu.controller.impl.rule.RuleEndpoint;
+import de.htwg.se.moerakikemu.controller.impl.rule.actor.ActorRule;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.Field;
@@ -20,15 +22,14 @@ import de.htwg.se.moerakikemu.util.observer.Observable;
  */
 @Singleton
 public class Controller extends Observable implements IController {
-	private Rule rule;
+	private RuleEndpoint ruleEndpoint;
 	private IField gameField;
 	private IFieldDAO fieldDAO;
 
 	@Inject
 	public Controller(IFieldDAO fieldDAO) {
-		rule = new Rule();
+		ruleEndpoint = new RuleEndpoint();
 		this.fieldDAO = fieldDAO;
-
 		gameField = new Field();
 	}
 
@@ -62,7 +63,7 @@ public class Controller extends Observable implements IController {
 		if (position == null)
 			return false;
 
-		if (!rule.isStartDotPosCorrect(position))
+		if (!ruleEndpoint.isStartDotPosCorrect(position))
 			return false;
 
 		gameField.occupy(position, Element.STARTDOT);
@@ -77,7 +78,7 @@ public class Controller extends Observable implements IController {
 		if (position == null)
 			return false;
 
-		if (!rule.isPositionPossibleInput(position))
+		if (!ruleEndpoint.isPositionPossibleInput(position))
 			return false;
 
 		if (!gameField.occupy(position, gameField.getCurrentPlayer()))
@@ -105,8 +106,8 @@ public class Controller extends Observable implements IController {
 	}
 
 	private State actIslands(Point position) {
-		List<Point> testCells = rule.getShiftedPositions(rule.getTemplateCells(), position);
-		List<Point> testIslands = rule.getShiftedPositions(rule.getTemplateIslands(), position);
+		List<Point> testCells = ruleEndpoint.getShiftedPositionsTemplateCells(position);
+		List<Point> testIslands = ruleEndpoint.getShiftedPositionsTemplateIslands(position);
 		List<Element> elementList = new ArrayList<>();
 
 		for (Point cell : testCells) {
@@ -116,7 +117,7 @@ public class Controller extends Observable implements IController {
 
 		for (int i = 0; i < 4; i++) {
 			Point islandPosition = testIslands.get(i);
-			List<Integer> cellNummer = rule.getCells().get(i);
+			List<Integer> cellNummer = ruleEndpoint.getCells().get(i);
 			State state = actIslandCell(elementList, cellNummer, islandPosition);
 
 			if (state != null)

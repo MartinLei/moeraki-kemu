@@ -21,6 +21,7 @@ dependencies {
     compile group: 'com.google.inject',        name: 'guice',      version: '3.0'
     testCompile "junit:junit:4.11"
     compile group: 'org.ektorp', name: 'org.ektorp', version: '1.4.4'
+    compile group: 'com.typesafe.akka', name: 'akka-actor_2.11', version: '2.5.1'
 }
 
 sourceSets {

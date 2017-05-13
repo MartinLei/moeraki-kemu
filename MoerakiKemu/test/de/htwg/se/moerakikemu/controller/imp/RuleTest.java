@@ -10,19 +10,19 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.htwg.se.moerakikemu.controller.impl.Rule;
+import de.htwg.se.moerakikemu.controller.impl.rule.actor.ActorRule;
 import de.htwg.se.moerakikemu.model.IField;
 import de.htwg.se.moerakikemu.model.impl.Field;
 
 public class RuleTest {
 
 	IField field;
-	Rule rule;
+	ActorRule rule;
 
 	@Before
 	public void setUp() throws Exception {
 		field = new Field();
-		rule = new Rule();
+		rule = new ActorRule();
 	}
 
 	@Test
