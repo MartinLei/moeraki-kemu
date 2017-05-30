@@ -1,5 +1,6 @@
 package de.htwg.se.moerakikemu.view.http;
 
+import java.awt.Point;
 import java.util.concurrent.CompletionStage;
 
 import org.apache.logging.log4j.LogManager;
@@ -22,6 +23,7 @@ import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
+import de.htwg.se.moerakikemu.view.tui.TextHelper;
 
 /**
  * REST Interface
@@ -29,10 +31,11 @@ import de.htwg.se.moerakikemu.util.observer.IObserver;
 public class RestUI extends AllDirectives implements IObserver {
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(RestUI.class);
 
+	private IController controller;
+	private TextHelper textHelper;
+
 	private final String IP = "localhost";
 	private final int PORT = 8080;
-
-	private IController controller;
 	private volatile Object shutdownSwitch = new Object();
 
 	/**
@@ -41,9 +44,11 @@ public class RestUI extends AllDirectives implements IObserver {
 	 * @param controller
 	 */
 	@Inject
-	public RestUI(IController controller) {
+	public RestUI(IController controller, TextHelper textHelper) {
 		this.controller = controller;
 		controller.addObserver(this);
+
+		this.textHelper = textHelper;
 	}
 
 	public void startHTTPServer() {
@@ -83,16 +88,21 @@ public class RestUI extends AllDirectives implements IObserver {
 
 	private Route createRoute() {
 		return route(path("new", () -> get(() -> {
-			LOGGER.info("hello request");
-			return complete("new");
+			LOGGER.info("new request");
+			controller.newGameQuickStart();
+			return complete(textHelper.getMapAsString());
 		})), path("q", () -> get(() -> {
 			LOGGER.info("q request");
-			
+
 			synchronized (shutdownSwitch) {
 				shutdownSwitch.notify();
 			}
 			controller.quitGame();
 			return complete("<h1>quitGame</h1>");
+		})), path("a", () ->parameter("", inputLine -> {
+			Point position = textHelper.getPosition(inputLine);
+			
+			return complete(textHelper.getMapAsString());
 		}))
 
 		);

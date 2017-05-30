@@ -20,20 +20,20 @@ public class TextUI implements IObserver {
 
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
 	private IController controller;
-	private PlotMap plotMap;
+	private TextHelper textHelper;
 	/**
 	 * Constructor
 	 * @param controller
 	 */
 	@Inject
-	public TextUI(IController controller, PlotMap plotMap) {
+	public TextUI(IController controller, TextHelper textHelper) {
 		this.controller = controller;
 		controller.addObserver(this);
-		this.plotMap = plotMap;
+		this.textHelper = textHelper;
 	}
 
 	private void printMap() {
-		LOGGER.info("\n"+plotMap.getMapAsString());
+		LOGGER.info("\n"+textHelper.getMapAsString());
 	}
 
 	
@@ -57,9 +57,7 @@ public class TextUI implements IObserver {
 		} else if (inputLine.matches("h")) {
 			printHelp();
 		} else if (inputLine.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])")) {
-			Point position = getPosition(inputLine);
-
-			setStone(position);
+			setStone(inputLine);
 		} else {
 			LOGGER.info("Keine Ahnung :/ [h Hilfe] ");
 		}
@@ -73,9 +71,11 @@ public class TextUI implements IObserver {
 		LOGGER.info("y-x Koordinaten z.b 1-2");
 	}
 
-	private void setStone(Point position) {
+	private void setStone(String coordinate) {
+		Point position = textHelper.getPosition(coordinate);
+		
 		if (position == null) {
-			LOGGER.info("Hier kannst du dein Stein nicht setzen");
+			LOGGER.info("Nicht im format x-y");
 			return;
 		}
 		
@@ -90,13 +90,7 @@ public class TextUI implements IObserver {
 		}
 	}
 
-	private Point getPosition(String coordinate) {
-		String[] parts = coordinate.split("-");
-		int x = Integer.parseInt(parts[0]);
-		int y = Integer.parseInt(parts[1]);
 
-		return new Point(x, y);
-	}
 
 	@Override
 	public void update(Event e) {

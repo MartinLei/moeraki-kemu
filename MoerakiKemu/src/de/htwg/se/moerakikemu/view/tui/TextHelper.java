@@ -1,16 +1,18 @@
 package de.htwg.se.moerakikemu.view.tui;
 
+import java.awt.Point;
+
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.Element;
 
-public final class PlotMap {
+public final class TextHelper {
 	private static final int MAP_LENGTH = 13;
 	private  IController controller;
 	
 	@Inject
-	public PlotMap(IController controller) {
+	public TextHelper(IController controller) {
 		this.controller = controller;
 	}
 
@@ -77,5 +79,16 @@ public final class PlotMap {
 		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayerName(Element.PLAYER1) + " :" + player1Points + " Punkte\n");
 		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayerName(Element.PLAYER2) + " :" + player2Points + " Punkte\n");
 		return sb.toString();
+	}
+	
+	public Point getPosition(String coordinate) {
+		if(!coordinate.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])"))
+			return null;
+		
+		String[] parts = coordinate.split("-");
+		int x = Integer.parseInt(parts[0]);
+		int y = Integer.parseInt(parts[1]);
+
+		return new Point(x, y);
 	}
 }
