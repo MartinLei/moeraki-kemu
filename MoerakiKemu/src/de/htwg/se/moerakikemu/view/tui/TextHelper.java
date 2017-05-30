@@ -6,18 +6,19 @@ import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.Element;
+import de.htwg.se.moerakikemu.model.impl.State;
+import scala.collection.mutable.StringBuilder;
 
 public final class TextHelper {
 	private static final int MAP_LENGTH = 13;
-	private  IController controller;
-	
+	private IController controller;
+
 	@Inject
 	public TextHelper(IController controller) {
 		this.controller = controller;
 	}
 
-	
-	public String getMapAsString(){
+	public String getMapAsString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getMap());
 		sb.append("\n");
@@ -26,7 +27,7 @@ public final class TextHelper {
 		sb.append(controller.getState());
 		return sb.toString();
 	}
-	
+
 	private String getMap() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(getCollumNumber());
@@ -39,7 +40,7 @@ public final class TextHelper {
 		}
 		return sb.toString();
 	}
-	
+
 	private String getCollumNumber() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("   ");
@@ -57,7 +58,7 @@ public final class TextHelper {
 			return " " + number + " ";
 		return "" + Integer.toString(number) + " ";
 	}
-	
+
 	private String getMapLine(int y) {
 		StringBuilder sb = new StringBuilder();
 
@@ -70,25 +71,54 @@ public final class TextHelper {
 
 		return sb.toString();
 	}
-	
+
 	private String getPoints() {
 		StringBuilder sb = new StringBuilder();
 
 		int player1Points = controller.getPlayerPoint(Element.PLAYER1);
 		int player2Points = controller.getPlayerPoint(Element.PLAYER2);
-		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayerName(Element.PLAYER1) + " :" + player1Points + " Punkte\n");
-		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayerName(Element.PLAYER2) + " :" + player2Points + " Punkte\n");
+		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayerName(Element.PLAYER1) + " :" + player1Points
+				+ " Punkte\n");
+		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayerName(Element.PLAYER2) + " :" + player2Points
+				+ " Punkte\n");
 		return sb.toString();
 	}
-	
-	public Point getPosition(String coordinate) {
-		if(!coordinate.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])"))
+
+	private Point getPosition(String coordinate) {
+		if (!coordinate.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])"))
 			return null;
-		
+
 		String[] parts = coordinate.split("-");
 		int x = Integer.parseInt(parts[0]);
 		int y = Integer.parseInt(parts[1]);
 
 		return new Point(x, y);
+	}
+
+	public String setStone(String coordinate) {
+		
+		Point position = getPosition(coordinate);
+
+		if (position == null)
+			return "Nicht im format x-y";
+
+		if (controller.getState().equals(State.SET_START_DOT)) {
+			if (!controller.setStartDot(position))
+				return "Deine Koordinaten waren nicht im Bereich :(";
+		} else {
+			if (!controller.setDot(position))
+				return "Das geht nicht :(";
+		}
+		
+		return null;
+	}
+	
+	public String getHelpText() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("Hilfe: \n");
+		sb.append("h Hilfe\n");
+		sb.append("q Beenden\n");
+		sb.append("y-x Koordinaten z.b 1-2\n");
+		return sb.toString();
 	}
 }

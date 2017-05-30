@@ -87,7 +87,10 @@ public class RestUI extends AllDirectives implements IObserver {
 	}
 
 	private Route createRoute() {
-		return route(path("new", () -> get(() -> {
+		return route(path("", () -> get(() -> {
+			LOGGER.info("map out request");
+			return complete(textHelper.getMapAsString());
+		})), path("new", () -> get(() -> {
 			LOGGER.info("new request");
 			controller.newGameQuickStart();
 			return complete(textHelper.getMapAsString());
@@ -99,11 +102,16 @@ public class RestUI extends AllDirectives implements IObserver {
 			}
 			controller.quitGame();
 			return complete("<h1>quitGame</h1>");
-		})), path("a", () ->parameter("", inputLine -> {
-			Point position = textHelper.getPosition(inputLine);
-			
+		})), path("h", () -> get(() -> {
+			LOGGER.info("h request");
+			return complete(textHelper.getMapAsString() + "\n" + textHelper.getHelpText());
+		})), parameter("", inputLine -> {
+			String returnMSG = textHelper.setStone(inputLine);
+			if (returnMSG != null)
+				return complete(textHelper.getMapAsString() + "\n" + returnMSG);
+
 			return complete(textHelper.getMapAsString());
-		}))
+		})
 
 		);
 	}

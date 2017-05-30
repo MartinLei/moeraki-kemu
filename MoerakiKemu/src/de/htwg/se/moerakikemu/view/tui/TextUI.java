@@ -1,14 +1,11 @@
 package de.htwg.se.moerakikemu.view.tui;
 
-import java.awt.Point;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.Logger;
 
 import com.google.inject.Inject;
 
 import de.htwg.se.moerakikemu.controller.IController;
-import de.htwg.se.moerakikemu.model.impl.Element;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.util.observer.Event;
 import de.htwg.se.moerakikemu.util.observer.IObserver;
@@ -21,8 +18,10 @@ public class TextUI implements IObserver {
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
 	private IController controller;
 	private TextHelper textHelper;
+
 	/**
 	 * Constructor
+	 * 
 	 * @param controller
 	 */
 	@Inject
@@ -33,10 +32,9 @@ public class TextUI implements IObserver {
 	}
 
 	private void printMap() {
-		LOGGER.info("\n"+textHelper.getMapAsString());
+		LOGGER.info("\n" + textHelper.getMapAsString());
 	}
 
-	
 	/**
 	 * Print the into
 	 */
@@ -55,41 +53,17 @@ public class TextUI implements IObserver {
 		if (inputLine.matches("q")) {
 			controller.quitGame();
 		} else if (inputLine.matches("h")) {
-			printHelp();
+			String helpText = textHelper.getHelpText();
+			LOGGER.info("\n" + helpText);
 		} else if (inputLine.matches("([1-9][0-9]|[0-9])-([1-9][0-9]|[0-9])")) {
-			setStone(inputLine);
+			String returnMSG = textHelper.setStone(inputLine);
+			if (returnMSG != null)
+				LOGGER.info(returnMSG);
 		} else {
 			LOGGER.info("Keine Ahnung :/ [h Hilfe] ");
 		}
 
 	}
-
-	private void printHelp() {
-		LOGGER.info("Hilfe: ");
-		LOGGER.info("h Hilfe");
-		LOGGER.info("q Beenden");
-		LOGGER.info("y-x Koordinaten z.b 1-2");
-	}
-
-	private void setStone(String coordinate) {
-		Point position = textHelper.getPosition(coordinate);
-		
-		if (position == null) {
-			LOGGER.info("Nicht im format x-y");
-			return;
-		}
-		
-		if (controller.getState().equals(State.SET_START_DOT)) {
-			if (!controller.setStartDot(position)) {
-				LOGGER.info("Deine Koordinaten waren nicht im Bereich :(");
-			}
-		} else {
-			if (!controller.setDot(position)) {
-				LOGGER.info("Das geht nicht :(");
-			}
-		}
-	}
-
 
 
 	@Override
@@ -103,15 +77,9 @@ public class TextUI implements IObserver {
 			LOGGER.info("Have a nice day :)");
 		} else if (state.equals(State.SET_START_DOT)) {
 			LOGGER.info("Setzt nun den StartStein:: ");
-		} else if (state.equals(State.TURN_PLAYER1)) {
-			String player1Name = controller.getPlayerName(Element.PLAYER1);
-			LOGGER.info(player1Name + " du bist dran:: ");
-		} else if (state.equals(State.TURN_PLAYER2)) {
-			String player2Name = controller.getPlayerName(Element.PLAYER2);
-			LOGGER.info(player2Name + " du bist dran:: ");
 		} else if (state.equals(State.WON)) {
 			String playerName = controller.getPlayerNameWithMostPoints();
 			LOGGER.info("Gewonnen hat " + playerName);
-		} 
+		}
 	}
 }
