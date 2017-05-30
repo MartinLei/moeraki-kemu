@@ -30,8 +30,8 @@ public class MoerakiKemu {
 	    tui = injector.getInstance(TextUI.class);
 		tui.printWelcome();
 		
-		rui = injector.getInstance(RestUI.class);
-		rui.startHTTPServer();		
+//		rui = injector.getInstance(RestUI.class);
+//		rui.startHTTPServer();		
 	}
 	
 	public static MoerakiKemu getInstance() {
