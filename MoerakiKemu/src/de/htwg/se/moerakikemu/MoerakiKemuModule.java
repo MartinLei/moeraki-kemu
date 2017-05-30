@@ -16,7 +16,7 @@ public class MoerakiKemuModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(IController.class).to(Controller.class);
-		//bind(IFieldDAO.class).to(FieldDb4oDAO.class);
-		bind(IFieldDAO.class).to(FieldCouchdbDAO.class);
+		bind(IFieldDAO.class).to(FieldDb4oDAO.class);
+//		bind(IFieldDAO.class).to(FieldCouchdbDAO.class);
 	}
 }

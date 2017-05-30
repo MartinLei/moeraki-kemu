@@ -8,6 +8,7 @@ import com.google.inject.Injector;
 import de.htwg.se.moerakikemu.controller.IController;
 import de.htwg.se.moerakikemu.model.impl.State;
 import de.htwg.se.moerakikemu.view.gui.GUI;
+import de.htwg.se.moerakikemu.view.http.RestUI;
 import de.htwg.se.moerakikemu.view.tui.TextUI;
 
 public class MoerakiKemu {
@@ -15,6 +16,7 @@ public class MoerakiKemu {
 	private static Scanner scanner;
 	private GUI gui;
 	private TextUI tui;
+	private RestUI rui;
 	private IController controller;
 	private static MoerakiKemu instance = null;
 
@@ -22,12 +24,14 @@ public class MoerakiKemu {
 		Injector injector = Guice.createInjector(new MoerakiKemuModule());
 
 		controller = injector.getInstance(IController.class);
-	    gui = injector.getInstance(GUI.class);
-		tui = injector.getInstance(TextUI.class);
-		tui.printWelcome();
-
-		
 		controller.newGameQuickStart();
+		
+		gui = injector.getInstance(GUI.class);
+	    tui = injector.getInstance(TextUI.class);
+		tui.printWelcome();
+		
+		rui = injector.getInstance(RestUI.class);
+		rui.startHTTPServer();		
 	}
 	
 	public static MoerakiKemu getInstance() {
