@@ -20,79 +20,23 @@ public class TextUI implements IObserver {
 
 	private static final Logger LOGGER = (Logger) LogManager.getLogger(TextUI.class);
 	private IController controller;
-	private static final int MAP_LENGTH = 13;
-	
+	private PlotMap plotMap;
 	/**
 	 * Constructor
 	 * @param controller
 	 */
 	@Inject
-	public TextUI(IController controller) {
+	public TextUI(IController controller, PlotMap plotMap) {
 		this.controller = controller;
 		controller.addObserver(this);
+		this.plotMap = plotMap;
 	}
 
 	private void printMap() {
-		String output = "\n" + getMap() + "\n" + getPunkte();
-		LOGGER.info(output);
-
-		LOGGER.info(controller.getState());
+		LOGGER.info("\n"+plotMap.getMapAsString());
 	}
 
-	private String getMap() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(getCollumNumber());
-		sb.append("\n");
-		for (int y = 0; y < MAP_LENGTH; y++) {
-			String line = getMapLine(y);
-			sb.append(getFormatNumber(y));
-			sb.append(line);
-			sb.append("\n");
-		}
-		return sb.toString();
-	}
-
-	private String getCollumNumber() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("   ");
-		for (int i = 0; i < MAP_LENGTH; i++) {
-			String number = getFormatNumber(i);
-			sb.append(number);
-		}
-		return sb.toString();
-	}
-
-	private String getFormatNumber(int number) {
-		if (number == 0 || number == 12)
-			return "   ";
-		else if (number < 10)
-			return " " + number + " ";
-		return "" + Integer.toString(number) + " ";
-	}
-
-	private String getMapLine(int y) {
-		StringBuilder sb = new StringBuilder();
-
-		for (int i = 0; i < MAP_LENGTH; i++) {
-			Element element = controller.getFieldElement(i, y);
-			sb.append(" ");
-			sb.append(element.toString());
-			sb.append(" ");
-		}
-
-		return sb.toString();
-	}
-
-	private String getPunkte() {
-		StringBuilder sb = new StringBuilder();
-
-		int player1Points = controller.getPlayerPoint(Element.PLAYER1);
-		int player2Points = controller.getPlayerPoint(Element.PLAYER2);
-		sb.append("(" + Element.PLAYER1 + ") " + controller.getPlayerName(Element.PLAYER1) + " :" + player1Points + " Punkte\n");
-		sb.append("(" + Element.PLAYER2 + ") " + controller.getPlayerName(Element.PLAYER2) + " :" + player2Points + " Punkte\n");
-		return sb.toString();
-	}
-
+	
 	/**
 	 * Print the into
 	 */
