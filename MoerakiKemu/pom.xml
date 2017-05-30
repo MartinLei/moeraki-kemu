@@ -48,6 +48,17 @@
 			<artifactId>org.ektorp</artifactId>
 			<version>1.4.4</version>
 		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-http_2.11</artifactId>
+			<version>10.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-http-testkit_2.11</artifactId>
+			<version>10.0.6</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
